@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\SubjectController;
 
 Route::get('/user', function (Request $request) {
@@ -9,3 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource("/subjects", SubjectController::class);
+
+Route::apiResource("/activities", ActivityController::class);
