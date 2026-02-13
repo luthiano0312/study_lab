@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ActivityController;
-use App\Http\Controllers\Api\SubjectController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -12,3 +13,5 @@ Route::get('/user', function (Request $request) {
 Route::apiResource("/subjects", SubjectController::class);
 
 Route::apiResource("/activities", ActivityController::class);
+
+Route::apiResource("/grades", GradeController::class);
