@@ -3,22 +3,53 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ActivityRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Validação falhou',
+                'errors' => $validator->errors()
+            ], 422)
+        );
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // Converter data de d-m-Y para Y-m-d ANTES da validação
+        if ($this->has('due_date') && $this->due_date) {
+            $parts = explode('-', $this->due_date);
+            if (count($parts) === 3) {
+                $this->merge([
+                    'due_date' => "{$parts[2]}-{$parts[1]}-{$parts[0]}",
+                ]);
+            }
+        }
+
+        // Normalizar status
+        if ($this->has('status')) {
+            $this->merge([
+                'status' => strtolower(trim($this->status)),
+            ]);
+        }
+
+        // Normalizar description
+        if ($this->has('description')) {
+            $this->merge([
+                'description' => trim($this->description),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         $isUpdate = in_array($this->method(), ['PUT', 'PATCH']);
@@ -32,7 +63,7 @@ class ActivityRequest extends FormRequest
             'due_date' => [
                 $isUpdate ? 'sometimes' : 'required',
                 'date',
-                'date_format:d-m-Y',
+                'date_format:Y-m-d',
             ],
             'status' => [
                 $isUpdate ? 'sometimes' : 'required',
@@ -50,26 +81,10 @@ class ActivityRequest extends FormRequest
             'description.max' => 'A descrição não pode ter mais de 500 caracteres.',
             'due_date.required' => 'A data de vencimento é obrigatória.',
             'due_date.date' => 'A data de vencimento deve ser uma data válida.',
-            'due_date.date_format' => 'A data de vencimento deve estar no formato YYYY-MM-DD.',
+            'due_date.date_format' => 'A data de vencimento deve estar no formato DD-MM-YYYY.',
             'status.required' => 'O status é obrigatório.',
             'status.string' => 'O status deve ser um texto.',
             'status.in' => 'O status deve ser: pending, in_progress ou completed.',
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        // Normalizar dados de entrada
-        if ($this->has('status')) {
-            $this->merge([
-                'status' => strtolower(trim($this->status)),
-            ]);
-        }
-
-        if ($this->has('description')) {
-            $this->merge([
-                'description' => trim($this->description),
-            ]);
-        }
     }
 }
