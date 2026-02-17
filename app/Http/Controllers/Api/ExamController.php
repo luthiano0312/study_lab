@@ -18,7 +18,7 @@ class ExamController extends Controller
         $exam = Exam::create($request->validated());
 
         return response()->json([
-            'message' => 'Matéria cadastrada com sucesso',
+            'message' => 'Prova cadastrada com sucesso',
             'data' => $exam
         ], 201);
     }
@@ -28,7 +28,7 @@ class ExamController extends Controller
         $exam->update($request->validated());
 
         return response()->json([
-            'message' => 'Matéria atualizada com sucesso',
+            'message' => 'Prova atualizada com sucesso',
             'data' => $exam
         ], 200);
     }
@@ -38,7 +38,7 @@ class ExamController extends Controller
         $exam->delete();
 
         return response()->json([
-            'message' => 'Matéria excluída com sucesso',
+            'message' => 'Prova excluída com sucesso',
         ], 200);
     }
 }

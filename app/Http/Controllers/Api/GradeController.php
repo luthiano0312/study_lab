@@ -18,7 +18,7 @@ class GradeController extends Controller
         $grade = Grade::create($request->validated());
 
         return response()->json([
-            'message' => 'Matéria cadastrada com sucesso',
+            'message' => 'Nota cadastrada com sucesso',
             'data' => $grade
         ], 201);
     }
@@ -28,7 +28,7 @@ class GradeController extends Controller
         $grade->update($request->validated());
 
         return response()->json([
-            'message' => 'Matéria atualizada com sucesso',
+            'message' => 'Nota atualizada com sucesso',
             'data' => $grade
         ], 200);
     }
@@ -38,7 +38,7 @@ class GradeController extends Controller
         $grade->delete();
 
         return response()->json([
-            'message' => 'Matéria excluída com sucesso',
+            'message' => 'Nota excluída com sucesso',
         ], 200);
     }
 }

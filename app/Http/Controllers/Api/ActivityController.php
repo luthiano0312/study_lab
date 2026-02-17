@@ -18,7 +18,7 @@ class ActivityController extends Controller
         $activity = Activity::create($request->validated());
 
         return response()->json([
-            'message' => 'Matéria cadastrada com sucesso',
+            'message' => 'Atividade cadastrada com sucesso',
             'data' => $activity
         ], 201);
     }
@@ -28,7 +28,7 @@ class ActivityController extends Controller
         $activity->update($request->validated());
 
         return response()->json([
-            'message' => 'Matéria atualizada com sucesso',
+            'message' => 'Atividade atualizada com sucesso',
             'data' => $activity
         ], 200);
     }
@@ -38,7 +38,7 @@ class ActivityController extends Controller
         $activity->delete();
 
         return response()->json([
-            'message' => 'Matéria excluída com sucesso',
+            'message' => 'Atividade excluída com sucesso',
         ], 200);
     }
 }
