@@ -38,6 +38,7 @@ class RegisterRequest extends FormRequest
             'password' => [
                 'required',
                 'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/', // Mín. 8 chars, 1 maiúsc., 1 min., 1 número, 1 especial
             ],
         ];
     }
@@ -50,7 +51,7 @@ class RegisterRequest extends FormRequest
             'email.email' => 'Informe um email válido.',
             'email.unique' => 'Este email já está cadastrado.',
             'password.required' => 'A senha é obrigatória.',
-            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.regex' => 'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e um caractere especial.',
             'password.confirmed' => 'As senhas não conferem.',
         ];
     }
