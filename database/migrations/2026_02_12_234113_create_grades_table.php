@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string("midterm");
-            $table->string("endterm");
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->decimal("midterm", 4, 2);
+            $table->decimal("endterm", 4, 2);
             $table->string("bimester");
-            $table->string("year");
+            $table->integer("year");
             $table->timestamps();
         });
     }
