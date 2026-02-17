@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
-use Illuminate\Http\Request;
+use App\Http\Requests\GradeRequest;
 
 class GradeController extends Controller
 {
@@ -13,23 +13,23 @@ class GradeController extends Controller
         return Grade::all();
     }
 
-    public function store(Request $request)
+    public function store(GradeRequest $request)
     {
-        $grade = Grade::create($request->all());
+        $grade = Grade::create($request->validated());
 
         return response()->json([
-            'message' => 'matéria cadastrada com sucesso',
+            'message' => 'Matéria cadastrada com sucesso',
             'data' => $grade
         ], 201);
     }
 
-    public function update(Request $request, Grade $grade)
+    public function update(GradeRequest $request, Grade $grade)
     {
-        $updated = $grade->update($request->all());
+        $grade->update($request->validated());
 
         return response()->json([
-            'message' => 'matéria atualizada com sucesso',
-            'data' => $updated
+            'message' => 'Matéria atualizada com sucesso',
+            'data' => $grade
         ], 200);
     }
 
@@ -38,7 +38,7 @@ class GradeController extends Controller
         $grade->delete();
 
         return response()->json([
-            'message' => 'matéria excluída com sucesso',
+            'message' => 'Matéria excluída com sucesso',
         ], 200);
     }
 }
