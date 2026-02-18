@@ -1,0 +1,28 @@
+git add .
+git commit -m "..."
+git push origin main
+
+Commits
+<tipo>: <descrição curta em minúsculas e no imperativo>
+
+Prefixos mais usados
+Prefixo	Significado
+feat	Feature (Nova funcionalidade) — quando você adiciona algo novo.
+
+fix	Correção de bug — quando você corrige um erro existente.
+
+chore	Tarefa de manutenção — algo que não afeta diretamente o código de produção, como atualizar pacotes, configurar o ambiente ou estruturar pastas.
+
+refactor	Refatoração — mudanças no código que não alteram o comportamento, mas melhoram a estrutura.
+
+docs	Documentação — alterações em arquivos como README, comentários, etc.
+
+test	Testes — adição ou modificação de testes.
+
+style	Estilo — mudanças de formatação, como identação, espaço, ponto e vírgula, etc., que não alteram o código funcional.
+
+perf	Performance — alterações que melhoram o desempenho.
+
+build	Build — mudanças que afetam o processo de build ou dependências.
+
+Integração Contínua — mudanças em arquivos de configuração de CI/CD.
