@@ -1,0 +1,1 @@
+<img {{ $attributes->merge(['class' => 'h-48 w-48']) }} src="{{ asset('assets/images/Logo3-sf.png') }}" alt="">
