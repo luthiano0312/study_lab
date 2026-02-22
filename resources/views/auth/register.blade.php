@@ -1,79 +1,87 @@
-<x-guest-layout>
-    <div class="text-center mb-6">
-        <x-application-logo-2 class="w-[80px] h-[80px] mx-auto mb-2" />
-        <h2 class="text-2xl font-bold text-white">Create an account at Nitros</h2>
-        <p class="text-gray-400 text-sm mt-1">
-Join the community!</p>
-    </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro - Studylab</title>
+@vite('resources/css/app.css')
+</head>
+<body class="h-screen flex items-center justify-center bg-gray-100">
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-4">
-        @csrf
+<div class="bg-white p-10 rounded-2xl shadow-lg w-[400px]">
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="name" :value="__('Your Full name')" />
-            <x-text-input id="name"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-400" />
-        </div>
+<h2 class="text-2xl font-bold text-center mb-6">Criar Conta</h2>
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="nickname" :value="__('Nickname')" />
-            <x-text-input id="nickname"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="text" name="nickname" :value="old('nickname')" required autocomplete="nickname" />
-            <x-input-error :messages="$errors->get('nickname')" class="mt-2 text-red-400" />
-        </div>
+<form id="registerForm" class="space-y-4">
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="email" :value="__('Email')" />
-            <x-text-input id="email"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-400" />
-        </div>
+<input id="name" type="text"
+class="w-full border p-3 rounded-md"
+placeholder="Nome completo" required>
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="bio" :value="__('Bio')" />
-            <x-text-input id="bio"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="text" name="bio" :value="old('bio')" required autocomplete="description" />
-            <x-input-error :messages="$errors->get('bio')" class="mt-2 text-red-400" />
-        </div>
+<input id="email" type="email"
+class="w-full border p-3 rounded-md"
+placeholder="Email" required>
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="password" :value="__('Password')" />
-            <x-text-input id="password"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-400" />
-        </div>
+<input id="password" type="password"
+class="w-full border p-3 rounded-md"
+placeholder="Senha" required>
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="password_confirmation" :value="__('Confirm password')" />
-            <x-text-input id="password_confirmation"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0"
-                type="password" name="password_confirmation" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-400" />
-        </div>
+<input id="password_confirmation" type="password"
+class="w-full border p-3 rounded-md"
+placeholder="Confirmar senha" required>
 
-        
-        <div class="mt-6 text-center">
-            <button type="submit"
-                class="w-full py-3 bg-gradient-to-r from-violet-500 to-violet-700 hover:from-violet-500 hover:to-violet-800 text-white font-semibold rounded-md shadow-lg transition duration-300">
-                Create account
-            </button>
+<button type="submit"
+class="w-full bg-[#FF0073] text-white py-3 rounded-md hover:bg-[#d10c65] transition">
+Criar conta
+</button>
 
-            <p class="text-gray-400 text-sm mt-4">
-                You have an account?
-                <a href="{{ route('login') }}" class="text-violet-400 hover:text-violet-300 font-medium">Login</a>
-            </p>
-        </div>
-    </form>
-</x-guest-layout>
+</form>
+
+<p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+
+<p class="text-center mt-4 text-sm">
+Já tem conta?
+<a href="/login" class="text-[#FF0073] font-medium hover:underline">
+Entrar
+</a>
+</p>
+
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(e){
+e.preventDefault();
+
+const name = document.getElementById('name').value;
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+const password_confirmation = document.getElementById('password_confirmation').value;
+
+const response = await fetch('/api/auth/register', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'Accept': 'application/json'
+},
+body: JSON.stringify({
+name,
+email,
+password,
+password_confirmation
+})
+});
+
+const data = await response.json();
+
+if(response.ok){
+localStorage.setItem('token', data.access_token);
+window.location.href = '/dashboard';
+}else{
+document.getElementById('error').innerText =
+data.message || Object.values(data.errors).flat().join('\n');
+document.getElementById('error').classList.remove('hidden');
+}
+});
+</script>
+
+</body>
+</html>
