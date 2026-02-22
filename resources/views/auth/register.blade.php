@@ -1,87 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Cadastro - Studylab</title>
-@vite('resources/css/app.css')
+    <meta charset="UTF-8">
+    <title>Cadastro - Studylab</title>
+    @vite('resources/css/app.css')
 </head>
-<body class="h-screen flex items-center justify-center bg-gray-100">
 
-<div class="bg-white p-10 rounded-2xl shadow-lg w-[400px]">
+<body class="h-screen bg-[#f3f3f3] flex">
 
-<h2 class="text-2xl font-bold text-center mb-6">Criar Conta</h2>
+    <div class="w-1/2 flex items-center justify-center mb-4">
 
-<form id="registerForm" class="space-y-4">
+        <div class="w-[380px] mb-10">
 
-<input id="name" type="text"
-class="w-full border p-3 rounded-md"
-placeholder="Nome completo" required>
+            <div class="flex mx-auto justify-center items-center mb-2">
+                <img src="/images/logosemfundo.png" class="w-[250px]">
+            </div>
 
-<input id="email" type="email"
-class="w-full border p-3 rounded-md"
-placeholder="Email" required>
+            <form id="registerForm" class="space-y-2 ">
 
-<input id="password" type="password"
-class="w-full border p-3 rounded-md"
-placeholder="Senha" required>
+                <div>
+                    <label class="text-sm text-gray-600">Nome de Usuário:</label>
+                    <input id="name" type="text"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="Estudante123" required>
+                </div>
 
-<input id="password_confirmation" type="password"
-class="w-full border p-3 rounded-md"
-placeholder="Confirmar senha" required>
+                <div>
+                    <label class="text-sm text-gray-600">E-mail:</label>
+                    <input id="email" type="email"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="estudante@gmail.com" required>
+                </div>
 
-<button type="submit"
-class="w-full bg-[#FF0073] text-white py-3 rounded-md hover:bg-[#d10c65] transition">
-Criar conta
-</button>
+                <div>
+                    <label class="text-sm text-gray-600">Telefone:</label>
+                    <input id="phone" type="text"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="+55 88 99999999">
+                </div>
 
-</form>
+                <div>
+                    <label class="text-sm text-gray-600">Senha:</label>
+                    <input id="password" type="password"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="********" required>
+                </div>
 
-<p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+                <div>
+                    <label class="text-sm text-gray-600">Confirmar Senha:</label>
+                    <input id="password_confirmation" type="password"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="********" required>
+                </div>
 
-<p class="text-center mt-4 text-sm">
-Já tem conta?
-<a href="/login" class="text-[#FF0073] font-medium hover:underline">
-Entrar
-</a>
-</p>
+                <button type="submit"
+                    class="w-full bg-[#FF0073] text-white py-3 rounded-full shadow-md hover:scale-105 transition duration-300">
+                    Cadastro
+                </button>
 
-</div>
+            </form>
 
-<script>
-document.getElementById('registerForm').addEventListener('submit', async function(e){
-e.preventDefault();
+            <p class="text-xs text-center mt-2">
+                Já tem uma conta?
+                <a href="/login" class="text-[#FF0073] font-semibold hover:underline">
+                    Login
+                </a>
+            </p>
 
-const name = document.getElementById('name').value;
-const email = document.getElementById('email').value;
-const password = document.getElementById('password').value;
-const password_confirmation = document.getElementById('password_confirmation').value;
+            <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
 
-const response = await fetch('/api/auth/register', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'Accept': 'application/json'
-},
-body: JSON.stringify({
-name,
-email,
-password,
-password_confirmation
-})
-});
+        </div>
+    </div>
 
-const data = await response.json();
+    <div class="w-1/2 flex flex-col mr-8 items-center justify-center relative">
 
-if(response.ok){
-localStorage.setItem('token', data.access_token);
-window.location.href = '/dashboard';
-}else{
-document.getElementById('error').innerText =
-data.message || Object.values(data.errors).flat().join('\n');
-document.getElementById('error').classList.remove('hidden');
-}
-});
-</script>
+        <h2 class="text-[50px] leading-none font-extrabold text-center text-black">
+            Registre-se e comece <br>
+            <span class="text-[#FF0073]">a se organizar</span>
+        </h2>
+
+        <img src="/images/register.png" class="w-[550px] mt-10">
+
+    </div>
+
+    <script src="{{ asset('js/register.js') }}"></script>
 
 </body>
+
 </html>

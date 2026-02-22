@@ -1,46 +1,59 @@
-<x-guest-layout>
-    <div class="text-center mb-6">
-        <x-application-logo-2 class="w-[120px] h-[120px] mx-auto mb-4" />
-        <h2 class="text-2xl font-bold text-white">Recover password</h2>
-        <p class="text-gray-400 text-sm mt-1">
-            Forgot your password? No problem — enter your email below and we'll send you a link to reset it.
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Senha - Studylab</title>
+    @vite('resources/css/app.css')
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+
+    <div class="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+
+        <div class="flex justify-center mb-6">
+            <img src="/images/logosemfundo.png" class="w-40">
+        </div>
+
+        <h2 class="text-xl font-semibold text-gray-800 text-center mb-2">
+            Esqueceu sua senha?
+        </h2>
+
+        <p class="text-sm text-gray-600 text-center mb-6">
+            Sem problemas. Informe seu e-mail e enviaremos um link para redefinir sua senha.
         </p>
-    </div>
 
-    
-    <x-auth-session-status class="mb-4 text-center text-green-400" :status="session('status')" />
+        <form id="forgotForm" class="space-y-6">
 
-    <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
-        @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700">
+                    Email
+                </label>
+                <input id="email" type="email"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF0073] focus:ring-[#FF0073]"
+                    required>
+            </div>
 
-        
-        <div>
-            <x-input-label class="text-white font-medium" for="email" :value="__('Email')" />
-            <x-text-input id="email"
-                class="mt-1 w-full bg-transparent border border-gray-700 text-white rounded-md placeholder-gray-400 focus:border-cyan-400 focus:ring-0 transition duration-200"
-                type="email"
-                name="email"
-                :value="old('email')"
-                required
-                autofocus
-                />
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-400" />
-        </div>
-
-        
-        <div class="mt-6">
             <button type="submit"
-                class="w-full py-3 bg-gradient-to-r from-violet-400 to-violet-500 hover:from-violet-500 hover:to-violet-600 text-white font-semibold rounded-md shadow-lg transition duration-300">
-                Send reset link
+                class="w-full bg-[#FF0073] text-white py-2.5 rounded-md font-semibold hover:bg-[#d10c65] transition">
+                Enviar link de redefinição
             </button>
-        </div>
 
-        
-        <div class="text-center mt-4 text-gray-400 text-sm">
-            Remember your password?
-            <a href="{{ route('login') }}" class="text-violet-400 hover:text-violet-300 font-medium">
-                Login
+        </form>
+
+        <p id="message" class="text-green-600 text-sm mt-4 text-center hidden"></p>
+        <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+
+        <div class="text-center mt-6">
+            <a href="/login" class="text-sm text-[#FF0073] hover:underline">
+                Voltar para login
             </a>
         </div>
-    </form>
-</x-guest-layout>
+
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,40 +1,99 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset('assets/favicons/favicon.ico') }}">
-    <title>Nitros</title>
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/games.css') }}">
-    
+    <title>StudyLab</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-900 overflow-hidden m-0 text-white min-h-screen">
+<body class="bg-gray-100 font-sans antialiased">
 
-    @include('layouts.navigation')
+    <div class="flex h-screen overflow-hidden">
 
-    <div class="ml-64 min-h-screen bg-[#0B0B0B]">
+        <aside class="w-64 bg-white shadow-md flex flex-col">
 
-        @isset($header)
-            <header class="bg-[#090909] border-b-2 border-primary">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+            <div class="p-6 border-b flex items-center gap-2">
+                <img src="/images/logosemfundo.png" class="w-32">
+            </div>
+
+            <nav class="flex-1 p-4 space-y-2 text-sm">
+
+                <a href="/dashboard" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                    <span></span> Dashboard
+                </a>
+
+                <p class="text-xs text-gray-400 mt-4">Estudos</p>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Matérias
+                </a>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Horários
+                </a>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Notas
+                </a>
+
+                <p class="text-xs text-gray-400 mt-4">Relatórios</p>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Boletim
+                </a>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Progresso
+                </a>
+
+                <p class="text-xs text-gray-400 mt-4">Configurações</p>
+
+                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
+                     Perfil
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
+
+                <div>
+                    <h1 class="text-lg font-semibold text-gray-800">
+                        Dashboard
+                    </h1>
+                    <p class="text-xs text-gray-500">
+                        {{ now()->format('l, d/m/Y - H:i') }}
+                    </p>
                 </div>
-            </header>
-        @endisset
 
-        <main class="p-6">
-            {{ $slot }}
-        </main>
+                <div class="flex items-center gap-4">
+
+                    <button class="text-gray-500 hover:text-[#FF0073]">
+                        Noti
+                    </button>
+
+                    <img src="https://wallpapers.com/images/hd/meme-profile-picture-2rhxt0ddudotto63.jpg" class="w-12 h-12 rounded-full ">
+
+                </div>
+
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-6">
+                @yield('content')
+            </main>
+
+        </div>
+
     </div>
 
-    <script src="{{ asset('assets/js/color.js') }}"></script>
-
 </body>
+
 </html>

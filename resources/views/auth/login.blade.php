@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Login - Studylab</title>
-@vite('resources/css/app.css')
+    <meta charset="UTF-8">
+    <title>Login - Studylab</title>
+    @vite('resources/css/app.css')
 </head>
-<body class="h-screen flex items-center justify-center bg-gray-100">
 
-    <div class="bg-white p-10 rounded-2xl shadow-lg w-[400px]">
+<body class="h-screen bg-[#f3f3f3] flex">
 
-        <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+    <div class="w-1/2 flex items-center justify-center">
 
-        <form id="loginForm" class="space-y-4">
+        <div class="w-[380px] mb-8">
 
-            <input id="email" type="email"
-            class="w-full border p-3 rounded-md"
-            placeholder="Email" required>
+            <div class="flex mx-auto justify-center items-center mb-6">
+                <img src="/images/logosemfundo.png" class="w-64">
+            </div>
+            <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+            <form id="loginForm" class="space-y-6">
 
-            <input id="password" type="password"
-            class="w-full border p-3 rounded-md"
-            placeholder="Senha" required>
+                <div>
+                    <label class="text-sm text-gray-600">Email:</label>
+                    <input id="email" type="email"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="Seu e-mail cadastrado" required>
+                </div>
 
-            <button type="submit"
-            class="w-full bg-[#FF0073] text-white py-3 rounded-md hover:bg-[#d10c65] transition">
-            Entrar
-            </button>
+                <div>
+                    <label class="text-sm text-gray-600">Senha:</label>
+                    <input id="password" type="password"
+                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
+                        placeholder="Sua senha cadastrada" required>
+                </div>
 
-        </form>
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" class="accent-[#FF0073]">
+                        <span>Mantenha-me logado</span>
+                    </div>
+                    <a href="/forgot" class="text-[#FF0073] hover:underline">Esqueceu sua senha?</a>
+                </div>
 
-        <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
-        <p class="text-center mt-4 text-sm">
-        Nao tem conta?
-        <a href="/register" class="text-[#FF0073] font-medium hover:underline">
-        Criar agora 
-        </a>
-        </a>
+                <button type="submit"
+                    class="w-full bg-[#FF0073] text-white py-3 rounded-full shadow-md hover:scale-105 transition duration-300">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="text-xs text-center mt-6">
+                Ainda não tem conta?
+                <a href="/register" class="text-[#FF0073] font-semibold hover:underline">
+                    Cadastrar
+                </a>
+            </p>
+
+            
+
+        </div>
     </div>
 
-<script>
-document.getElementById('loginForm').addEventListener('submit', async function(e){
-e.preventDefault();
+    <div class="w-1/2 flex flex-col mr-8 items-center justify-center relative">
 
-const email = document.getElementById('email').value;
-const password = document.getElementById('password').value;
+        <h2 class="text-[80px] leading-none font-extrabold text-center  text-black">
+            Entre e <br> <span  class="text-[#FF0073] ">aproveite</span>
+        </h2>
+        
 
-const response = await fetch('/api/auth/login', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'Accept': 'application/json'
-},
-body: JSON.stringify({ email, password })
-});
+        <img src="/images/login.png" class="w-[670px] mt-10">
 
-const data = await response.json();
+    </div>
 
-if(response.ok){
-localStorage.setItem('token', data.access_token);
-window.location.href = '/dashboard';
-}else{
-document.getElementById('error').innerText = 'Credenciais inválidas';
-document.getElementById('error').classList.remove('hidden');
-}
-});
-</script>
+    <script src="{{ asset('js/login.js') }}"></script>
 
 </body>
+
 </html>

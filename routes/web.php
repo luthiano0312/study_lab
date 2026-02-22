@@ -14,6 +14,10 @@ Route::get('/register', function () {
     return view('auth/register');
 });
 
+Route::get('/forgot', function () {
+    return view('auth/forgot-password');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
