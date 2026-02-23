@@ -15,7 +15,7 @@
       <img src="{{ asset('images/Logosemfundo.png') }}" class="w-20" alt="Logo">
     </div>
     <div class="flex items-center gap-6">
-      <a <a href="/login" class="text-[#FF0073] px-4 py-1.5 rounded-md font-medium transition duration-500 ease-out hover:bg-[#FF0073] hover:text-white">
+      <a href="/login" class="text-[#FF0073] px-4 py-1.5 rounded-md font-medium transition duration-500 ease-out hover:bg-[#FF0073] hover:text-white">
         Entrar
       </a>
       <a href="#" class="bg-[#FF0073] px-4 py-1.5 flex items-center justify-center font-medium text-white rounded-md transition duration-300 ease-in hover:bg-[#d10c65]">
