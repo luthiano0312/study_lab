@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string("midterm");
-            $table->string("endterm");
-            $table->string("bimester");
-            $table->string("year");
+            $table->float("midterm");
+            $table->float("endterm");
+            $table->integer("bimester");
+            $table->year("year");
             $table->timestamps();
         });
     }
