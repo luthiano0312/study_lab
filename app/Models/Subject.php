@@ -3,8 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Subject extends Model
 {
-    protected $fillable = ["name","abbreviation","teacher","semester"];
+    protected $fillable = ["user_id", "name", "abbreviation", "teacher", "semester"];
+
+    /**
+     * Get the user that owns the subject.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
-use Illuminate\Http\Request;
+use App\Http\Requests\ExamRequest;
 
 class ExamController extends Controller
 {
@@ -13,23 +13,23 @@ class ExamController extends Controller
         return Exam::all();
     }
 
-    public function store(Request $request)
+    public function store(ExamRequest $request)
     {
-        $exam = Exam::create($request->all());
+        $exam = Exam::create($request->validated());
 
         return response()->json([
-            'message' => 'matéria cadastrada com sucesso',
+            'message' => 'Prova cadastrada com sucesso',
             'data' => $exam
         ], 201);
     }
 
-    public function update(Request $request, Exam $exam)
+    public function update(ExamRequest $request, Exam $exam)
     {
-        $updated = $exam->update($request->all());
+        $exam->update($request->validated());
 
         return response()->json([
-            'message' => 'matéria atualizada com sucesso',
-            'data' => $updated
+            'message' => 'Prova atualizada com sucesso',
+            'data' => $exam
         ], 200);
     }
 
@@ -38,7 +38,7 @@ class ExamController extends Controller
         $exam->delete();
 
         return response()->json([
-            'message' => 'matéria excluída com sucesso',
+            'message' => 'Prova excluída com sucesso',
         ], 200);
     }
 }

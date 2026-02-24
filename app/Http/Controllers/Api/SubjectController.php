@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Subject;
-use Illuminate\Http\Request;
+use App\Http\Requests\SubjectRequest;
 use App\Http\Controllers\Controller;
 
 class SubjectController extends Controller
@@ -13,23 +13,23 @@ class SubjectController extends Controller
         return Subject::all();
     }
 
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
-        $subject = Subject::create($request->all());
+        $subject = Subject::create($request->validated());
 
         return response()->json([
-            'message' => 'matéria cadastrada com sucesso',
+            'message' => 'Matéria cadastrada com sucesso',
             'data' => $subject
         ], 201);
     }
 
-    public function update(Request $request, Subject $subject)
+    public function update(SubjectRequest $request, Subject $subject)
     {
-        $updated = $subject->update($request->all());
+        $subject->update($request->validated());
 
         return response()->json([
-            'message' => 'matéria atualizada com sucesso',
-            'data' => $updated
+            'message' => 'Matéria atualizada com sucesso',
+            'data' => $subject
         ], 200);
     }
 
@@ -38,7 +38,7 @@ class SubjectController extends Controller
         $subject->delete();
 
         return response()->json([
-            'message' => 'matéria excluída com sucesso',
+            'message' => 'Matéria excluída com sucesso',
         ], 200);
     }
 }

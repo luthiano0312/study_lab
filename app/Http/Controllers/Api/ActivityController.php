@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Activity;
-use Illuminate\Http\Request;
+use App\Http\Requests\ActivityRequest;
 use Illuminate\Routing\Controller;
 
 class ActivityController extends Controller
@@ -13,23 +13,23 @@ class ActivityController extends Controller
         return Activity::all();
     }
 
-    public function store(Request $request)
+    public function store(ActivityRequest $request)
     {
-        $activity = Activity::create($request->all());
+        $activity = Activity::create($request->validated());
 
         return response()->json([
-            'message' => 'matéria cadastrada com sucesso',
+            'message' => 'Atividade cadastrada com sucesso',
             'data' => $activity
         ], 201);
     }
 
-    public function update(Request $request, Activity $activity)
+    public function update(ActivityRequest $request, Activity $activity)
     {
-        $updated = $activity->update($request->all());
+        $activity->update($request->validated());
 
         return response()->json([
-            'message' => 'matéria atualizada com sucesso',
-            'data' => $updated
+            'message' => 'Atividade atualizada com sucesso',
+            'data' => $activity
         ], 200);
     }
 
@@ -38,7 +38,7 @@ class ActivityController extends Controller
         $activity->delete();
 
         return response()->json([
-            'message' => 'matéria excluída com sucesso',
+            'message' => 'Atividade excluída com sucesso',
         ], 200);
     }
 }
