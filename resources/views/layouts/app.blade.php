@@ -5,95 +5,135 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>StudyLab</title>
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-50 font-sans antialiased">
 
-    <div class="flex h-screen overflow-hidden">
+<div class="flex flex-col h-screen">
 
-        <aside class="w-64 bg-white shadow-md flex flex-col">
+    <header class="bg-white h-20 px-8 flex items-center justify-between border-b border-pink-500 shadow-sm z-50">
 
-            <div class="p-6 border-b flex items-center gap-2">
-                <img src="/images/logosemfundo.png" class="w-32">
+        <div class="flex items-center gap-3">
+            <img src="/images/logohorizontal.png" class="h-[100px]">
+        </div>
+
+        <div class="flex items-center gap-6">
+
+            <button class="relative w-10 h-10 rounded-xl hover:bg-gray-100 flex items-center justify-center transition">
+                <img class="h-5 opacity-70"
+                    src="{{ asset('favicons/notifications_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+
+                <span class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                    #
+                </span>
+            </button>
+
+            <div class="flex items-center gap-3 bg-gray-50 px-3 py-2 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+                <img src="https://wallpapers.com/images/hd/meme-profile-picture-2rhxt0ddudotto63.jpg"
+                    class="w-9 h-9 rounded-full object-cover">
+
+                <div class="text-sm">
+                    <p class="font-medium text-gray-700">Nome</p>
+                    <p class="text-xs text-gray-400">Estudante</p>
+                </div>
             </div>
 
-            <nav class="flex-1 p-4 space-y-2 text-sm">
+        </div>
 
-                <a href="/dashboard" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                    <span></span> Dashboard
-                </a>
+    </header>
 
-                <p class="text-xs text-gray-400 mt-4">Estudos</p>
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Matérias
-                </a>
+    <div class="flex flex-1 overflow-hidden">
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Horários
-                </a>
+        <aside class="w-64 bg-white border-r border-gray-100 flex flex-col">
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Notas
-                </a>
+            <nav class="flex-1 px-4 py-6 space-y-6 text-sm">
 
-                <p class="text-xs text-gray-400 mt-4">Relatórios</p>
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        Início
+                    </p>
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Boletim
-                </a>
+                    <a href="/dashboard"
+                        class="flex items-center gap-3 px-4 py-2 rounded-xl bg-pink-50 text-pink-600 font-medium shadow-sm">
+                        <img class="h-4 opacity-80"
+                            src="{{ asset('favicons/vital_signs_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                        Dashboard
+                    </a>
+                </div>
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Progresso
-                </a>
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        Estudos
+                    </p>
 
-                <p class="text-xs text-gray-400 mt-4">Configurações</p>
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                            <img class="h-4 opacity-60"
+                                src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                            Matérias
+                        </a>
 
-                <a href="#" class="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100">
-                     Perfil
-                </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                            <img class="h-4 opacity-60"
+                                src="{{ asset('favicons/pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                            Horários
+                        </a>
+
+                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                            <img class="h-4 opacity-60"
+                                src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                            Notas
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        Relatórios
+                    </p>
+
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                            <img class="h-4 opacity-60"
+                                src="{{ asset('favicons/notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                            Boletim
+                        </a>
+
+                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                            <img class="h-4 opacity-60"
+                                src="{{ asset('favicons/area_chart_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                            Progresso
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        Configurações
+                    </p>
+
+                    <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                        <img class="h-4 opacity-60"
+                            src="{{ asset('favicons/account_child_invert_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                        Perfil
+                    </a>
+                </div>
 
             </nav>
 
         </aside>
 
-        <div class="flex-1 flex flex-col overflow-hidden">
 
-            <header class="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-
-                <div>
-                    <h1 class="text-lg font-semibold text-gray-800">
-                        Dashboard
-                    </h1>
-                    <p class="text-xs text-gray-500">
-                        {{ now()->format('l, d/m/Y - H:i') }}
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-4">
-
-                    <button class="text-gray-500 hover:text-[#FF0073]">
-                        Noti
-                    </button>
-
-                    <img src="https://wallpapers.com/images/hd/meme-profile-picture-2rhxt0ddudotto63.jpg" class="w-12 h-12 rounded-full ">
-
-                </div>
-
-            </header>
-
-            <main class="flex-1 overflow-y-auto p-6">
-                @yield('content')
-            </main>
-
-        </div>
+        <main class="flex-1 overflow-y-auto p-8 bg-gray-50">
+            @yield('content')
+        </main>
 
     </div>
 
-</body>
+</div>
 
+</body>
 </html>

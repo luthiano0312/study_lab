@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'email:rfc',
+                'email:rfc,',
                 'max:255',
                 'unique:users,email',
             ],
