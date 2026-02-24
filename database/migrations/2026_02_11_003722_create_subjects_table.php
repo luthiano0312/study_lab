@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("abbreviation");
             $table->string("teacher");
-            $table->string("semester");
+            $table->integer("semester");
             $table->timestamps();
         });
     }

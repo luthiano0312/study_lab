@@ -22,6 +22,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('subjects', SubjectController::class);
     Route::apiResource('activities', ActivityController::class);
     Route::apiResource('exams', ExamController::class);
+    Route::apiResource('grades', GradeController::class);
 });
-Route::apiResource('grades', GradeController::class);
     
