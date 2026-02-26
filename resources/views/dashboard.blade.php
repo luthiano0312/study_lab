@@ -11,9 +11,17 @@
                 <h1 class="text-3xl font-bold text-gray-800 tracking-tight">
                     Dashboard
                 </h1>
-                <p class="text-sm text-pink-500 font-semibold mt-1">
-                    {{ now()->format('H:i') }}
-                </p>
+
+                <span class="text-sm text-pink-500 font-semibold mt-1" id="clock"></span>
+                <script>
+                    const clock = document.getElementById('clock');
+                    setInterval(() => {
+                        clock.textContent = new Date().toLocaleTimeString('pt-BR', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }, 1000);
+                </script>
             </div>
 
             <div class="flex items-center gap-3 bg-white px-5 py-2 rounded-xl shadow-sm border border-gray-100">
@@ -141,22 +149,26 @@
             <div class="grid grid-cols-2 gap-4">
 
                 <a href="#" class="bg-gray-50 hover:bg-pink-50 transition rounded-xl p-4 flex items-center gap-3">
-                    <img class="h-4 opacity-60" src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    <img class="h-4 opacity-60"
+                        src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     <span>Matérias</span>
                 </a>
 
                 <a href="#" class="bg-gray-50 hover:bg-pink-50 transition rounded-xl p-4 flex items-center gap-3">
-                    <img class="h-4 opacity-60" src="{{ asset('favicons/pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    <img class="h-4 opacity-60"
+                        src="{{ asset('favicons/pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     <span>Horários</span>
                 </a>
 
                 <a href="#" class="bg-gray-50 hover:bg-pink-50 transition rounded-xl p-4 flex items-center gap-3">
-                    <img class="h-4 opacity-60" src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    <img class="h-4 opacity-60"
+                        src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     <span>Notas</span>
                 </a>
 
                 <a href="#" class="bg-gray-50 hover:bg-pink-50 transition rounded-xl p-4 flex items-center gap-3">
-                    <img class="h-4 opacity-60" src="{{ asset('favicons/area_chart_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    <img class="h-4 opacity-60"
+                        src="{{ asset('favicons/area_chart_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     <span>Progresso</span>
                 </a>
 
