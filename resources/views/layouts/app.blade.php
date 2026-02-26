@@ -16,7 +16,7 @@
     <header class="bg-white h-20 px-8 flex items-center justify-between border-b border-pink-500 shadow-sm z-50">
 
         <div class="flex items-center gap-3">
-            <img src="/images/logohorizontal.png" class="h-[100px]">
+            <a href="/dashboard"><img src="/images/logohorizontal.png" class="h-[100px]"></a>
         </div>
 
         <div class="flex items-center gap-6">
