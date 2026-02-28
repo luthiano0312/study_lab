@@ -52,7 +52,7 @@
                     <a href="/forgot" class="text-[#FF0073] hover:underline">Esqueceu sua senha?</a>
                 </div>
 
-                <button type="submit"
+                <button onclick type="submit"
                     class="w-full bg-[#FF0073] text-white py-3 hover:cursor-pointer rounded-full shadow-md hover:scale-105 transition duration-300">
                     Login
                 </button>

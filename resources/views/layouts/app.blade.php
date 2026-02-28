@@ -70,7 +70,7 @@
                     </p>
 
                     <div class="space-y-1">
-                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                        <a href="/subject" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
                             <img class="h-4 opacity-60"
                                 src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                             Matérias

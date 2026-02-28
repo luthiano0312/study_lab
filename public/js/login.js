@@ -16,11 +16,13 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
         const data = await response.json();
 
+        console.log('resposta do login:', data); // 👈 adiciona isso pra debugar
+
         if (response.ok) {
-            localStorage.setItem('token', data.access_token);
+            localStorage.setItem('auth_token', data.token);
             window.location.href = '/dashboard';
         } else {
-            document.getElementById('errorMessage').innerText = 'Credenciais inválidas';
+            document.getElementById('errorMessage').innerText = data.message ?? 'Credenciais inválidas';
             document.getElementById('errorBox').classList.remove('hidden');
         }
 

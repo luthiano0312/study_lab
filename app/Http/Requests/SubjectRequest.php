@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SubjectRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -21,20 +18,17 @@ class SubjectRequest extends FormRequest
         throw new HttpResponseException(
             response()->json([
                 'message' => 'Validação falhou',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422)
         );
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         $isUpdate = in_array($this->method(), ['PUT', 'PATCH']);
-        $subjectId = $isUpdate ? $this->route('subject')->id : null;
+        $subjectId = $isUpdate && $this->route('subject')
+            ? $this->route('subject')->id
+            : null;
 
         return [
             'name' => [
@@ -66,43 +60,34 @@ class SubjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'O nome da matéria é obrigatório.',
-            'name.string' => 'O nome da matéria deve ser um texto.',
-            'name.max' => 'O nome não pode ter mais de 255 caracteres.',
-            'name.unique' => 'Esta matéria já está registrada.',
+            'name.required'         => 'O nome da matéria é obrigatório.',
+            'name.string'           => 'O nome da matéria deve ser um texto.',
+            'name.max'              => 'O nome não pode ter mais de 255 caracteres.',
+            'name.unique'           => 'Esta matéria já está registrada.',
             'abbreviation.required' => 'A abreviação é obrigatória.',
-            'abbreviation.string' => 'A abreviação deve ser um texto.',
-            'abbreviation.max' => 'A abreviação não pode ter mais de 10 caracteres.',
-            'abbreviation.unique' => 'Esta abreviação já está em uso.',
-            'teacher.required' => 'O nome do professor é obrigatório.',
-            'teacher.string' => 'O nome do professor deve ser um texto.',
-            'teacher.max' => 'O nome não pode ter mais de 255 caracteres.',
-            'semester.required' => 'O semestre é obrigatório.',
-            'semester.integer' => 'O semestre deve ser um número inteiro.',
-            'semester.min' => 'O semestre deve ser no mínimo 1.',
-            'semester.max' => 'O semestre não pode ser maior que 8.',
+            'abbreviation.string'   => 'A abreviação deve ser um texto.',
+            'abbreviation.max'      => 'A abreviação não pode ter mais de 10 caracteres.',
+            'abbreviation.unique'   => 'Esta abreviação já está em uso.',
+            'teacher.required'      => 'O nome do professor é obrigatório.',
+            'teacher.string'        => 'O nome do professor deve ser um texto.',
+            'teacher.max'           => 'O nome não pode ter mais de 255 caracteres.',
+            'semester.required'     => 'O semestre é obrigatório.',
+            'semester.integer'      => 'O semestre deve ser um número inteiro.',
+            'semester.min'          => 'O semestre deve ser no mínimo 1.',
+            'semester.max'          => 'O semestre não pode ser maior que 8.',
         ];
     }
 
     protected function prepareForValidation(): void
     {
-        // Normalizar dados de entrada
         if ($this->has('name')) {
-            $this->merge([
-                'name' => trim($this->name),
-            ]);
+            $this->merge(['name' => trim($this->name)]);
         }
-
         if ($this->has('abbreviation')) {
-            $this->merge([
-                'abbreviation' => strtoupper(trim($this->abbreviation)),
-            ]);
+            $this->merge(['abbreviation' => strtoupper(trim($this->abbreviation))]);
         }
-
         if ($this->has('teacher')) {
-            $this->merge([
-                'teacher' => trim($this->teacher),
-            ]);
+            $this->merge(['teacher' => trim($this->teacher)]);
         }
     }
 }

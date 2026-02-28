@@ -10,12 +10,12 @@ class SubjectController extends Controller
 {
     public function index()
     {
-        return Subject::all();
+        return auth()->user()->subjects()->get();
     }
 
     public function store(SubjectRequest $request)
     {
-        $subject = Subject::create($request->validated());
+        $subject = auth()->user()->subjects()->create($request->validated());
 
         return response()->json([
             'message' => 'Matéria cadastrada com sucesso',
