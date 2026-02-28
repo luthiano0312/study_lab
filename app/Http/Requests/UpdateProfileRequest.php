@@ -26,6 +26,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $userId,
+            'avatar' => 'sometimes|nullable|image|max:2048',
         ];
     }
 
@@ -36,6 +37,8 @@ class UpdateProfileRequest extends FormRequest
             'name.max'       => 'O nome não pode ter mais de 255 caracteres.',
             'email.email'    => 'Informe um e-mail válido.',
             'email.unique'   => 'Este e-mail já está em uso.',
+            'avatar.image'   => 'O arquivo do avatar deve ser uma imagem.',
+            'avatar.max'     => 'A imagem do avatar não pode exceder 2MB.',
         ];
     }
 }

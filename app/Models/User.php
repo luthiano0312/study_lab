@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
     ];
 
     /**
@@ -78,5 +80,17 @@ class User extends Authenticatable
     public function exams(): HasMany
     {
         return $this->hasMany(Exam::class);
+    }
+
+    /**
+     * Retorna a URL pública do avatar, ou null.
+     */
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (!$this->avatar) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($this->avatar);
     }
 }
