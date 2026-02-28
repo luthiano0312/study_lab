@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro - Studylab</title>
+    <script src="https://unpkg.com/imask"></script>
     @vite('resources/css/app.css')
 </head>
 
@@ -55,7 +56,7 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-[#FF0073] text-white py-3 rounded-full shadow-md hover:scale-105 transition duration-300">
+                    class="w-full hover:cursor-pointer bg-[#FF0073] text-white py-3 rounded-full shadow-md hover:scale-105 transition duration-300">
                     Cadastro
                 </button>
 
@@ -68,7 +69,17 @@
                 </a>
             </p>
 
-            <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+            <div id="errorBox" class="mx-auto mb-4 hidden flex items-center bg-white shadow-md rounded-md h-10 w-64">
+
+                <img src="{{ asset('favicons/notifications_active_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}"
+                    class="h-5 opacity-50 ml-4" alt="">
+
+                <p id="errorMessage" class="text-pink-500 text-sm pl-2">
+                </p>
+
+            </div>
+
+        
 
         </div>
     </div>

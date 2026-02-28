@@ -16,7 +16,18 @@
             <div class="flex mx-auto justify-center items-center mb-6">
                 <img src="/images/logosemfundo.png" class="w-64">
             </div>
-            <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+
+            <div id="errorBox" class="mx-auto mb-4 hidden flex items-center bg-white shadow-md rounded-md h-10 w-64">
+
+                <img src="{{ asset('favicons/notifications_active_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}"
+                    class="h-5 opacity-50 ml-4" alt="">
+
+                <p id="errorMessage" class="text-pink-500 text-sm pl-2">
+                </p>
+
+            </div>
+
+
             <form id="loginForm" class="space-y-6">
 
                 <div>
@@ -42,7 +53,7 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-[#FF0073] text-white py-3 rounded-full shadow-md hover:scale-105 transition duration-300">
+                    class="w-full bg-[#FF0073] text-white py-3 hover:cursor-pointer rounded-full shadow-md hover:scale-105 transition duration-300">
                     Login
                 </button>
 
@@ -55,7 +66,7 @@
                 </a>
             </p>
 
-            
+
 
         </div>
     </div>
@@ -63,9 +74,9 @@
     <div class="w-1/2 flex flex-col mr-8 items-center justify-center relative">
 
         <h2 class="text-[80px] leading-none font-extrabold text-center  text-black">
-            Entre e <br> <span  class="text-[#FF0073] ">aproveite</span>
+            Entre e <br> <span class="text-[#FF0073] ">aproveite</span>
         </h2>
-        
+
 
         <img src="/images/login.png" class="w-[670px] mt-10">
 

@@ -172,7 +172,7 @@
             </p>
 
             <h2 class="text-5xl font-bold text-pink-600 mt-3">
-                7.87
+                #
             </h2>
 
             <div class="mt-6">

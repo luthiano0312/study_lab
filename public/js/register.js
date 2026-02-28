@@ -1,4 +1,3 @@
-
 document.getElementById('registerForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -27,8 +26,31 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         localStorage.setItem('token', data.access_token);
         window.location.href = '/dashboard';
     } else {
-        document.getElementById('error').innerText =
-            data.message || Object.values(data.errors).flat().join('\n');
-        document.getElementById('error').classList.remove('hidden');
+
+        const errorBox = document.getElementById('errorBox');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let message = "Erro ao registrar";
+
+        if (data.message) {
+            message = data.message;
+        }
+
+        if (data.errors) {
+            message = Object.values(data.errors).flat().join(' | ');
+        }
+
+        errorMessage.innerText = message;
+        errorBox.classList.remove('hidden');
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const phoneInput = document.getElementById('phone');
+
+    if (phoneInput) {
+        IMask(phoneInput, {
+            mask: '(00) 00000-0000'
+        });
     }
 });

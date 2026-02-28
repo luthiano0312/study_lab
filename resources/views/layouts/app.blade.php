@@ -31,11 +31,11 @@
             </button>
 
             <div class="flex items-center gap-3 bg-gray-50 px-3 py-2 rounded-xl hover:bg-gray-100 transition cursor-pointer">
-                <img src="https://wallpapers.com/images/hd/meme-profile-picture-2rhxt0ddudotto63.jpg"
+                <img src=""
                     class="w-9 h-9 rounded-full object-cover">
 
                 <div class="text-sm">
-                    <p class="font-medium text-gray-700">Nome</p>
+                    <p class="font-medium text-gray-700">#</p>
                     <p class="text-xs text-gray-400">Estudante</p>
                 </div>
             </div>
