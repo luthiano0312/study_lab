@@ -28,28 +28,37 @@
 
     <div class="flex flex-wrap gap-3 mb-6">
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center text-lg">📋</div>
+        <div class="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center text-lg">
+          <img class="opacity-15" src="{{ asset('favicons/full_coverage_24dp_000000_FILL0_wght400_GRAD0_opsz24.png')}}">
+
+        </div>
         <div>
           <p class="text-xs text-gray-400 font-semibold">Total</p>
           <p class="text-xl font-black text-gray-900" id="totalCount">—</p>
         </div>
       </div>
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-yellow-100 flex items-center justify-center text-lg">⏳</div>
+        <div class="w-9 h-9 rounded-xl bg-yellow-100 flex items-center justify-center text-lg">
+          <img class="" src="{{ asset('favicons/hourglass_disabled_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png')}}">
+        </div>
         <div>
           <p class="text-xs text-gray-400 font-semibold">Pendentes</p>
           <p class="text-xl font-black text-gray-900" id="pendingCount">—</p>
         </div>
       </div>
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-lg">🔄</div>
+        <div class="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-lg">
+          <img class="opacity-15" src="{{ asset('favicons/history_24dp_000000_FILL0_wght400_GRAD0_opsz24.png')}}">
+        </div>
         <div>
           <p class="text-xs text-gray-400 font-semibold">Em andamento</p>
           <p class="text-xl font-black text-gray-900" id="progressCount">—</p>
         </div>
       </div>
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-lg">✅</div>
+        <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-lg">
+          <img class="" src="{{ asset('favicons/check_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png')}}">
+        </div>
         <div>
           <p class="text-xs text-gray-400 font-semibold">Concluídas</p>
           <p class="text-xl font-black text-gray-900" id="completedCount">—</p>

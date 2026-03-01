@@ -5,7 +5,7 @@ function authHeaders(extra = {}) {
   return { 'Accept': 'application/json', 'Authorization': `Bearer ${token}`, ...extra };
 }
 
-const STATUS_LABEL = { pending: '⏳ Pendente', in_progress: '🔄 Em andamento', completed: '✅ Concluída' };
+const STATUS_LABEL = { pending: ' Pendente', in_progress: 'Em andamento', completed: 'Concluída' };
 const STATUS_CLASS = { pending: 'bg-yellow-100 text-yellow-800', in_progress: 'bg-blue-100 text-blue-800', completed: 'bg-green-100 text-green-800' };
 
 function todayISO()      { return new Date().toISOString().split('T')[0]; }
