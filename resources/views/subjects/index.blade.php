@@ -32,7 +32,7 @@
                 <p class="text-gray-400 text-sm text-center pt-1 font-semibold leading-relaxed">Cadastre e gerencie suas tarefas e
                     exercícios para não se perder nos prazos!!</p>
                 </div>
-                <a
+                <a href="{{ route('activity.index') }}"
                     class="mt-[20px] hover:cursor-pointer w-full bg-[#E91E63] hover:bg-[#C2185B] text-white justify-center text-center align-center flex font-bold rounded-xl py-3 transition-colors shadow-md shadow-pink-200">
                     Selecionar
                 </a>

@@ -15,7 +15,7 @@ class ActivityController extends Controller
 
     public function store(ActivityRequest $request)
     {
-        $activity = Activity::create($request->validated());
+        $activity = $request->user()->activities()->create($request->validated());
 
         return response()->json([
             'message' => 'Atividade cadastrada com sucesso',
