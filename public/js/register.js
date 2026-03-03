@@ -24,7 +24,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
 
     if (response.ok) {
         localStorage.setItem('token', data.access_token);
-        window.location.href = '/dashboard';
+        window.location.href = '/login';
     } else {
 
         const errorBox = document.getElementById('errorBox');

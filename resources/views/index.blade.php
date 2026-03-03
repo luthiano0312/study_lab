@@ -16,7 +16,8 @@
                 <img src="{{ asset('images/logohorizontal.png') }}" class="w-[200px]" alt="Logo">
             </div>
             <div class="flex items-center gap-6">
-               <a href="/login" class="text-[#FF0073] px-4 py-1.5 rounded-md font-medium border border-transparent transition-all duration-300 ease-in-out hover:border-[#FF0073]">
+                <a href="/login"
+                    class="text-[#FF0073] px-4 py-1.5 rounded-md font-medium border border-transparent transition-all duration-300 ease-in-out hover:border-[#FF0073]">
                     Entrar
                 </a>
                 <a href="/register"
@@ -33,9 +34,9 @@
             <div class="mt-[60px]">
                 <h1 class="font-bold text-[95px] leading-none pl-[50px]">
                     <b>Bem vindo a <br>
-                        <span class="text-[#FF0073]">Studylab</span></b>
+                    <span class="text-[#FF0073]">Studylab</span></b>
                 </h1>
-                <h3 class="pt-[20px] text-[25px] font-light pl-[50px]">
+                <h3 class="pt-[20px] text-[25px] font-light pl-[50px] whitespace-nowrap">
                     Conheça sua escola online, e comece a se organizar <br>
                     da melhor forma
                 </h3>

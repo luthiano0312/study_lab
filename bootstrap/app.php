@@ -13,17 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Configurar redirecionamento para guests
-        $middleware->redirectGuestsTo(function (Request $request) {
-            // Se for uma requisição API, retornar 401 ao invés de redirecionar
-            if ($request->expectsJson() || $request->is('api/*')) {
-                abort(401, 'Unauthenticated.');
-            }
-            
-            // Para rotas web, redirecionar para login (se você tiver)
-            return route('login');
-        });
-    })
+    $middleware->redirectGuestsTo(function (Request $request) {
+        if ($request->expectsJson() || $request->is('api/*')) {
+            abort(401, 'Unauthenticated.');
+        }
+
+        return '/login';
+    });
+})
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
