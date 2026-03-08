@@ -1,100 +1,119 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-[#fdf4f8] via-white to-[#fce7f3] relative overflow-hidden py-16 px-6">
 
-    <div class="absolute inset-0 opacity-25 pointer-events-none"
-         style="background-image: radial-gradient(circle,#f9a8d4 1.2px,transparent 1.2px);
-                background-size: 28px 28px;">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fdf4f8] via-white to-[#fce7f3] px-6 py-20 relative overflow-hidden">
+
+    <div class="absolute inset-0 opacity-20"
+        style="background-image: radial-gradient(circle,#f472b6 1.2px,transparent 1.2px);
+        background-size:28px 28px;">
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto">
+    <div class="relative z-10 w-full max-w-6xl">
 
-        <div class="text-center mb-14">
-            <h1 class="text-4xl font-black text-gray-800 mb-3">Escolha uma opção</h1>
-            <p class="text-gray-500 font-semibold text-base">Selecione o que você deseja acessar</p>
-            <div class="mt-4 h-1 w-20 bg-gradient-to-r from-pink-500 to-pink-400 mx-auto rounded-full"></div>
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black text-gray-800 mb-4">
+                Escolha uma opção
+            </h1>
+
+            <p class="text-gray-500 font-medium">
+                Selecione o que você deseja acessar
+            </p>
+
+            <div class="mt-6 h-1 w-24 mx-auto bg-gradient-to-r from-pink-500 to-pink-400 rounded-full"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl shadow-pink-200/40 border border-pink-100 p-8 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <a href="{{ route('activity.index') }}" class="group relative">
 
-                <div class="bg-pink-100 rounded-2xl p-6 relative shadow-md">
-                    <svg class="w-14 h-14 text-pink-600" fill="none" stroke="currentColor" stroke-width="1.5"
-                        viewBox="0 0 24 24">
-                        <rect x="5" y="2" width="14" height="20" rx="2" fill="#F8BBD0" stroke="#E91E63"
-                            stroke-width="1.5" />
-                        <path d="M9 7h6M9 11h4" stroke="#E91E63" stroke-width="1.5" stroke-linecap="round" />
-                    </svg>
-                    <div class="absolute -bottom-2 -right-2 bg-pink-600 rounded-full p-1.5 shadow-md">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5"
-                            viewBox="0 0 24 24">
-                            <path d="M5 13l4 4L19 7" />
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-pink-400 rounded-2xl blur opacity-0 group-hover:opacity-60 transition duration-500"></div>
+
+                <div class="relative bg-white/80 backdrop-blur-xl border border-pink-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-lg transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.03]">
+
+                    <div class="bg-pink-100 p-6 rounded-2xl mb-6 transition group-hover:scale-110">
+
+                        <svg class="w-14 h-14 text-pink-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
                         </svg>
+
                     </div>
+
+                    <h2 class="text-3xl font-extrabold text-pink-600 mb-3">
+                        Atividades
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mb-8 max-w-xs">
+                        Cadastre e gerencie suas tarefas e exercícios
+                        para não perder nenhum prazo.
+                    </p>
                 </div>
 
-                <h2 class="text-3xl font-extrabold text-pink-600 mt-8">Atividades</h2>
+            </a>
 
-                <p class="text-gray-500 text-sm text-center mt-2 font-semibold leading-relaxed">
-                    Cadastre e gerencie suas tarefas e exercícios para não se perder nos prazos!
-                </p>
+            <a href="#" class="group relative">
 
-                <a href="{{ route('activity.index') }}"
-                   class="mt-8 w-full bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 text-white text-center font-bold rounded-xl py-3 transition-all shadow-lg shadow-pink-300/40 hover:-translate-y-1">
-                    Selecionar
-                </a>
-            </div>
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-purple-400 rounded-2xl blur opacity-0 group-hover:opacity-60 transition duration-500"></div>
 
-            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl shadow-purple-200/40 border border-purple-100 p-8 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <div class="relative bg-white/80 backdrop-blur-xl border border-purple-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-lg transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.03]">
 
-                <div class="bg-purple-100 rounded-2xl p-6 shadow-md">
-                    <svg class="w-14 h-14" fill="none" stroke="#7C3AED" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path
-                            d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11z"
-                            fill="#EDE9FE" stroke="#7C3AED" />
-                        <path d="M12 4v16M2 12h20" stroke="#7C3AED" stroke-width="1.2" stroke-dasharray="3 2" />
-                    </svg>
+                    <div class="bg-purple-100 p-6 rounded-2xl mb-6 transition group-hover:scale-110">
+
+                        <svg class="w-14 h-14 text-purple-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16l5-5 4 4 8-8"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 7h6v6"/>
+                        </svg>
+
+                    </div>
+
+                    <h2 class="text-3xl font-extrabold text-purple-600 mb-3">
+                        Conteúdos
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mb-8 max-w-xs">
+                        Acesse materiais de estudo para se preparar
+                        melhor para as provas.
+                    </p>
+
+
                 </div>
 
-                <h2 class="text-3xl font-extrabold text-purple-600 mt-8">Conteúdos</h2>
+            </a>
 
-                <p class="text-gray-500 text-sm text-center mt-2 font-semibold leading-relaxed">
-                    Acesse materiais de estudo para se preparar melhor para as provas!
-                </p>
+            <a href="{{ route('subject.index') }}" class="group relative">
 
-                <a class="mt-14 w-full bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white text-center font-bold rounded-xl py-3 transition-all shadow-lg shadow-purple-300/40 hover:-translate-y-1">
-                    Selecionar
-                </a>
-            </div>
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-teal-500 to-teal-400 rounded-2xl blur opacity-0 group-hover:opacity-60 transition duration-500"></div>
 
-            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl shadow-teal-200/40 border border-teal-100 p-8 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <div class="relative bg-white/80 backdrop-blur-xl border border-teal-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-lg transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.03]">
 
-                <div class="bg-teal-100 rounded-2xl p-6 shadow-md">
-                    <svg class="w-14 h-14" fill="none" stroke="#0D9488" stroke-width="1.5" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="4" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.5" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#0D9488" stroke-width="1.5" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#0D9488" stroke-width="1.5" transform="rotate(60 12 12)" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#0D9488" stroke-width="1.5" transform="rotate(120 12 12)" />
-                    </svg>
+                    <div class="bg-teal-100 p-6 rounded-2xl mb-6 transition group-hover:scale-110">
+
+                        <svg class="w-14 h-14 text-teal-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/>
+                            <circle cx="12" cy="12" r="9"/>
+                        </svg>
+
+                    </div>
+
+                    <h2 class="text-3xl font-extrabold text-teal-600 mb-3">
+                        Disciplinas
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mb-8 max-w-xs">
+                        Cadastre e visualize suas matérias e cursos
+                        para uma organização melhor.
+                    </p>
+
+                    
+
                 </div>
 
-                <h2 class="text-3xl font-extrabold text-teal-600 mt-8">Disciplinas</h2>
-
-                <p class="text-gray-500 text-sm text-center mt-2 font-semibold leading-relaxed">
-                    Cadastre e veja suas matérias e cursos para uma melhor organização!
-                </p>
-
-                <a href="{{ route('subject.index') }}"
-                   class="mt-8 w-full bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 text-white text-center font-bold rounded-xl py-3 transition-all shadow-lg shadow-teal-300/40 hover:-translate-y-1">
-                    Selecionar
-                </a>
-            </div>
+            </a>
 
         </div>
 
     </div>
 
 </div>
+
 @endsection

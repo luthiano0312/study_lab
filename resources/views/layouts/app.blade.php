@@ -76,13 +76,13 @@
                             Matérias
                         </a>
 
-                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                        <a href="/horary" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
                             <img class="h-4 opacity-60"
                                 src="{{ asset('favicons/pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                             Horários
                         </a>
 
-                        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
+                        <a href="/notes" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition">
                             <img class="h-4 opacity-60"
                                 src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                             Notas

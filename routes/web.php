@@ -16,6 +16,14 @@ Route::get('/profile',  fn() => view('profile.profile'))->name('profile');
 Route::get('/subject', function () {
     return view('subjects/index');
 });
+Route::get('/horary', function () {
+    return view('horary/index');
+});
+Route::get('/notes', function () {
+    return view('notes/index');
+});
+
+
 
 Route::get('/subjects', fn() => view('subjects.subject.index'))->name('subject.index');
 Route::get('/subjects/create', fn() => view('subjects.subject.create'))->name('subject.create');
