@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Subject;
 use App\Models\Activity;
+use App\Models\Exam;
 
 Route::get('/', fn() => view('index'));
 
@@ -39,4 +40,10 @@ Route::get('/activities/edit/{id}', function ($id) {
     return view('subjects.activities.edit', compact('activity'));
 })->name('activity.edit');
 
-Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
+
+Route::get('/exams', fn() => view('notes.exam.index'))->name('exam.index');
+Route::get('/exams/create', fn() => view('notes.exam.create'))->name('exam.create');
+Route::get('/exams/edit/{id}', function ($id) {
+    $exam = Exam::findOrFail($id);
+    return view('notes.exam.edit', compact('exam'));
+})->name('exam.edit');
