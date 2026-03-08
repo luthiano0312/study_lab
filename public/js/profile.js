@@ -5,6 +5,17 @@ function authHeaders(extra = {}) {
     return { 'Accept': 'application/json', 'Authorization': `Bearer ${token}`, ...extra };
 }
 
+const COLOR_MAP = {
+    rosa:    'linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%)',
+    roxo:    'linear-gradient(135deg,#5b21b6 0%,#7c3aed 40%,#a78bfa 100%)',
+    azul:    'linear-gradient(135deg,#1e40af 0%,#2563eb 40%,#60a5fa 100%)',
+    verde:   'linear-gradient(135deg,#065f46 0%,#059669 40%,#34d399 100%)',
+    laranja: 'linear-gradient(135deg,#c2410c 0%,#ea580c 40%,#fb923c 100%)',
+    preto:   'linear-gradient(135deg,#111827 0%,#1f2937 40%,#374151 100%)',
+};
+
+const DICEBEAR_BASE = 'https://api.dicebear.com/7.x/lorelei/svg?seed=studylab';
+
 function applyUserToUI(user) {
     document.getElementById('cardName').textContent  = (user.name  || 'SEU NOME').toUpperCase();
     document.getElementById('cardEmail').textContent = user.email  || '—';
@@ -19,9 +30,23 @@ function applyUserToUI(user) {
     document.getElementById('nameInput').value  = user.name  || '';
     document.getElementById('emailInput').value = user.email || '';
 
-    const photoUrl = user.avatar || null;
+    // Cor da carteira
+    if (user.card_color && COLOR_MAP[user.card_color]) {
+        document.getElementById('studentCard').style.background = COLOR_MAP[user.card_color];
+    }
+
+    // Foto: avatar de upload tem prioridade, depois preset avatar, depois placeholder
+    let photoUrl = null;
+    if (user.avatar) {
+        photoUrl = user.avatar;
+    } else if (user.preset_avatar !== null && user.preset_avatar !== undefined) {
+        photoUrl = DICEBEAR_BASE + user.preset_avatar + '&backgroundColor=transparent';
+    }
+
     if (photoUrl) {
-        const imgHtml = `<img src="${photoUrl}" class="w-full h-full object-cover">`;
+        const isPreset = !user.avatar && user.preset_avatar !== null;
+        const fit = isPreset ? 'contain' : 'cover';
+        const imgHtml = `<img src="${photoUrl}" class="w-full h-full" style="object-fit:${fit};">`;
         document.getElementById('photoPreviewWrapper').innerHTML = imgHtml;
         document.getElementById('cardPhotoWrapper').innerHTML    = imgHtml;
     }
@@ -187,10 +212,7 @@ document.getElementById('confirmDelete').addEventListener('click', async () => {
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
     try {
-        await fetch(`${API_BASE}/logout`, {
-            method: 'POST',
-            headers: authHeaders(),
-        });
+        await fetch(`${API_BASE}/logout`, { method: 'POST', headers: authHeaders() });
     } catch (_) {}
     localStorage.removeItem('auth_token');
     window.location.href = '/login';

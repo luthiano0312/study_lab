@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('card_color')->default('rosa')->after('avatar');
+            $table->integer('preset_avatar')->nullable()->after('card_color');
+            $table->boolean('onboarding_done')->default(false)->after('preset_avatar');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -46,5 +49,8 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn(['card_color', 'preset_avatar', 'onboarding_done']);
+            });
     }
 };

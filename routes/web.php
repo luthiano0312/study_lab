@@ -24,9 +24,11 @@ Route::get('/subjects/edit/{id}', function ($id) {
     return view('subjects.subject.edit', compact('subject'));
 })->name('subject.edit');
 
-Route::get('/activities', fn() => view('activities.activity.index'))->name('activities.index');
-Route::get('/activities/create', fn() => view('activities.activity.create'))->name('activities.create');
+Route::get('/activities', fn() => view('subjects.activities.index'))->name('activity.index');
+Route::get('/activities/create', fn() => view('subjects.activities.create'))->name('activity.create');
 Route::get('/activities/edit/{id}', function ($id) {
     $activity = Activity::findOrFail($id);
-    return view('activities.activity.edit', compact('activity'));
-})->name('activities.edit');
+    return view('subjects.activities.edit', compact('activity'));
+})->name('activity.edit');
+
+Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');

@@ -24,9 +24,14 @@ class UpdateProfileRequest extends FormRequest
         $userId = $this->user()->id;
 
         return [
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,' . $userId,
-            'avatar' => 'sometimes|nullable|image|max:2048',
+        'name'             => 'sometimes|string|max:255',
+        'email'            => 'sometimes|email|unique:users,email,' . $this->user()->id,
+        'password'         => 'sometimes|min:8|confirmed',
+        'current_password' => 'required_with:password',
+        'card_color'       => 'sometimes|string|in:rosa,roxo,azul,verde,laranja,preto',
+        'preset_avatar'    => 'sometimes|integer|min:0|max:7',
+        'onboarding_done'  => 'sometimes|boolean',
+        'avatar'           => 'sometimes|image|max:2097152',
         ];
     }
 

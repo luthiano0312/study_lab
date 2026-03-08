@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="h-screen bg-[#f3f3f3] flex">
+<body class="h-screen bg-white flex">
 
     <div class="w-1/2 flex items-center justify-center">
 

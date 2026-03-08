@@ -9,3 +9,21 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer components {
+
+    .input-field {
+        @apply w-full border-b border-gray-300 py-2 bg-transparent
+               focus:outline-none focus:border-[#FF0073]
+               transition duration-300;
+    }
+
+    .input-error {
+        @apply border-[#FF0073];
+    }
+
+    .error-text {
+        @apply text-xs text-[#FF0073] mt-1;
+    }
+
+}

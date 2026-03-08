@@ -25,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'name', 'email', 'password', 'avatar',
+        'card_color', 'preset_avatar', 'onboarding_done',
     ];
 
     /**
