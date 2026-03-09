@@ -63,18 +63,7 @@
                                 <img class="h-4 opacity-60" src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                                 Matérias
                             </a>
-                            <a href="/activities"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                                {{ request()->is('activities*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Atividades
-                            </a>
-                            <a href="/exams"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                                {{ request()->is('exams*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Provas
-                            </a>
+                    
                             <a href="/horary"
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
                                 {{ request()->is('horary*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">

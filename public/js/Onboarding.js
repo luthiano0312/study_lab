@@ -5,31 +5,58 @@ function authHeaders(extra = {}) {
     return { 'Accept': 'application/json', 'Authorization': `Bearer ${token}`, ...extra };
 }
 
-const MASCOT = {
-    1: 'Olá! Eu sou o <strong class="text-pink-500 not-italic">Prof. Lab</strong>. Vamos deixar sua conta com a sua cara!',
-    2: 'Ótimo! Agora escolha a cor da sua <strong class="text-pink-500 not-italic">carteira de estudante</strong>. Qual combina com você?',
-    3: 'Quase lá! Escolha um <strong class="text-pink-500 not-italic">avatar</strong> ou faça upload de uma foto sua.',
-    done: 'Perfeito! Tudo pronto. Bem-vindo ao <strong class="text-pink-500 not-italic">StudyLab</strong>! 🚀',
-};
+const TOTAL_STEPS = 6;
 
+// ─── flag de transição em andamento ───────────────────────────────────────────
+let transitioning = false;
+
+// ─── Cores ────────────────────────────────────────────────────────────────────
 const COLORS = [
-    { key:'rosa',    label:'Rosa',    grad:'linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%)' },
-    { key:'roxo',    label:'Roxo',    grad:'linear-gradient(135deg,#5b21b6 0%,#7c3aed 40%,#a78bfa 100%)' },
-    { key:'azul',    label:'Azul',    grad:'linear-gradient(135deg,#1e40af 0%,#2563eb 40%,#60a5fa 100%)' },
-    { key:'verde',   label:'Verde',   grad:'linear-gradient(135deg,#065f46 0%,#059669 40%,#34d399 100%)' },
-    { key:'laranja', label:'Laranja', grad:'linear-gradient(135deg,#c2410c 0%,#ea580c 40%,#fb923c 100%)' },
-    { key:'preto',   label:'Preto',   grad:'linear-gradient(135deg,#111827 0%,#1f2937 40%,#374151 100%)' },
+    { key: 'rosa',      label: 'Rosa',      grad: 'linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%)',  light: false },
+    { key: 'roxo',      label: 'Roxo',      grad: 'linear-gradient(135deg,#5b21b6 0%,#7c3aed 40%,#a78bfa 100%)',  light: false },
+    { key: 'azul',      label: 'Azul',      grad: 'linear-gradient(135deg,#1e40af 0%,#2563eb 40%,#60a5fa 100%)',  light: false },
+    { key: 'verde',     label: 'Verde',     grad: 'linear-gradient(135deg,#065f46 0%,#059669 40%,#34d399 100%)',  light: false },
+    { key: 'laranja',   label: 'Laranja',   grad: 'linear-gradient(135deg,#c2410c 0%,#ea580c 40%,#fb923c 100%)',  light: false },
+    { key: 'preto',     label: 'Preto',     grad: 'linear-gradient(135deg,#111827 0%,#1f2937 40%,#374151 100%)',  light: false },
+    { key: 'vermelho',  label: 'Vermelho',  grad: 'linear-gradient(135deg,#991b1b 0%,#dc2626 40%,#f87171 100%)',  light: false },
+    { key: 'branco',    label: 'Branco',    grad: 'linear-gradient(135deg,#e5e7eb 0%,#f9fafb 50%,#ffffff 100%)',  light: true  },
+    { key: 'ciano',     label: 'Ciano',     grad: 'linear-gradient(135deg,#164e63 0%,#0891b2 40%,#67e8f9 100%)',  light: false },
+    { key: 'amarelo',   label: 'Amarelo',   grad: 'linear-gradient(135deg,#92400e 0%,#d97706 40%,#fcd34d 100%)',  light: false },
+    { key: 'indigo',    label: 'Índigo',    grad: 'linear-gradient(135deg,#312e81 0%,#4338ca 40%,#a5b4fc 100%)',  light: false },
+    { key: 'rose-gold', label: 'Rose Gold', grad: 'linear-gradient(135deg,#9f1239 0%,#e11d48 30%,#fb7185 60%,#fda4af 100%)', light: false },
 ];
 
-const AVATAR_SEEDS = ['felix','luna','nova','zara','milo','cleo','rex','aria'];
-const AVATAR_BGS   = ['#fce7f3','#ede9fe','#dbeafe','#d1fae5','#ffedd5','#fef3c7','#f3f4f6','#fce7f3'];
+// ─── Só 2 temas ───────────────────────────────────────────────────────────────
+const THEMES = [
+    { key: 'dark',  label: 'Dark',  bg: '#1e1e1e', sb: '#252526', lines: ['#569cd6','#9cdcfe','#ce9178','#4ec9b0','#dcdcaa'], tc: '#aaa' },
+    { key: 'light', label: 'Light', bg: '#ffffff', sb: '#f3f3f3', lines: ['#0000ff','#001080','#a31515','#267f99','#795e26'], tc: '#555' },
+];
+
+// ─── 16 imagens de public/images ─────────────────────────────────────────────
+// Nomes assumidos: avatar1.png … avatar16.png  (ajuste se necessário)
+const AVATAR_IMAGES = Array.from({ length: 16 }, (_, i) => ({
+    id:  i + 1,
+    url: `/images/avatar${i + 1}.png`,
+}));
 
 const state = {
-    name: '', colorKey: 'rosa',
-    colorGrad: COLORS[0].grad,
-    avatarType: 'preset', avatarId: 0,
-    avatarFile: null, avatarDataUrl: null, userId: null,
+    currentStep:   0,
+    name:          '',
+    colorKey:      'rosa',
+    colorGrad:     COLORS[0].grad,
+    colorLight:    false,
+    themeKey:      'dark',
+    avatarType:    'preset',
+    avatarId:      1,
+    avatarUrl:     AVATAR_IMAGES[0].url,
+    avatarFile:    null,
+    avatarDataUrl: null,
+    userId:        null,
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Boot
+// ─────────────────────────────────────────────────────────────────────────────
 
 async function init() {
     try {
@@ -37,105 +64,267 @@ async function init() {
         if (r.ok) {
             const u = await r.json();
             state.userId = u.id;
-            document.getElementById('previewId').textContent = 'SL-' + String(u.id).padStart(6,'0');
+            document.getElementById('previewId').textContent = 'SL-' + String(u.id).padStart(6, '0');
         }
-    } catch(e) {}
+    } catch (e) {}
+
+    buildDots();
+    buildThemes();
     buildColors();
     buildAvatars();
     bindEvents();
     selectColor(COLORS[0]);
-    selectAvatar(0);
+    selectAvatar(AVATAR_IMAGES[0]);
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Dots — pílula animada no ativo
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildDots() {
+    for (let s = 0; s < TOTAL_STEPS; s++) {
+        const wrap = document.getElementById(`dots${s}`);
+        if (!wrap) continue;
+        wrap.innerHTML = '';
+        for (let i = 0; i < TOTAL_STEPS; i++) {
+            const d = document.createElement('div');
+            d.className = 'rounded-full transition-all duration-300 ' + (
+                i === s ? 'w-4 h-2 bg-pink-500' :
+                i <  s  ? 'w-2 h-2 bg-pink-300' :
+                           'w-2 h-2 bg-gray-200'
+            );
+            wrap.appendChild(d);
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Navigation — fade + leve translate Y
+// ─────────────────────────────────────────────────────────────────────────────
+
+function goStep(n) {
+    if (transitioning || n === state.currentStep) return;
+    transitioning = true;
+
+    const prev = document.getElementById(`step${state.currentStep}`);
+    const next = document.getElementById(`step${n}`);
+    const goingForward = n > state.currentStep;
+
+    // 1. fade-out do step atual (sobe um pouco se avançando, desce se voltando)
+    prev.style.transition = 'opacity 220ms ease, transform 220ms ease';
+    prev.style.opacity    = '0';
+    prev.style.transform  = goingForward ? 'translateY(-10px)' : 'translateY(10px)';
+
+    setTimeout(() => {
+        // 2. esconde o anterior definitivamente
+        prev.classList.add('opacity-0', 'pointer-events-none');
+        prev.style.transition = '';
+        prev.style.opacity    = '';
+        prev.style.transform  = '';
+
+        // 3. prepara o próximo fora de vista
+        next.classList.remove('opacity-0', 'pointer-events-none');
+        next.style.opacity   = '0';
+        next.style.transform = goingForward ? 'translateY(12px)' : 'translateY(-12px)';
+
+        state.currentStep = n;
+        buildDots();
+
+        // 4. força reflow e faz fade-in
+        next.getBoundingClientRect();
+        next.style.transition = 'opacity 260ms ease, transform 260ms ease';
+        next.style.opacity    = '1';
+        next.style.transform  = 'translateY(0)';
+
+        setTimeout(() => {
+            next.style.transition = '';
+            next.style.opacity    = '';
+            next.style.transform  = '';
+            transitioning = false;
+        }, 280);
+    }, 230);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Toggle select
+// ─────────────────────────────────────────────────────────────────────────────
+
+function selectOpt(el, containerId) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('bg-pink-500', 'text-white');
+        btn.classList.add('bg-transparent', 'text-gray-400');
+    });
+    el.classList.remove('bg-transparent', 'text-gray-400');
+    el.classList.add('bg-pink-500', 'text-white');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Theme grid (só Dark e Light)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildThemes() {
+    const grid = document.getElementById('themeGrid');
+    const lw = [70, 50, 85, 40, 65, 55, 75];
+    const sw = [60, 40, 70, 35, 55, 45];
+
+    THEMES.forEach((t, idx) => {
+        const card = document.createElement('div');
+        card.className = 'relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all duration-200 hover:scale-[1.04] ' +
+            (idx === 0 ? 'border-pink-500' : 'border-gray-200');
+        card.style.cssText = `background:${t.bg}; aspect-ratio:4/3`;
+        card.dataset.key = t.key;
+
+        const sideLines = sw.map(w =>
+            `<div class="h-[3px] rounded-sm opacity-70" style="width:${w}%;background:${t.lines[0]}"></div>`
+        ).join('');
+        const mainLines = [
+            ...t.lines.map((c, i) => `<div class="h-[3px] rounded-sm" style="width:${lw[i % lw.length]}%;background:${c};opacity:.8"></div>`),
+            ...t.lines.map((c, i) => `<div class="h-[3px] rounded-sm" style="width:${lw[(i+2) % lw.length]}%;background:${c};opacity:.35"></div>`),
+        ].join('');
+
+        card.innerHTML = `
+            <div class="w-full h-full flex">
+                <div class="flex flex-col gap-1 p-2" style="width:35%;background:${t.sb}">${sideLines}</div>
+                <div class="flex-1 flex flex-col gap-[3px] p-2">${mainLines}</div>
+            </div>
+            <div class="absolute bottom-1.5 left-0 right-0 text-center text-[10px] font-semibold" style="color:${t.tc}">${t.label}</div>
+            <div class="check-icon absolute top-1.5 right-1.5 w-4 h-4 bg-pink-500 rounded-full flex items-center justify-center ${idx === 0 ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>`;
+
+        card.addEventListener('click', () => {
+            document.querySelectorAll('#themeGrid > div').forEach(c => {
+                c.classList.remove('border-pink-500'); c.classList.add('border-gray-200');
+                c.querySelector('.check-icon').classList.replace('opacity-100', 'opacity-0');
+            });
+            card.classList.remove('border-gray-200'); card.classList.add('border-pink-500');
+            card.querySelector('.check-icon').classList.replace('opacity-0', 'opacity-100');
+            state.themeKey = t.key;
+        });
+
+        grid.appendChild(card);
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Color grid + card preview text adaptation
+// ─────────────────────────────────────────────────────────────────────────────
 
 function buildColors() {
     const grid = document.getElementById('colorGrid');
-    COLORS.forEach(c => {
-        const btn = document.createElement('button');
-        btn.className = 'color-card group relative flex flex-col items-center gap-2 p-2.5 rounded-2xl border-2 transition-all duration-200 cursor-pointer ' +
-            (c.key === 'rosa'
-                ? 'border-pink-400 bg-pink-50 shadow-md shadow-pink-100'
-                : 'border-transparent bg-gray-50 hover:border-pink-200 hover:bg-pink-50/50');
-        btn.dataset.key = c.key;
-        btn.innerHTML = `
-            <div class="w-full aspect-square rounded-xl shadow-sm relative overflow-hidden" style="background:${c.grad};">
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 check-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
+    COLORS.forEach((c, idx) => {
+        const el = document.createElement('div');
+        const selBorder = c.light ? 'border-gray-500' : 'border-gray-800';
+        el.className = 'relative rounded-lg border-2 cursor-pointer overflow-hidden hover:scale-[1.04] transition-all duration-200 ' +
+            (idx === 0 ? selBorder : 'border-transparent');
+        el.style.cssText  = `background:${c.grad}; aspect-ratio:16/9`;
+        el.dataset.key    = c.key;
+        el.dataset.selBorder = selBorder;
+
+        const labelColor  = c.light ? 'rgba(55,65,81,.75)'  : 'rgba(255,255,255,.85)';
+        const checkStroke = c.light ? '#374151' : 'white';
+
+        el.innerHTML = `
+            <div class="check-overlay absolute inset-0 flex items-center justify-center bg-black/10 ${idx === 0 ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${checkStroke}" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <span class="text-[10px] font-700 text-gray-500 group-hover:text-pink-500 transition-colors color-label">${c.label}</span>`;
-        grid.appendChild(btn);
-        btn.addEventListener('click', () => selectColor(c));
+            <div class="absolute bottom-1.5 left-0 right-0 text-center text-[9px] font-semibold uppercase tracking-wider" style="color:${labelColor}">${c.label}</div>`;
+
+        el.addEventListener('click', () => selectColor(c));
+        grid.appendChild(el);
     });
 }
 
 function selectColor(c) {
-    document.querySelectorAll('.color-card').forEach(b => {
-        b.classList.remove('border-pink-400', 'bg-pink-50', 'shadow-md', 'shadow-pink-100');
-        b.classList.add('border-transparent', 'bg-gray-50');
-        b.querySelector('.check-icon')?.classList.add('opacity-0');
-        b.querySelector('.color-label')?.classList.remove('text-pink-500', 'font-bold');
-        b.querySelector('.color-label')?.classList.add('text-gray-500');
+    document.querySelectorAll('#colorGrid > div').forEach(el => {
+        el.classList.remove('border-gray-800', 'border-gray-500');
+        el.classList.add('border-transparent');
+        el.querySelector('.check-overlay').classList.replace('opacity-100', 'opacity-0');
     });
-    const active = document.querySelector(`.color-card[data-key="${c.key}"]`);
+    const active = document.querySelector(`#colorGrid > div[data-key="${c.key}"]`);
     if (active) {
-        active.classList.remove('border-transparent', 'bg-gray-50');
-        active.classList.add('border-pink-400', 'bg-pink-50', 'shadow-md', 'shadow-pink-100');
-        active.querySelector('.check-icon')?.classList.remove('opacity-0');
-        active.querySelector('.color-label')?.classList.remove('text-gray-500');
-        active.querySelector('.color-label')?.classList.add('text-pink-500', 'font-bold');
+        active.classList.remove('border-transparent');
+        active.classList.add(active.dataset.selBorder);
+        active.querySelector('.check-overlay').classList.replace('opacity-0', 'opacity-100');
     }
-    state.colorKey  = c.key;
-    state.colorGrad = c.grad;
+
+    state.colorKey   = c.key;
+    state.colorGrad  = c.grad;
+    state.colorLight = c.light;
+
     document.getElementById('cardPreview').style.background = c.grad;
+
+    // adapta textos e bordas do card para cor clara (branco)
+    const isLight = c.light;
+    const nameEl = document.getElementById('previewName');
+    nameEl.style.color = isLight ? '#1f2937' : '#ffffff';
+
+    document.getElementById('previewSchool').style.color  = isLight ? 'rgba(55,65,81,.55)' : 'rgba(255,255,255,.5)';
+    document.getElementById('previewId').style.color      = isLight ? 'rgba(55,65,81,.35)' : 'rgba(255,255,255,.3)';
+    document.getElementById('previewYear').style.color      = isLight ? 'rgba(55,65,81,.5)'  : 'rgba(255,255,255,.6)';
+    document.getElementById('previewYear').style.background = isLight ? 'rgba(0,0,0,.07)'   : 'rgba(255,255,255,.15)';
+
+    const mini = document.getElementById('previewPhotoMini');
+    mini.style.borderColor = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.25)';
+    mini.style.background  = isLight ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.15)';
+
+    document.getElementById('cardPatternOverlay').style.opacity = isLight ? '0.03' : '0.05';
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Avatar grid — 16 imagens de public/images
+// ─────────────────────────────────────────────────────────────────────────────
 
 function buildAvatars() {
     const grid = document.getElementById('avatarGrid');
-    AVATAR_SEEDS.forEach((seed, i) => {
-        const url = `https://api.dicebear.com/7.x/lorelei/svg?seed=${seed}&backgroundColor=transparent`;
+    grid.innerHTML = '';   // remove skeletons
+
+    AVATAR_IMAGES.forEach((av, i) => {
         const btn = document.createElement('button');
-        btn.className    = 'avbtn';
-        btn.dataset.id   = String(i);
-        btn.style.background = AVATAR_BGS[i];
+        btn.className = 'relative aspect-square rounded-lg border-2 overflow-hidden flex items-center justify-center hover:scale-[1.05] transition-all duration-200 bg-gray-50 ' +
+            (i === 0 ? 'border-pink-500' : 'border-gray-100 hover:border-pink-200');
+        btn.dataset.id = String(av.id);
+
         btn.innerHTML = `
-            <img src="${url}" alt="avatar ${i}" loading="lazy">
-            <div class="avcheck" style="opacity:0;">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <img src="${av.url}" alt="avatar ${av.id}" loading="lazy" class="w-full h-full object-cover">
+            <div class="avcheck absolute bottom-1 right-1 w-3 h-3 bg-pink-500 rounded-full flex items-center justify-center ${i === 0 ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200">
+                <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>`;
-        btn.addEventListener('click', () => selectAvatar(i, url));
+
+        btn.addEventListener('click', () => selectAvatar(av, btn));
         grid.appendChild(btn);
     });
 }
 
-function selectAvatar(id, url) {
-    if (!url) url = `https://api.dicebear.com/7.x/lorelei/svg?seed=${AVATAR_SEEDS[id]}&backgroundColor=transparent`;
-    document.querySelectorAll('.avbtn').forEach(b => {
-        b.classList.remove('selected');
-        b.style.borderColor = '#fce7f3';
-        b.style.boxShadow   = 'none';
-        b.style.transform   = 'scale(1)';
-        const chk = b.querySelector('.avcheck');
-        if (chk) chk.style.opacity = '0';
+function selectAvatar(av, btnEl) {
+    document.querySelectorAll('#avatarGrid button').forEach(b => {
+        b.classList.remove('border-pink-500');
+        b.classList.add('border-gray-100');
+        b.querySelector('.avcheck')?.classList.replace('opacity-100', 'opacity-0');
     });
-    const active = [...document.querySelectorAll('.avbtn')].find(b => Number(b.dataset.id) === id);
-    if (active) {
-        active.classList.add('selected');
-        active.style.borderColor = '#db2777';
-        active.style.transform   = 'scale(1.07)';
-        active.style.boxShadow   = '0 0 0 3px rgba(219,39,119,.15)';
-        const chk = active.querySelector('.avcheck');
-        if (chk) chk.style.opacity = '1';
+
+    if (btnEl) {
+        btnEl.classList.remove('border-gray-100');
+        btnEl.classList.add('border-pink-500');
+        btnEl.querySelector('.avcheck')?.classList.replace('opacity-0', 'opacity-100');
     }
+
     state.avatarType    = 'preset';
-    state.avatarId      = id;
-    state.avatarDataUrl = url;
-    updateCardPhoto(url, true);
+    state.avatarId      = av.id;
+    state.avatarUrl     = av.url;
+    state.avatarDataUrl = av.url;
+    updateCardPhoto(av.url, false);
 }
 
-function updateCardPhoto(src, isSvg=false) {
+function updateCardPhoto(src) {
     const mini = document.getElementById('previewPhotoMini');
-    mini.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:${isSvg?'contain':'cover'};">`;
+    mini.innerHTML = `<img src="${src}" class="w-full h-full object-cover">`;
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Events
+// ─────────────────────────────────────────────────────────────────────────────
 
 function bindEvents() {
     document.getElementById('nameInput').addEventListener('input', () => {
@@ -146,64 +335,65 @@ function bindEvents() {
         document.getElementById('nextStep1').disabled = v.length < 2;
     });
 
-    document.getElementById('nextStep1').addEventListener('click', () => goStep(2));
-    document.getElementById('nextStep2').addEventListener('click', () => goStep(3));
-    document.getElementById('backStep2').addEventListener('click', () => goStep(1));
-    document.getElementById('backStep3').addEventListener('click', () => goStep(2));
-    document.getElementById('skipAll').addEventListener('click',   () => finish(true));
     document.getElementById('finishBtn').addEventListener('click', () => finish(false));
 
-    document.getElementById('avatarFileInput').addEventListener('change', function() {
+    document.getElementById('avatarFileInput').addEventListener('change', function () {
         const file = this.files[0];
         if (!file) return;
         state.avatarType = 'upload';
         state.avatarFile = file;
-        document.querySelectorAll('.avbtn').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('#avatarGrid button').forEach(b => {
+            b.classList.remove('border-pink-500');
+            b.classList.add('border-gray-100');
+            b.querySelector('.avcheck')?.classList.replace('opacity-100', 'opacity-0');
+        });
         const reader = new FileReader();
-        reader.onload = ev => { state.avatarDataUrl = ev.target.result; updateCardPhoto(ev.target.result, false); };
+        reader.onload = ev => { state.avatarDataUrl = ev.target.result; updateCardPhoto(ev.target.result); };
         reader.readAsDataURL(file);
     });
+
+    document.addEventListener('keydown', e => {
+        if (transitioning) return;
+        if (e.key === 'Enter') {
+            const step = document.getElementById(`step${state.currentStep}`);
+            const btns = step?.querySelectorAll('button') ?? [];
+            const last = [...btns].reverse().find(b => !b.disabled);
+            if (last) last.click();
+        }
+        if (state.currentStep === 2) {
+            const cards = [...document.querySelectorAll('#themeGrid > div')];
+            const ci    = cards.findIndex(c => c.classList.contains('border-pink-500'));
+            if (e.key === 'ArrowRight' && ci < cards.length - 1) cards[ci + 1].click();
+            if (e.key === 'ArrowLeft'  && ci > 0)                 cards[ci - 1].click();
+        }
+    });
 }
 
-function goStep(n) {
-    [1,2,3].forEach(i => {
-        const el = document.getElementById(`step${i}`);
-        if (i === n) { el.classList.remove('hidden'); }
-        else         { el.classList.add('hidden'); }
-    });
+// ─────────────────────────────────────────────────────────────────────────────
+// Finish
+// ─────────────────────────────────────────────────────────────────────────────
 
-    document.getElementById('progressFill').style.width = (n/3*100) + '%';
-    document.getElementById('stepLabel').textContent    = `Passo ${n} de 3`;
-
-    [1,2,3].forEach(i => {
-        const dot = document.getElementById(`dot${i}`);
-        dot.className = 'w-1.5 h-1.5 rounded-full transition-all duration-300 ' +
-            (i === n ? 'bg-pink-600 scale-125' : i < n ? 'bg-pink-300' : 'bg-pink-100');
-    });
-
-    document.getElementById('mascotBubble').innerHTML = MASCOT[n];
-}
-
-async function finish(skip=false) {
-    document.getElementById('mascotBubble').innerHTML = MASCOT['done'];
-    document.getElementById('loadingScreen').classList.remove('hidden');
+async function finish(skip = false) {
+    const ld = document.getElementById('loadingScreen');
+    ld.classList.remove('hidden');
+    ld.classList.add('flex');
 
     try {
-        if (!skip && state.name) {
-            await fetch(`${API_BASE}/profile`, { method:'PUT', headers:authHeaders({'Content-Type':'application/json'}), body:JSON.stringify({name:state.name}) });
-        }
-        if (!skip && state.colorKey) {
-            await fetch(`${API_BASE}/profile`, { method:'PUT', headers:authHeaders({'Content-Type':'application/json'}), body:JSON.stringify({card_color:state.colorKey}) });
-        }
+        if (!skip && state.name)
+            await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ name: state.name }) });
+        if (!skip && state.colorKey)
+            await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ card_color: state.colorKey }) });
+        if (!skip && state.themeKey)
+            await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ theme: state.themeKey }) });
         if (!skip && state.avatarType === 'upload' && state.avatarFile) {
             const form = new FormData();
             form.append('photo', state.avatarFile);
-            await fetch(`${API_BASE}/profile/photo`, { method:'POST', headers:authHeaders(), body:form });
-        } else if (!skip && state.avatarType === 'preset') {
-            await fetch(`${API_BASE}/profile`, { method:'PUT', headers:authHeaders({'Content-Type':'application/json'}), body:JSON.stringify({preset_avatar:state.avatarId}) });
+            await fetch(`${API_BASE}/profile/photo`, { method: 'POST', headers: authHeaders(), body: form });
+        } else if (!skip && state.avatarType === 'preset' && state.avatarId) {
+            await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ preset_avatar: state.avatarId }) });
         }
-        await fetch(`${API_BASE}/profile`, { method:'PUT', headers:authHeaders({'Content-Type':'application/json'}), body:JSON.stringify({onboarding_done:true}) });
-    } catch(e) { console.error(e); }
+        await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ onboarding_done: true }) });
+    } catch (e) { console.error(e); }
 
     window.location.href = '/dashboard';
 }
