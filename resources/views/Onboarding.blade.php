@@ -1,3 +1,4 @@
+{
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalizar conta - StudyLab</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{asset('css/onboarding.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/onboarding.css') }}">
 </head>
 
 <body class="bg-white text-gray-700 h-screen w-screen overflow-hidden font-sans">
 
-    {{-- ══ STEP 0 — Welcome ══ --}}
+
     <div id="step0" class="ob-step fixed inset-0 flex flex-col items-center justify-center">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
             <div class="w-[130px] h-[130px] mb-2">
@@ -27,8 +28,8 @@
         </div>
     </div>
 
-    {{-- ══ STEP 1 — Name ══ --}}
-    <div id="step1"
+
+    {<div id="step1"
         class="ob-step fixed inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-start justify-center w-full max-w-lg px-10">
             <h2 class="text-[22px] font-semibold text-gray-800 mb-2">Como quer ser chamado?</h2>
@@ -77,7 +78,6 @@
             <p class="text-[13px] text-gray-400 mb-5">Selecione um dos avatares ou envie uma foto sua.</p>
             <div class="w-full border border-gray-200 rounded-lg overflow-hidden">
                 <div class="px-5 pb-5 pt-4 flex flex-col gap-2.5 bg-white">
-                    {{-- 16 skeletons enquanto carrega --}}
                     <div class="grid grid-cols-4 gap-2" id="avatarGrid">
                         @for ($i = 0; $i < 16; $i++)
                             <div class="aspect-square rounded-lg bg-gray-100 animate-pulse"></div>
@@ -148,8 +148,10 @@
         </div>
     </div>
 
+    {{-- ══ STEP 5 — Tudo pronto ══ --}}
     <div id="step5"
         class="ob-step fixed inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none">
+
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
             <div class="w-14 h-14 bg-pink-50 border border-pink-200 rounded-xl flex items-center justify-center mb-6">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ec4899"
@@ -158,16 +160,18 @@
                 </svg>
             </div>
             <h2 class="text-[22px] font-semibold text-gray-800 mb-2">Tudo pronto!</h2>
-            <p class="text-[13px] text-gray-400">Sua conta está configurada. Bem-vindo ao StudyLab.</p>
+            <p class="text-[13px] text-gray-400 mb-8">Sua conta está configurada. Bem-vindo ao StudyLab.</p>
+
+            {{-- Botão centralizado direto aqui --}}
+            <x-final-bt id="finishBtn" />
         </div>
+
+        {{-- Footer só com voltar + dots (sem botão direito) --}}
         <div class="w-full px-11 pb-8 flex items-center justify-between flex-shrink-0">
             <button onclick="goStep(4)"
                 class="text-[13px] text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer transition-colors">Voltar</button>
             <div class="flex gap-2 items-center" id="dots5"></div>
-            <button id="finishBtn"
-                class="flex items-center gap-2 px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-[13px] font-semibold rounded-md transition-colors">
-                Entrar no StudyLab <span class="opacity-60">↵</span>
-            </button>
+            <span class="invisible text-sm">X</span>
         </div>
     </div>
 
