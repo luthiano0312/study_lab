@@ -15,18 +15,7 @@ Route::get('/profile',  fn() => view('profile.profile'))->name('profile');
 
 Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
 
-Route::get('/subject', function () {
-    return view('subjects/index');
-});
-Route::get('/horary', function () {
-    return view('horary/index');
-});
-Route::get('/notes', function () {
-    return view('notes/index');
-});
-Route::get('/notes', function () {
-    return view('notes/index');
-});
+
 
 
 

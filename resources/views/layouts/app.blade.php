@@ -14,99 +14,128 @@
     <div class="flex flex-col h-screen">
 
         <header class="bg-white h-16 px-8 flex items-center justify-between border-b border-pink-100 shadow-sm z-50">
-
             <div class="flex items-center gap-3">
                 <a href="/dashboard"><img src="/images/logohorizontal.png" class="h-[90px]"></a>
             </div>
-
             <div class="flex items-center gap-4">
-
-                <button class="relative w-9 h-9 rounded-xl hover:bg-gray-100 flex items-center justify-center transition">
-                    <img class="h-5 opacity-50" src="{{ asset('favicons/notifications_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                    <span class="absolute -top-0.5 -right-0.5 bg-pink-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">3</span>
+                <button
+                    class="relative w-9 h-9 rounded-xl hover:bg-gray-100 flex items-center justify-center transition">
+                    <img class="h-5 opacity-50"
+                        src="{{ asset('favicons/notifications_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    <span
+                        class="absolute -top-0.5 -right-0.5 bg-pink-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">3</span>
                 </button>
-
-                <a href="/profile" class="flex items-center gap-2.5 bg-gray-50 hover:bg-pink-50 px-3 py-1.5 rounded-xl transition cursor-pointer border border-transparent hover:border-pink-100">
-                    <img id="userAvatar" src="{{ asset('images/default-avatar.png') }}" class="w-8 h-8 rounded-full object-cover ring-2 ring-pink-100">
+                <a href="/profile"
+                    class="flex items-center gap-2.5 bg-gray-50 hover:bg-pink-50 px-3 py-1.5 rounded-xl transition cursor-pointer border border-transparent hover:border-pink-100">
+                    <img id="userAvatar" src="{{ asset('images/default-avatar.png') }}"
+                        class="w-8 h-8 rounded-full object-cover ring-2 ring-pink-100">
                     <div class="text-sm">
                         <p class="font-semibold text-gray-700 leading-tight" id="userName">Estudante</p>
                         <p class="text-xs text-gray-400 leading-tight">StudyLab</p>
                     </div>
                 </a>
-
             </div>
-
         </header>
 
         <div class="flex flex-1 overflow-hidden">
 
-            <aside class="w-60 bg-white border-r border-gray-100 flex flex-col shadow-sm">
+            <aside id="sidebar"
+                class="flex flex-col bg-white border-r border-gray-100 shadow-sm
+                       transition-all duration-300 ease-in-out
+                       w-16 hover:w-56 overflow-visible group/sidebar">
 
-                <nav class="flex-1 px-3 py-5 space-y-5 text-sm overflow-y-auto">
+                <nav class="flex-1 px-2 py-4 flex flex-col gap-1">
 
-                    <div>
-                        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-2 px-2">Início</p>
-                        <a href="/dashboard"
-                            class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                            {{ request()->is('dashboard') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                            <img class="h-4 opacity-70" src="{{ asset('favicons/vital_signs_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                            Dashboard
-                        </a>
-                    </div>
+                    <p
+                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mb-1
+                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                        Início
+                    </p>
 
-                    <div>
-                        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-2 px-2">Estudos</p>
-                        <div class="space-y-0.5">
-                            <a href="/subject"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                                {{ request()->is('subject*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Matérias
-                            </a>
-                    
-                            <a href="/horary"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                                {{ request()->is('horary*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Horários
-                            </a>
-                            <a href="/notes"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                                {{ request()->is('notes*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Notas
-                            </a>
-                        </div>
-                    </div>
+                    <x-sb-item href="/dashboard" :active="request()->is('dashboard')" label="Dashboard"
+                        icon="vital_signs_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" />
 
-                    <div>
-                        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-2 px-2">Relatórios</p>
-                        <div class="space-y-0.5">
-                            <a href="#"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all text-gray-600 hover:bg-pink-50 hover:text-pink-600">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Boletim
-                            </a>
-                            <a href="#"
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all text-gray-600 hover:bg-pink-50 hover:text-pink-600">
-                                <img class="h-4 opacity-60" src="{{ asset('favicons/area_chart_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                                Progresso
-                            </a>
-                        </div>
-                    </div>
+                    <p
+                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mt-3 mb-1
+                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                        Estudos
+                    </p>
 
-                    <div>
-                        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-2 px-2">Conta</p>
-                        <a href="/profile"
-                            class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all
-                            {{ request()->is('profile*') ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-600 hover:bg-pink-50 hover:text-pink-600' }}">
-                            <img class="h-4 opacity-60" src="{{ asset('favicons/account_child_invert_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
-                            Perfil
-                        </a>
-                    </div>
+                    <x-sb-item href="/subjects" :active="request()->is('subjects*')" label="Matérias"
+                        icon="book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
+                            [
+                                'label' => 'Ver matérias',
+                                'href' => route('subject.index'),
+                                'icon' => 'book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                            [
+                                'label' => 'Ver conteúdos',
+                                'href' => '#',
+                                'icon' => 'full_coverage_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                            [
+                                'label' => 'Ver atividades',
+                                'href' => route('activity.index'),
+                                'icon' => 'notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                        ]" />
+
+                    <x-sb-item href="/horary" :active="request()->is('horary*')" label="Horários"
+                        icon="pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
+                            [
+                                'label' => 'Cadastrar manualmente',
+                                'href' => '#',
+                                'icon' => 'calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                            [
+                                'label' => 'Upload de foto',
+                                'href' => '#',
+                                'icon' => 'pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                        ]" />
+
+                    <x-sb-item href="/exams" :active="request()->is('exams*')" label="Exames"
+                        icon="news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
+                            [
+                                'label' => 'Ver Provas',
+                                'href' => route('exam.index'),
+                                'icon' => 'dual_screen_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                            [
+                                'label' => 'Ver Trabalhos',
+                                'href' => '#',
+                                'icon' => 'book_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                        ]" />
+
+                    <p
+                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mt-3 mb-1
+                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                        Relatórios
+                    </p>
+
+                    <x-sb-item href="#" :active="false" label="Boletim"
+                        icon="notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" />
+                    <x-sb-item href="#" :active="false" label="Progresso"
+                        icon="area_chart_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" />
+
+                    <p
+                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mt-3 mb-1
+                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                        Conta
+                    </p>
+
+                    <x-sb-item href="/profile" :active="request()->is('profile*')" label="Perfil"
+                        icon="account_child_invert_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
+                            [
+                                'label' => 'Meu perfil',
+                                'href' => '/profile',
+                                'icon' => 'account_child_invert_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
+                            ],
+                            ['label' => 'Sair', 'href' => '/logout', 'icon' => ''],
+                        ]" />
 
                 </nav>
-
             </aside>
 
             <main class="flex-1 overflow-y-auto overflow-x-hidden p-8 bg-gray-50">
@@ -114,8 +143,8 @@
             </main>
 
         </div>
-
     </div>
+
     <script src="{{ asset('js/dashboard.js') }}"></script>
 </body>
 
