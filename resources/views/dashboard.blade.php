@@ -8,7 +8,7 @@
             <div>
                 <p class="text-xs font-bold tracking-widest uppercase text-pink-400 mb-1">Painel de Controle</p>
                 <h1 class="text-4xl font-black text-gray-900 leading-tight" style="font-family:'Syne',sans-serif;">
-                    Olá, <span id="greetName" class="text-pink-500">Estudante</span> 👋
+                    Olá, <span id="greetName" class="text-pink-500">Estudante</span> 
                 </h1>
                 <p class="text-sm text-gray-400 mt-1 font-medium">
                     <span id="clock" class="text-pink-500 font-bold"></span>

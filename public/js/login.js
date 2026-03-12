@@ -1,33 +1,34 @@
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+const $        = id => document.getElementById(id);
+const JSON_HDR = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+const showErr    = msg => { const b = $('errorBox'), t = $('errorMessage'); if (t) t.innerText = msg; b?.classList.remove('hidden'); };
+const clearErr   = ()  => { $('errorBox')?.classList.add('hidden'); if ($('errorMessage')) $('errorMessage').innerText = ''; };
+const setLoading = (btn, on, label) => { btn.disabled = on; btn.textContent = on ? 'Carregando...' : label; };
 
-    try {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    const form = $('loginForm'); if (!form) return;
+    const btn  = form.querySelector('button[type=submit]');
+    const defaultText = btn?.textContent || 'Entrar';
 
-        const data = await response.json();
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+        clearErr();
+        setLoading(btn, true, defaultText);
 
-        console.log('resposta do login:', data); // 👈 adiciona isso pra debugar
+        try {
+            const res  = await fetch('/api/auth/login', {
+                method: 'POST', headers: JSON_HDR,
+                body: JSON.stringify({ email: $('email').value, password: $('password').value }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem('auth_token', data.token);
+                window.location.href = '/dashboard';
+            } else {
+                showErr(data.message ?? 'Credenciais inválidas');
+            }
+        } catch { showErr('Erro no servidor. Tente novamente.'); }
 
-        if (response.ok) {
-            localStorage.setItem('auth_token', data.token);
-            window.location.href = '/dashboard';
-        } else {
-            document.getElementById('errorMessage').innerText = data.message ?? 'Credenciais inválidas';
-            document.getElementById('errorBox').classList.remove('hidden');
-        }
-
-    } catch (error) {
-        document.getElementById('errorMessage').innerText = 'Erro no servidor';
-        document.getElementById('errorBox').classList.remove('hidden');
-    }
+        setLoading(btn, false, defaultText);
+    });
 });

@@ -7,56 +7,53 @@ function authHeaders(extra = {}) {
 
 const TOTAL_STEPS = 6;
 
-// ─── flag de transição em andamento ───────────────────────────────────────────
+
 let transitioning = false;
 
-// ─── Cores ────────────────────────────────────────────────────────────────────
+
 const COLORS = [
-    { key: 'rosa',      label: 'Rosa',      grad: 'linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%)',  light: false },
-    { key: 'roxo',      label: 'Roxo',      grad: 'linear-gradient(135deg,#5b21b6 0%,#7c3aed 40%,#a78bfa 100%)',  light: false },
-    { key: 'azul',      label: 'Azul',      grad: 'linear-gradient(135deg,#1e40af 0%,#2563eb 40%,#60a5fa 100%)',  light: false },
-    { key: 'verde',     label: 'Verde',     grad: 'linear-gradient(135deg,#065f46 0%,#059669 40%,#34d399 100%)',  light: false },
-    { key: 'laranja',   label: 'Laranja',   grad: 'linear-gradient(135deg,#c2410c 0%,#ea580c 40%,#fb923c 100%)',  light: false },
-    { key: 'preto',     label: 'Preto',     grad: 'linear-gradient(135deg,#111827 0%,#1f2937 40%,#374151 100%)',  light: false },
-    { key: 'vermelho',  label: 'Vermelho',  grad: 'linear-gradient(135deg,#991b1b 0%,#dc2626 40%,#f87171 100%)',  light: false },
-    { key: 'branco',    label: 'Branco',    grad: 'linear-gradient(135deg,#e5e7eb 0%,#f9fafb 50%,#ffffff 100%)',  light: true  },
-    { key: 'ciano',     label: 'Ciano',     grad: 'linear-gradient(135deg,#164e63 0%,#0891b2 40%,#67e8f9 100%)',  light: false },
-    { key: 'amarelo',   label: 'Amarelo',   grad: 'linear-gradient(135deg,#92400e 0%,#d97706 40%,#fcd34d 100%)',  light: false },
-    { key: 'indigo',    label: 'Índigo',    grad: 'linear-gradient(135deg,#312e81 0%,#4338ca 40%,#a5b4fc 100%)',  light: false },
+    { key: 'rosa', label: 'Rosa', grad: 'linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%)', light: false },
+    { key: 'roxo', label: 'Roxo', grad: 'linear-gradient(135deg,#5b21b6 0%,#7c3aed 40%,#a78bfa 100%)', light: false },
+    { key: 'azul', label: 'Azul', grad: 'linear-gradient(135deg,#1e40af 0%,#2563eb 40%,#60a5fa 100%)', light: false },
+    { key: 'verde', label: 'Verde', grad: 'linear-gradient(135deg,#065f46 0%,#059669 40%,#34d399 100%)', light: false },
+    { key: 'laranja', label: 'Laranja', grad: 'linear-gradient(135deg,#c2410c 0%,#ea580c 40%,#fb923c 100%)', light: false },
+    { key: 'preto', label: 'Preto', grad: 'linear-gradient(135deg,#111827 0%,#1f2937 40%,#374151 100%)', light: false },
+    { key: 'vermelho', label: 'Vermelho', grad: 'linear-gradient(135deg,#991b1b 0%,#dc2626 40%,#f87171 100%)', light: false },
+    { key: 'branco', label: 'Branco', grad: 'linear-gradient(135deg,#e5e7eb 0%,#f9fafb 50%,#ffffff 100%)', light: true },
+    { key: 'ciano', label: 'Ciano', grad: 'linear-gradient(135deg,#164e63 0%,#0891b2 40%,#67e8f9 100%)', light: false },
+    { key: 'amarelo', label: 'Amarelo', grad: 'linear-gradient(135deg,#92400e 0%,#d97706 40%,#fcd34d 100%)', light: false },
+    { key: 'indigo', label: 'Índigo', grad: 'linear-gradient(135deg,#312e81 0%,#4338ca 40%,#a5b4fc 100%)', light: false },
     { key: 'rose-gold', label: 'Rose Gold', grad: 'linear-gradient(135deg,#9f1239 0%,#e11d48 30%,#fb7185 60%,#fda4af 100%)', light: false },
 ];
 
-// ─── Só 2 temas ───────────────────────────────────────────────────────────────
+
 const THEMES = [
-    { key: 'dark',  label: 'Dark',  bg: '#1e1e1e', sb: '#252526', lines: ['#569cd6','#9cdcfe','#ce9178','#4ec9b0','#dcdcaa'], tc: '#aaa' },
-    { key: 'light', label: 'Light', bg: '#ffffff', sb: '#f3f3f3', lines: ['#0000ff','#001080','#a31515','#267f99','#795e26'], tc: '#555' },
+    { key: 'dark', label: 'Dark', bg: '#1e1e1e', sb: '#252526', lines: ['#569cd6', '#9cdcfe', '#ce9178', '#4ec9b0', '#dcdcaa'], tc: '#aaa' },
+    { key: 'light', label: 'Light', bg: '#ffffff', sb: '#f3f3f3', lines: ['#0000ff', '#001080', '#a31515', '#267f99', '#795e26'], tc: '#555' },
 ];
 
-// ─── 16 imagens de public/images ─────────────────────────────────────────────
-// Nomes assumidos: avatar1.png … avatar16.png  (ajuste se necessário)
+
 const AVATAR_IMAGES = Array.from({ length: 16 }, (_, i) => ({
-    id:  i + 1,
+    id: i + 1,
     url: `/images/avatar${i + 1}.png`,
 }));
 
 const state = {
-    currentStep:   0,
-    name:          '',
-    colorKey:      'rosa',
-    colorGrad:     COLORS[0].grad,
-    colorLight:    false,
-    themeKey:      'dark',
-    avatarType:    'preset',
-    avatarId:      1,
-    avatarUrl:     AVATAR_IMAGES[0].url,
-    avatarFile:    null,
+    currentStep: 0,
+    name: '',
+    colorKey: 'rosa',
+    colorGrad: COLORS[0].grad,
+    colorLight: false,
+    themeKey: 'dark',
+    avatarType: 'preset',
+    avatarId: 1,
+    avatarUrl: AVATAR_IMAGES[0].url,
+    avatarFile: null,
     avatarDataUrl: null,
-    userId:        null,
+    userId: null,
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Boot
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 async function init() {
     try {
@@ -66,7 +63,7 @@ async function init() {
             state.userId = u.id;
             document.getElementById('previewId').textContent = 'SL-' + String(u.id).padStart(6, '0');
         }
-    } catch (e) {}
+    } catch (e) { }
 
     buildDots();
     buildThemes();
@@ -77,9 +74,7 @@ async function init() {
     selectAvatar(AVATAR_IMAGES[0]);
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Dots — pílula animada no ativo
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 function buildDots() {
     for (let s = 0; s < TOTAL_STEPS; s++) {
@@ -90,17 +85,15 @@ function buildDots() {
             const d = document.createElement('div');
             d.className = 'rounded-full transition-all duration-300 ' + (
                 i === s ? 'w-4 h-2 bg-pink-500' :
-                i <  s  ? 'w-2 h-2 bg-pink-300' :
-                           'w-2 h-2 bg-gray-200'
+                    i < s ? 'w-2 h-2 bg-pink-300' :
+                        'w-2 h-2 bg-gray-200'
             );
             wrap.appendChild(d);
         }
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Navigation — fade + leve translate Y
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 function goStep(n) {
     if (transitioning || n === state.currentStep) return;
@@ -110,44 +103,38 @@ function goStep(n) {
     const next = document.getElementById(`step${n}`);
     const goingForward = n > state.currentStep;
 
-    // 1. fade-out do step atual (sobe um pouco se avançando, desce se voltando)
     prev.style.transition = 'opacity 220ms ease, transform 220ms ease';
-    prev.style.opacity    = '0';
-    prev.style.transform  = goingForward ? 'translateY(-10px)' : 'translateY(10px)';
+    prev.style.opacity = '0';
+    prev.style.transform = goingForward ? 'translateY(-10px)' : 'translateY(10px)';
 
     setTimeout(() => {
-        // 2. esconde o anterior definitivamente
         prev.classList.add('opacity-0', 'pointer-events-none');
         prev.style.transition = '';
-        prev.style.opacity    = '';
-        prev.style.transform  = '';
+        prev.style.opacity = '';
+        prev.style.transform = '';
 
-        // 3. prepara o próximo fora de vista
         next.classList.remove('opacity-0', 'pointer-events-none');
-        next.style.opacity   = '0';
+        next.style.opacity = '0';
         next.style.transform = goingForward ? 'translateY(12px)' : 'translateY(-12px)';
 
         state.currentStep = n;
         buildDots();
 
-        // 4. força reflow e faz fade-in
         next.getBoundingClientRect();
         next.style.transition = 'opacity 260ms ease, transform 260ms ease';
-        next.style.opacity    = '1';
-        next.style.transform  = 'translateY(0)';
+        next.style.opacity = '1';
+        next.style.transform = 'translateY(0)';
 
         setTimeout(() => {
             next.style.transition = '';
-            next.style.opacity    = '';
-            next.style.transform  = '';
+            next.style.opacity = '';
+            next.style.transform = '';
             transitioning = false;
         }, 280);
     }, 230);
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Toggle select
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 function selectOpt(el, containerId) {
     const container = document.getElementById(containerId);
@@ -159,9 +146,7 @@ function selectOpt(el, containerId) {
     el.classList.add('bg-pink-500', 'text-white');
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Theme grid (só Dark e Light)
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 function buildThemes() {
     const grid = document.getElementById('themeGrid');
@@ -180,7 +165,7 @@ function buildThemes() {
         ).join('');
         const mainLines = [
             ...t.lines.map((c, i) => `<div class="h-[3px] rounded-sm" style="width:${lw[i % lw.length]}%;background:${c};opacity:.8"></div>`),
-            ...t.lines.map((c, i) => `<div class="h-[3px] rounded-sm" style="width:${lw[(i+2) % lw.length]}%;background:${c};opacity:.35"></div>`),
+            ...t.lines.map((c, i) => `<div class="h-[3px] rounded-sm" style="width:${lw[(i + 2) % lw.length]}%;background:${c};opacity:.35"></div>`),
         ].join('');
 
         card.innerHTML = `
@@ -207,9 +192,7 @@ function buildThemes() {
     });
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Color grid + card preview text adaptation
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 function buildColors() {
     const grid = document.getElementById('colorGrid');
@@ -218,11 +201,11 @@ function buildColors() {
         const selBorder = c.light ? 'border-gray-500' : 'border-gray-800';
         el.className = 'relative rounded-lg border-2 cursor-pointer overflow-hidden hover:scale-[1.04] transition-all duration-200 ' +
             (idx === 0 ? selBorder : 'border-transparent');
-        el.style.cssText  = `background:${c.grad}; aspect-ratio:16/9`;
-        el.dataset.key    = c.key;
+        el.style.cssText = `background:${c.grad}; aspect-ratio:16/9`;
+        el.dataset.key = c.key;
         el.dataset.selBorder = selBorder;
 
-        const labelColor  = c.light ? 'rgba(55,65,81,.75)'  : 'rgba(255,255,255,.85)';
+        const labelColor = c.light ? 'rgba(55,65,81,.75)' : 'rgba(255,255,255,.85)';
         const checkStroke = c.light ? '#374151' : 'white';
 
         el.innerHTML = `
@@ -249,32 +232,27 @@ function selectColor(c) {
         active.querySelector('.check-overlay').classList.replace('opacity-0', 'opacity-100');
     }
 
-    state.colorKey   = c.key;
-    state.colorGrad  = c.grad;
+    state.colorKey = c.key;
+    state.colorGrad = c.grad;
     state.colorLight = c.light;
 
     document.getElementById('cardPreview').style.background = c.grad;
 
-    // adapta textos e bordas do card para cor clara (branco)
     const isLight = c.light;
     const nameEl = document.getElementById('previewName');
     nameEl.style.color = isLight ? '#1f2937' : '#ffffff';
 
-    document.getElementById('previewSchool').style.color  = isLight ? 'rgba(55,65,81,.55)' : 'rgba(255,255,255,.5)';
-    document.getElementById('previewId').style.color      = isLight ? 'rgba(55,65,81,.35)' : 'rgba(255,255,255,.3)';
-    document.getElementById('previewYear').style.color      = isLight ? 'rgba(55,65,81,.5)'  : 'rgba(255,255,255,.6)';
-    document.getElementById('previewYear').style.background = isLight ? 'rgba(0,0,0,.07)'   : 'rgba(255,255,255,.15)';
+    document.getElementById('previewSchool').style.color = isLight ? 'rgba(55,65,81,.55)' : 'rgba(255,255,255,.5)';
+    document.getElementById('previewId').style.color = isLight ? 'rgba(55,65,81,.35)' : 'rgba(255,255,255,.3)';
+    document.getElementById('previewYear').style.color = isLight ? 'rgba(55,65,81,.5)' : 'rgba(255,255,255,.6)';
+    document.getElementById('previewYear').style.background = isLight ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.15)';
 
     const mini = document.getElementById('previewPhotoMini');
     mini.style.borderColor = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.25)';
-    mini.style.background  = isLight ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.15)';
+    mini.style.background = isLight ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.15)';
 
     document.getElementById('cardPatternOverlay').style.opacity = isLight ? '0.03' : '0.05';
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Avatar grid — 16 imagens de public/images
-// ─────────────────────────────────────────────────────────────────────────────
 
 function buildAvatars() {
     const grid = document.getElementById('avatarGrid');
@@ -310,9 +288,9 @@ function selectAvatar(av, btnEl) {
         btnEl.querySelector('.avcheck')?.classList.replace('opacity-0', 'opacity-100');
     }
 
-    state.avatarType    = 'preset';
-    state.avatarId      = av.id;
-    state.avatarUrl     = av.url;
+    state.avatarType = 'preset';
+    state.avatarId = av.id;
+    state.avatarUrl = av.url;
     state.avatarDataUrl = av.url;
     updateCardPhoto(av.url, false);
 }
@@ -322,16 +300,13 @@ function updateCardPhoto(src) {
     mini.innerHTML = `<img src="${src}" class="w-full h-full object-cover">`;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Events
-// ─────────────────────────────────────────────────────────────────────────────
 
 function bindEvents() {
     document.getElementById('nameInput').addEventListener('input', () => {
         const v = document.getElementById('nameInput').value.trim();
         state.name = v;
         document.getElementById('namePreviewVal').textContent = v ? v.toUpperCase() : '—';
-        document.getElementById('previewName').textContent    = v ? v.toUpperCase() : 'SEU NOME';
+        document.getElementById('previewName').textContent = v ? v.toUpperCase() : 'SEU NOME';
         document.getElementById('nextStep1').disabled = v.length < 2;
     });
 
@@ -362,29 +337,57 @@ function bindEvents() {
         }
         if (state.currentStep === 2) {
             const cards = [...document.querySelectorAll('#themeGrid > div')];
-            const ci    = cards.findIndex(c => c.classList.contains('border-pink-500'));
+            const ci = cards.findIndex(c => c.classList.contains('border-pink-500'));
             if (e.key === 'ArrowRight' && ci < cards.length - 1) cards[ci + 1].click();
-            if (e.key === 'ArrowLeft'  && ci > 0)                 cards[ci - 1].click();
+            if (e.key === 'ArrowLeft' && ci > 0) cards[ci - 1].click();
         }
     });
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Finish
-// ─────────────────────────────────────────────────────────────────────────────
 
 async function finish(skip = false) {
     const ld = document.getElementById('loadingScreen');
+    const lb = document.getElementById('progressBar');
+    const statusEl = document.getElementById('statusLabel');
+
+
     ld.classList.remove('hidden');
     ld.classList.add('flex');
 
+
+    const messages = [
+        'Configurando sua conta...',
+        'Salvando preferências...',
+        'Preparando o dashboard...',
+        'Quase lá...',
+    ];
+    let mi = 0;
+    const msgInterval = setInterval(() => {
+        mi = (mi + 1) % messages.length;
+        statusEl.style.transition = 'opacity .3s';
+        statusEl.style.opacity = '0';
+        setTimeout(() => {
+            statusEl.textContent = messages[mi];
+            statusEl.style.opacity = '';
+        }, 300);
+    }, 1800);
+
+    const setProgress = w => { if (lb) lb.style.width = w + '%'; };
+
     try {
+        setProgress(15);
         if (!skip && state.name)
             await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ name: state.name }) });
+
+        setProgress(35);
         if (!skip && state.colorKey)
             await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ card_color: state.colorKey }) });
+
+        setProgress(55);
         if (!skip && state.themeKey)
             await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ theme: state.themeKey }) });
+
+        setProgress(72);
         if (!skip && state.avatarType === 'upload' && state.avatarFile) {
             const form = new FormData();
             form.append('photo', state.avatarFile);
@@ -392,10 +395,18 @@ async function finish(skip = false) {
         } else if (!skip && state.avatarType === 'preset' && state.avatarId) {
             await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ preset_avatar: state.avatarId }) });
         }
+
+        setProgress(90);
         await fetch(`${API_BASE}/profile`, { method: 'PUT', headers: authHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ onboarding_done: true }) });
+
+        setProgress(100);
     } catch (e) { console.error(e); }
 
-    window.location.href = '/dashboard';
+    clearInterval(msgInterval);
+    setTimeout(() => {
+        ld.classList.add('done');
+        setTimeout(() => { window.location.href = '/dashboard'; }, 500);
+    }, 400);
 }
 
 init();

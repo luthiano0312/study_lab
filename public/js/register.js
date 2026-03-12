@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Máscara de telefone
     const phoneInput = document.getElementById('phone');
     if (phoneInput && typeof IMask !== 'undefined') {
         IMask(phoneInput, { mask: '(00) 00000-0000' });
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // 🔹 Limpa erros antigos
         document.querySelectorAll('.error-text').forEach(el => {
             el.classList.add('hidden');
             el.innerText = '';
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } else {
 
-            // 🔹 Se houver erros de validação do Laravel
             if (data.errors) {
 
                 Object.entries(data.errors).forEach(([field, messages]) => {
@@ -71,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
             } else if (data.message) {
-                // erro geral (fallback)
                 alert(data.message);
             }
 
