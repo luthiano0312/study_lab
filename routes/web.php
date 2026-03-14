@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Subject;
 use App\Models\Activity;
 use App\Models\Exam;
+use App\Models\Content;
 
 Route::get('/', fn() => view('index'));
 
@@ -40,3 +41,10 @@ Route::get('/exams/edit/{id}', function ($id) {
     $exam = Exam::findOrFail($id);
     return view('notes.exam.edit', compact('exam'));
 })->name('exam.edit');
+
+Route::get('/contents', fn() => view('subjects.content.index'))->name('content.index');
+Route::get('/contents/create', fn() => view('subjects.content.create'))->name('content.create');
+Route::get('/contents/edit/{id}', function ($id) {
+    $content = Content::findOrFail($id);
+    return view('subjects.content.edit', compact('content'));
+})->name('content.edit');
