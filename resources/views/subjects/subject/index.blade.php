@@ -78,7 +78,7 @@
         <div class="relative z-10 max-w-5xl mx-auto px-6 py-10">
             <div class="flex flex-wrap items-end justify-between gap-4 mb-8 fade-up">
                 <div>
-                    <p class="text-[10px] font-black tracking-widest uppercase text-pink-400 mb-1">📖 Painel acadêmico</p>
+
                     <h1 class="text-4xl font-black text-gray-900 leading-tight" style="font-family:'Syne',sans-serif;">
                         Minhas Matérias</h1>
                     <p class="text-sm text-gray-400 font-semibold mt-1">Gerencie suas matérias cadastradas com facilidade

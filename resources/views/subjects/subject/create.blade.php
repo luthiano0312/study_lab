@@ -215,7 +215,7 @@
                     <hr class="border-gray-100">
 
                     <div class="flex justify-end gap-2.5">
-                        <a href="{{ route('subject.index') }}"
+                        <a href="/subjects"
                             class="inline-flex items-center gap-1.5 border border-pink-200 hover:border-pink-300 text-pink-500 hover:text-pink-700 font-bold text-sm px-5 py-2.5 rounded-xl transition-colors">Cancelar</a>
                         <button type="submit" id="submitBtn"
                             class="inline-flex items-center gap-1.5 bg-pink-600 hover:bg-pink-700 text-white font-black text-sm px-6 py-2.5 rounded-xl shadow-lg shadow-pink-200 transition-all hover:-translate-y-0.5 disabled:opacity-60">

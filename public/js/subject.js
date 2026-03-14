@@ -1,6 +1,6 @@
 'use strict';
 
-const API = 'http://127.0.0.1:8000/api/subjects';
+const API = '/api/subjects';
 
 const KNOWN_NAMES = [
     'Português','Literatura','Redação','Matemática','Física','Química',
