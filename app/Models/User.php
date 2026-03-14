@@ -93,6 +93,13 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all schedule images owned by the user.
+     */
+    public function scheduleImages(): HasMany
+    {
+        return $this->hasMany(ScheduleImage::class);
+    }
+    /**
      * Retorna a URL pública do avatar, ou null.
      */
     public function getAvatarUrlAttribute(): ?string
