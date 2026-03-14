@@ -85,6 +85,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all contents owned by the user.
+     */
+    public function contents(): HasMany
+    {
+        return $this->hasMany(Content::class);
+    }
+
+    /**
      * Retorna a URL pública do avatar, ou null.
      */
     public function getAvatarUrlAttribute(): ?string
