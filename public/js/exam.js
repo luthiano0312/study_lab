@@ -1,274 +1,317 @@
 
-const API = '/api/exams';
+'use strict';
 
-const PAGE = (() => {
-    const p = location.pathname;
-    if (p.includes('/create'))     return 'create';
-    if (p.match(/\/exams\/edit\//)) return 'edit';
-    return 'index';
-})();
+const DAYS_PT     = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const DAYS_FULL   = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+const MONTHS_PT   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MONTHS_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const API  = '/api/exams';
+const hdrs = () => ({ 'Content-Type':'application/json','Accept':'application/json','Authorization':`Bearer ${localStorage.getItem('auth_token')}` });
 
-const $    = id => document.getElementById(id);
-const hdrs = () => ({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-});
-const fmtDate = s => { if (!s) return '—'; const [y,m,d] = s.split('-'); return `${d}/${m}/${y}`; };
+let allExams    = [];
+let allSubjects = [];
+let weekOffset  = 0;
 
-const DIFFICULTY = {
-    pending:     { bg: 'bg-red-100',    text: 'text-red-800',    label: '❌ Difícil'  },
-    in_progress: { bg: 'bg-green-100',  text: 'text-green-800',  label: '✅ Fácil'    },
-    completed:   { bg: 'bg-yellow-100', text: 'text-yellow-800', label: '❗ Médio'    },
-};
+const $       = id => document.getElementById(id);
+const isoDate = d  => d.toISOString().slice(0,10);
 
-const showModal = id => { const m = $(id); if (m) m.style.display = 'flex'; };
-const hideModal = id => { const m = $(id); if (m) m.style.display = 'none'; };
+function weekDates(offset = 0) {
+  const now = new Date();
+  const day = now.getDay();
+  const mon = new Date(now);
+  mon.setDate(now.getDate() - (day === 0 ? 6 : day - 1) + offset * 7);
+  return Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(mon); d.setDate(mon.getDate() + i); return d;
+  });
+}
 
 function showToast(msg) {
-    const t = $('toast'); if (!t) return;
-    const p = t.querySelector('p');
-    if (p && msg) p.textContent = msg;
-    t.style.display = 'flex';
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => { t.style.display = 'none'; }, 3000);
+  $('toastMsg').textContent = msg;
+  const t = $('toast'); t.style.display = 'flex';
+  setTimeout(() => { t.style.display = 'none'; }, 2800);
+}
+
+function renderCalendar() {
+  const days     = weekDates(weekOffset);
+  const todayISO = isoDate(new Date());
+
+  const m1 = days[0], m2 = days[4];
+  $('weekLabel').textContent =
+    `${m1.getDate()} de ${MONTHS_PT[m1.getMonth()]} – ${m2.getDate()} de ${MONTHS_PT[m2.getMonth()]} de ${m2.getFullYear()}`;
+
+  $('calHead').innerHTML = days.map(d => {
+    const isToday = isoDate(d) === todayISO;
+    return `<th style="width:20%;padding:10px 8px;text-align:center;">
+      <div class="inline-flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl ${isToday ? 'bg-pink-600' : ''}">
+        <span class="text-[9px] font-black tracking-widest uppercase ${isToday ? 'text-pink-200' : 'text-gray-400'}">${DAYS_PT[d.getDay()]}</span>
+        <span class="font-black leading-none text-xl ${isToday ? 'text-white' : 'text-gray-800'}" style="font-family:'Syne',sans-serif;">${d.getDate()}</span>
+        <span class="text-[9px] font-bold ${isToday ? 'text-pink-200' : 'text-gray-400'}">${MONTHS_PT[d.getMonth()]}</span>
+      </div>
+    </th>`;
+  }).join('');
+
+  const cardCls = {
+    pending:     'bg-orange-50 border border-orange-200 text-orange-700',
+    in_progress: 'bg-blue-50 border border-blue-200 text-blue-700',
+    completed:   'bg-green-50 border border-green-200 text-green-700',
+  };
+  const badgeCls = {
+    pending:     'bg-orange-100 text-orange-700',
+    in_progress: 'bg-blue-100 text-blue-700',
+    completed:   'bg-green-100 text-green-700',
+  };
+  const badgeTxt = { pending:'Pendente', in_progress:'Andamento', completed:'Concluída' };
+
+  $('calBody').innerHTML = days.map(d => {
+    const iso      = isoDate(d);
+    const isToday  = iso === todayISO;
+    const dayExams = allExams.filter(e => e.due_date?.slice(0,10) === iso);
+
+    const cards = dayExams.map(e => {
+      const cs = cardCls[e.status]  || cardCls.pending;
+      const bs = badgeCls[e.status] || badgeCls.pending;
+      const bl = badgeTxt[e.status] || 'Pendente';
+      return `<div onclick="openEdit(${e.id})"
+                   class="relative rounded-xl p-2 mb-1 cursor-pointer hover:-translate-y-px hover:shadow-md transition-all ${cs}">
+        <p class="text-[11px] font-black leading-tight truncate">${e.type}</p>
+        <p class="text-[10px] opacity-70 mt-0.5 truncate">${e.description}${e.time_info ? ' · ' + e.time_info : ''}</p>
+        <span class="inline-flex items-center mt-1 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full ${bs}">${bl}</span>
+      </div>`;
+    }).join('');
+
+    const addLabel = `${DAYS_FULL[d.getDay()]}, ${d.getDate()} de ${MONTHS_FULL[d.getMonth()]}`;
+    return `<td class="${isToday ? 'bg-pink-50/40' : ''}"
+               style="padding:8px 6px;vertical-align:top;border-top:1px solid #fce7f3;min-height:80px;min-width:120px;">
+      <div class="min-h-16">
+        ${cards}
+        <button onclick="openNew('${iso}','${addLabel}')"
+                class="w-full mt-1 flex items-center justify-center gap-1 bg-pink-50 hover:bg-pink-100 border border-dashed border-pink-200 text-pink-600 rounded-xl py-1.5 text-[11px] font-black cursor-pointer transition-colors">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar
+        </button>
+      </div>
+    </td>`;
+  }).join('');
 }
 
 
-const FORM_FIELDS = ['type', 'description', 'due_date', 'status'];
-
-function setError(id, msg) {
-    $(id)?.classList.add('border-red-400');
-    const err = $(`err-${id}`);
-    if (err) { if (msg) err.textContent = msg; err.classList.remove('hidden'); }
-}
-function clearError(id) {
-    $(id)?.classList.remove('border-red-400');
-    $(`err-${id}`)?.classList.add('hidden');
-}
-const clearAllErrors = () => FORM_FIELDS.forEach(clearError);
-
-
-function bindSelectOther(selectId, extraId) {
-    const sel = $(selectId), extra = $(extraId);
-    if (!sel || !extra) return;
-    sel.addEventListener('change', () => {
-        extra.classList.toggle('hidden', sel.value !== 'outro');
-        if (sel.value === 'outro') extra.querySelector('input')?.focus();
-        clearError(selectId);
-    });
+function renderStats() {
+  $('statTotal').textContent    = allExams.length;
+  $('statPending').textContent  = allExams.filter(e => e.status === 'pending').length;
+  $('statProgress').textContent = allExams.filter(e => e.status === 'in_progress').length;
+  $('statDone').textContent     = allExams.filter(e => e.status === 'completed').length;
 }
 
-function getFieldValue(selectId, customId) {
-    const sel = $(selectId); if (!sel) return '';
-    return sel.value === 'outro' ? ($(`${customId}`)?.value.trim() || '') : sel.value;
+async function loadSubjects() {
+  try {
+    const r = await fetch('/api/subjects', { headers: hdrs() });
+    if (!r.ok) return;
+    allSubjects = await r.json();
+    populateSubjectSelect();
+  } catch (e) { console.error(e); }
 }
 
-function prefillSelect(selectId, value, extraId, customId) {
-    if (!value) return;
-    const sel = $(selectId), extra = $(extraId), cust = $(customId);
-    if (!sel) return;
-    const exists = [...sel.options].some(o => o.value === value);
-    if (exists) { sel.value = value; }
-    else { sel.value = 'outro'; extra?.classList.remove('hidden'); if (cust) cust.value = value; }
+function populateSubjectSelect() {
+  const sel = $('modalDesc'); if (!sel) return;
+  sel.innerHTML = '<option value="" disabled selected>Selecione uma matéria...</option>';
+  allSubjects.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value       = s.name;
+    opt.textContent = s.abbreviation ? `${s.name} (${s.abbreviation})` : s.name;
+    sel.appendChild(opt);
+  });
+  const outro = document.createElement('option');
+  outro.value       = '__outro__';
+  outro.textContent = '✏️ Digitar manualmente...';
+  sel.appendChild(outro);
 }
-
-function collectAndValidate() {
-    clearAllErrors();
-    const type        = getFieldValue('type', 'type_custom');
-    const description = ($('description')?.value || '').trim();
-    const due_date    = $('due_date')?.value || '';
-    const status      = $('status')?.value || '';
-
-    let valid = true;
-    if (!type)        { setError('type',        'Selecione ou informe o tipo.'); valid = false; }
-    if (!description) { setError('description', 'Informe uma descrição.');       valid = false; }
-    if (!due_date)    { setError('due_date',     'Informe a data da prova.');     valid = false; }
-    if (!status)      { setError('status',       'Selecione o status.');          valid = false; }
-
-    return valid ? { type, description, due_date, status } : null;
-}
-
-
-function bindSubmitForm({ examId, isEdit }) {
-    const form  = $('examForm');
-    const btn   = $('submitBtn');
-    const label = $('btnLabel');
-    const defaultLabel = isEdit ? 'Salvar alterações' : 'Salvar prova';
-
-    FORM_FIELDS.forEach(id => {
-        $(id)?.addEventListener('input',  () => clearError(id));
-        $(id)?.addEventListener('change', () => clearError(id));
-    });
-
-    form?.addEventListener('submit', async e => {
-        e.preventDefault();
-        if (btn.disabled) return;
-
-        const payload = collectAndValidate();
-        if (!payload) return;
-
-        btn.disabled = true; label.textContent = 'Salvando...';
-
-        try {
-            const url = isEdit ? `${API}/${examId}` : API;
-            const r   = await fetch(url, { method: isEdit ? 'PUT' : 'POST', headers: hdrs(), body: JSON.stringify(payload) });
-            const data = await r.json();
-
-            if (r.ok) {
-                showToast(isEdit ? 'Prova atualizada!' : 'Prova cadastrada!');
-                setTimeout(() => location.href = '/exams', 1400);
-                return;
-            }
-            if (data.errors) Object.entries(data.errors).forEach(([k, v]) => setError(k, v[0]));
-            else alert(data.message || 'Erro ao salvar.');
-        } catch { alert('Erro de conexão. Tente novamente.'); }
-
-        btn.disabled = false; label.textContent = defaultLabel;
-    });
-}
-
-
-function bindDeleteModal(examId, { onSuccess }) {
-    $('deleteBtn')?.addEventListener('click',    () => showModal('deleteModal'));
-    $('cancelDelete')?.addEventListener('click', () => hideModal('deleteModal'));
-
-    $('confirmDelete')?.addEventListener('click', async () => {
-        const btn = $('confirmDelete');
-        btn.textContent = 'Excluindo...'; btn.disabled = true;
-        try {
-            const r = await fetch(`${API}/${examId}`, { method: 'DELETE', headers: hdrs() });
-            if (!r.ok) throw new Error();
-            hideModal('deleteModal');
-            showToast('Prova excluída!');
-            onSuccess();
-        } catch { alert('Erro ao excluir. Tente novamente.'); }
-        finally  { btn.textContent = 'Sim, excluir'; btn.disabled = false; }
-    });
-}
-
 
 async function loadExams() {
-    try {
-        const r = await fetch(API, { headers: hdrs() });
-        if (!r.ok) throw new Error();
-        const exams = await r.json();
-        renderTable(exams);
-        renderStats(exams);
-    } catch {
-        $('examsTable').innerHTML =
-            `<tr><td colspan="5" class="px-6 py-10 text-center text-gray-400 text-sm">Erro ao carregar provas. Tente novamente.</td></tr>`;
-    }
+  try {
+    const r = await fetch(API, { headers: hdrs() });
+    if (!r.ok) return;
+    allExams = await r.json();
+    renderCalendar();
+    renderStats();
+  } catch (e) { console.error(e); }
 }
 
-function renderStats(exams) {
-    let pending = 0, progress = 0, completed = 0;
-    for (const e of exams) {
-        if (e.status === 'pending')     pending++;
-        if (e.status === 'in_progress') progress++;
-        if (e.status === 'completed')   completed++;
-    }
-    const set = (id, v) => { const el = $(id); if (el) el.textContent = v; };
-    set('totalCount',    exams.length);
-    set('pendingCount',  pending);
-    set('progressCount', progress);
-    set('completedCount',completed);
+
+function getDescValue() {
+  const sel = $('modalDesc').value;
+  return sel === '__outro__' ? $('descCustom').value.trim() : (sel || '').trim();
 }
 
-function renderTable(exams) {
-    const tbody = $('examsTable');
-    if (!exams.length) {
-        tbody.innerHTML = `
-            <tr><td colspan="5" class="px-6 py-14 text-center">
-                <div class="flex flex-col items-center gap-3">
-                    <span class="text-4xl">📝</span>
-                    <p class="text-gray-400 text-sm font-semibold">Nenhuma prova cadastrada ainda.</p>
-                    <a href="/exams/create" class="text-pink-500 text-sm font-bold hover:underline">+ Adicionar primeira prova</a>
-                </div>
-            </td></tr>`;
-        return;
-    }
-
-    const editSVG   = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-    const trashSVG  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>`;
-
-    tbody.innerHTML = exams.map(exam => {
-        const d = DIFFICULTY[exam.status] || DIFFICULTY.pending;
-        const badge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${d.bg} ${d.text}">${d.label}</span>`;
-        return `
-        <tr class="border-b border-gray-50 hover:bg-pink-50/30 transition-colors">
-            <td class="px-6 py-4 text-center"><span class="text-sm font-semibold text-gray-800">${exam.type}</span></td>
-            <td class="px-4 py-4 text-center max-w-xs"><span class="text-sm text-gray-500">${exam.description}</span></td>
-            <td class="px-4 py-4 text-center"><span class="text-sm font-semibold text-gray-700">${fmtDate(exam.due_date)}</span></td>
-            <td class="px-4 py-4 text-center">${badge}</td>
-            <td class="px-4 py-4 text-center">
-                <div class="flex items-center justify-center gap-2">
-                    <button data-edit="${exam.id}" class="inline-flex items-center gap-1 text-xs font-bold text-pink-500 hover:text-pink-700 border border-pink-200 hover:border-pink-400 px-3 py-1.5 rounded-lg transition-colors">
-                        ${editSVG} Editar
-                    </button>
-                    <button data-delete="${exam.id}" class="inline-flex items-center gap-1 text-xs font-bold text-red-400 hover:text-red-600 border border-red-100 hover:border-red-300 px-3 py-1.5 rounded-lg transition-colors">
-                        ${trashSVG} Excluir
-                    </button>
-                </div>
-            </td>
-        </tr>`;
-    }).join('');
+function setDescValue(value) {
+  if (!value) { $('modalDesc').value = ''; $('descCustom').classList.add('hidden'); return; }
+  const opts = Array.from($('modalDesc').options).map(o => o.value);
+  if (opts.includes(value)) {
+    $('modalDesc').value = value;
+    $('descCustom').classList.add('hidden');
+  } else {
+    $('modalDesc').value = '__outro__';
+    $('descCustom').classList.remove('hidden');
+    $('descCustom').value = value;
+  }
 }
 
-async function initIndex() {
+
+function resetModal() {
+  $('modalType').value  = 'Prova';
+  $('typeCustom').value = '';
+  $('typeCustomWrap').classList.add('hidden');
+  $('modalDesc').value  = '';
+  $('descCustom').value = '';
+  $('descCustom').classList.add('hidden');
+  $('modalTime').value  = '';
+  document.querySelectorAll('[name="modalStatus"]').forEach(r => r.checked = r.value === 'pending');
+  updateStatusLabels();
+  $('modalDelete').classList.add('hidden');
+  $('modalDelete').classList.remove('flex');
+  $('modalExamId').value = '';
+  $('errType').classList.add('hidden');
+  $('errDesc').classList.add('hidden');
+}
+
+function updateStatusLabels() {
+  const val = document.querySelector('[name="modalStatus"]:checked')?.value;
+  const cfg = {
+    pending:     { on: 'border-orange-200 bg-orange-50 text-orange-700', off: 'border-gray-200 bg-gray-50 text-gray-400' },
+    in_progress: { on: 'border-blue-200 bg-blue-50 text-blue-700',      off: 'border-gray-200 bg-gray-50 text-gray-400' },
+    completed:   { on: 'border-green-200 bg-green-50 text-green-700',   off: 'border-gray-200 bg-gray-50 text-gray-400' },
+  };
+  const map  = { pending: 'lblPending', in_progress: 'lblProgress', completed: 'lblDone' };
+  const base = 'flex-1 flex items-center justify-center gap-1 py-2 rounded-xl border-2 cursor-pointer text-[11px] font-black uppercase tracking-wider transition-all';
+  Object.entries(map).forEach(([v, id]) => {
+    $(id).className = `${base} ${v === val ? cfg[v].on : cfg[v].off}`;
+  });
+}
+
+function showModal() { $('examModal').style.display = 'flex'; setTimeout(() => $('modalDesc').focus(), 80); }
+function hideModal() { $('examModal').style.display = 'none'; }
+
+function openNew(iso, dateLabel) {
+  resetModal();
+  $('modalTitle').textContent     = 'Nova prova';
+  $('modalSaveLabel').textContent = 'Salvar prova';
+  $('modalDateLabel').textContent = dateLabel;
+  $('modalDate').value            = iso;
+  showModal();
+}
+
+function openEdit(id) {
+  const e = allExams.find(x => x.id === id); if (!e) return;
+  resetModal();
+  $('modalTitle').textContent     = 'Editar prova';
+  $('modalSaveLabel').textContent = 'Salvar alterações';
+  $('modalExamId').value          = id;
+
+  const d = new Date(e.due_date + 'T00:00:00');
+  $('modalDateLabel').textContent = `${DAYS_FULL[d.getDay()]}, ${d.getDate()} de ${MONTHS_FULL[d.getMonth()]}`;
+  $('modalDate').value            = e.due_date?.slice(0, 10) || '';
+
+
+  const opts = Array.from($('modalType').options).map(o => o.value);
+  if (opts.includes(e.type)) {
+    $('modalType').value = e.type;
+  } else {
+    $('modalType').value = 'Outro';
+    $('typeCustomWrap').classList.remove('hidden');
+    $('typeCustom').value = e.type;
+  }
+
+
+  setDescValue(e.description || '');
+
+  $('modalTime').value = e.time_info || '';
+
+  const r = document.querySelector(`[name="modalStatus"][value="${e.status}"]`);
+  if (r) r.checked = true;
+  updateStatusLabels();
+
+  $('modalDelete').classList.remove('hidden');
+  $('modalDelete').classList.add('flex');
+  showModal();
+}
+
+
+async function saveExam() {
+  const typeVal = $('modalType').value === 'Outro' ? $('typeCustom').value.trim() : $('modalType').value;
+  const desc    = getDescValue();
+  let ok        = true;
+
+  typeVal ? $('errType').classList.add('hidden') : ($('errType').classList.remove('hidden'), ok = false);
+  desc    ? $('errDesc').classList.add('hidden') : ($('errDesc').classList.remove('hidden'), ok = false);
+  if (!ok) return;
+
+  const status   = document.querySelector('[name="modalStatus"]:checked')?.value || 'pending';
+  const dueDate  = $('modalDate').value;
+  const examId   = $('modalExamId').value;
+  const timeInfo = $('modalTime').value.trim();
+  const payload  = { type: typeVal, description: desc, due_date: dueDate, status };
+  if (timeInfo) payload.time_info = timeInfo;
+
+  const btn = $('modalSave');
+  btn.disabled = true;
+  $('modalSaveLabel').textContent = 'Salvando...';
+
+  try {
+    const isEdit = !!examId;
+    const r = await fetch(isEdit ? `${API}/${examId}` : API, {
+      method: isEdit ? 'PUT' : 'POST',
+      headers: hdrs(),
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) { const d = await r.json(); showToast(d.message || 'Erro ao salvar.'); return; }
+    hideModal();
     await loadExams();
-
-    let deleteId = null;
-
-    $('cancelDelete')?.addEventListener('click',  () => hideModal('deleteModal'));
-    $('confirmDelete')?.addEventListener('click', async () => {
-        if (!deleteId) return;
-        const btn = $('confirmDelete');
-        btn.textContent = 'Excluindo...'; btn.disabled = true;
-        try {
-            const r = await fetch(`${API}/${deleteId}`, { method: 'DELETE', headers: hdrs() });
-            if (!r.ok) throw new Error();
-            hideModal('deleteModal');
-            showToast('Prova excluída!');
-            await loadExams();
-        } catch { alert('Erro ao excluir. Tente novamente.'); }
-        finally  { btn.textContent = 'Sim, excluir'; btn.disabled = false; }
-    });
-
-    // Delegated click on table
-    $('examsTable')?.addEventListener('click', e => {
-        const del  = e.target.closest('[data-delete]');
-        const edit = e.target.closest('[data-edit]');
-        if (del)  { deleteId = del.dataset.delete; showModal('deleteModal'); }
-        if (edit) { location.href = `/exams/edit/${edit.dataset.edit}`; }
-    });
-}
-
-function initCreate() {
-    bindSelectOther('type', 'extra-type');
-    bindSubmitForm({ examId: null, isEdit: false });
+    showToast(isEdit ? 'Prova atualizada! ✓' : 'Prova cadastrada! ✓');
+  } catch (e) { console.error(e); showToast('Erro de conexão.'); }
+  finally {
+    btn.disabled = false;
+    $('modalSaveLabel').textContent = $('modalExamId').value ? 'Salvar alterações' : 'Salvar prova';
+  }
 }
 
 
-function initEdit() {
-    const form = $('examForm'); if (!form) return;
-    const examId = form.dataset.id;
-
-    bindSelectOther('type', 'extra-type');
-    prefillSelect('type', form.dataset.type, 'extra-type', 'type_custom');
-
-    const fill = (id, val) => { const el = $(id); if (el) el.value = val || ''; };
-    fill('description', form.dataset.description);
-    fill('due_date',    form.dataset.due_date);
-    fill('status',      form.dataset.status);
-
-    bindSubmitForm({ examId, isEdit: true });
-    bindDeleteModal(examId, { onSuccess: () => setTimeout(() => location.href = '/exams', 1400) });
+async function deleteExam() {
+  const id = $('modalExamId').value; if (!id) return;
+  if (!confirm('Excluir esta prova?')) return;
+  try {
+    const r = await fetch(`${API}/${id}`, { method: 'DELETE', headers: hdrs() });
+    if (!r.ok) return;
+    hideModal(); await loadExams(); showToast('Prova excluída.');
+  } catch (e) { console.error(e); }
 }
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (PAGE === 'index')  initIndex();
-    if (PAGE === 'create') initCreate();
-    if (PAGE === 'edit')   initEdit();
+  loadExams();
+  loadSubjects();
+
+  $('prevWeek').addEventListener('click', () => { weekOffset--; renderCalendar(); });
+  $('nextWeek').addEventListener('click', () => { weekOffset++; renderCalendar(); });
+  $('todayBtn').addEventListener('click', () => { weekOffset = 0; renderCalendar(); });
+
+  $('modalClose').addEventListener('click', hideModal);
+  $('modalCancel').addEventListener('click', hideModal);
+  $('modalSave').addEventListener('click', saveExam);
+  $('modalDelete').addEventListener('click', deleteExam);
+
+  $('examModal').addEventListener('click', e => { if (e.target === $('examModal')) hideModal(); });
+
+  $('modalType').addEventListener('change', () => {
+    $('typeCustomWrap').classList.toggle('hidden', $('modalType').value !== 'Outro');
+  });
+
+  $('modalDesc').addEventListener('change', () => {
+    $('descCustom').classList.toggle('hidden', $('modalDesc').value !== '__outro__');
+    if ($('modalDesc').value === '__outro__') $('descCustom').focus();
+    $('errDesc').classList.add('hidden');
+  });
+
+
+  document.querySelectorAll('[name="modalStatus"]').forEach(r => {
+    r.addEventListener('change', updateStatusLabels);
+  });
 });
