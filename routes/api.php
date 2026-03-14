@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\ExamController;
 use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\ScheduleImageController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('exams',      ExamController::class);
     Route::apiResource('grades',     GradeController::class);
     Route::apiResource('contents',  ContentController::class);
+    Route::apiResource('scheduleImages', ScheduleImageController::class);
 });
