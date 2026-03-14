@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>StudyLab</title>
+    <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -65,28 +66,23 @@
                         icon="book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
                             [
                                 'label' => 'Ver matérias',
-                                'href' => route('subject.index'),
+                                'href' => '/subjects',
                                 'icon' => 'book_4_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
                             ],
                             [
                                 'label' => 'Ver conteúdos',
-                                'href' => '#',
+                                'href' => '/contents',
                                 'icon' => 'full_coverage_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
                             ],
                             [
                                 'label' => 'Ver atividades',
-                                'href' => route('activity.index'),
+                                'href' => '/activities',
                                 'icon' => 'notes_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
                             ],
                         ]" />
 
                     <x-sb-item href="/horary" :active="request()->is('horary*')" label="Horários"
                         icon="pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
-                            [
-                                'label' => 'Cadastrar manualmente',
-                                'href' => '#',
-                                'icon' => 'calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
-                            ],
                             [
                                 'label' => 'Upload de foto',
                                 'href' => '#',
@@ -98,7 +94,7 @@
                         icon="news_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
                             [
                                 'label' => 'Ver Provas',
-                                'href' => route('exam.index'),
+                                'href' => '/exams',
                                 'icon' => 'dual_screen_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
                             ],
                             [

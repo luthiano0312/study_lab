@@ -1,3 +1,4 @@
+'use strict';
 
 const API = 'http://127.0.0.1:8000/api/subjects';
 
@@ -26,7 +27,6 @@ const KNOWN_SEMESTERS = ['1','2','3','4','5','6','7','8','9','10'];
 
 const AVATAR_COLORS = ['#db2777','#7c3aed','#0891b2','#059669','#d97706','#be185d'];
 
-
 const $    = id => document.getElementById(id);
 const hdrs = (ct = false) => ({
     'Accept': 'application/json',
@@ -35,25 +35,22 @@ const hdrs = (ct = false) => ({
 });
 const initials = name => (name || '?').trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
-
 function showErr(id, msg) {
-    $(id)?.classList.add('is-error');
+    $(id)?.classList.add('border-red-400');
     const e = $(`err-${id}`);
-    if (e) { if (msg) e.textContent = msg; e.classList.add('show'); }
+    if (e) { if (msg) e.textContent = msg; e.classList.remove('hidden'); }
 }
 function clearErr(id) {
-    $(id)?.classList.remove('is-error');
-    $(`err-${id}`)?.classList.remove('show');
+    $(id)?.classList.remove('border-red-400');
+    $(`err-${id}`)?.classList.add('hidden');
 }
-
 
 function showToast() {
     const t = $('toast'); if (!t) return;
-    t.classList.remove('hidden');
+    t.style.display = 'flex';
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => t.classList.add('hidden'), 3000);
+    showToast._t = setTimeout(() => { t.style.display = 'none'; }, 3000);
 }
-
 
 const emptyState = (icon, title, sub) => `
     <tr><td colspan="5">
@@ -63,7 +60,6 @@ const emptyState = (icon, title, sub) => `
             <p class="text-gray-400 text-xs">${sub}</p>
         </div>
     </td></tr>`;
-
 
 async function fetchSubjects() {
     try {
@@ -94,7 +90,7 @@ function renderSubjects(subjects) {
     tbody.innerHTML = subjects.map((s, i) => {
         const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
         return `
-        <tr>
+        <tr class="border-b border-gray-50 hover:bg-pink-50/40 transition-colors">
             <td class="px-6 py-4 text-center font-semibold text-gray-900 text-sm">${s.name}</td>
             <td class="px-4 py-4 text-center">
                 <span class="inline-block bg-gray-100 text-gray-500 text-xs font-semibold tracking-wide px-2.5 py-1 rounded-lg">${s.abbreviation}</span>
@@ -116,10 +112,12 @@ function renderSubjects(subjects) {
             <td class="px-4 py-4 text-center">
                 <div class="inline-flex gap-1.5 justify-center">
                     <a href="/subjects/edit/${s.id}" class="inline-flex items-center gap-1 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors">
-                        <img src="${editIcon}" class="w-3.5 h-3.5 opacity-60"> Editar
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Editar
                     </a>
                     <button data-del="${s.id}" class="inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-500 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border-0 cursor-pointer">
-                        <img src="${deleteIcon}" class="w-3.5 h-3.5 opacity-60"> Excluir
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+                        Excluir
                     </button>
                 </div>
             </td>
@@ -130,14 +128,28 @@ function renderSubjects(subjects) {
 function initIndex() {
     fetchSubjects();
 
-    $('subjectsTable')?.addEventListener('click', async e => {
+    let pendingId = null;
+
+    $('subjectsTable')?.addEventListener('click', e => {
         const btn = e.target.closest('[data-del]'); if (!btn) return;
-        if (!confirm('Deseja realmente excluir esta matéria?')) return;
+        pendingId = btn.dataset.del;
+        $('deleteModal').style.display = 'flex';
+    });
+
+    $('cancelDelete')?.addEventListener('click', () => {
+        $('deleteModal').style.display = 'none';
+        pendingId = null;
+    });
+
+    $('confirmDelete')?.addEventListener('click', async () => {
+        if (!pendingId) return;
         try {
-            const res = await fetch(`${API}/${btn.dataset.del}`, { method: 'DELETE', headers: hdrs() });
+            const res = await fetch(`${API}/${pendingId}`, { method: 'DELETE', headers: hdrs() });
+            $('deleteModal').style.display = 'none';
             if (res.ok) fetchSubjects();
             else alert((await res.json().catch(() => ({}))).message || 'Erro ao excluir.');
         } catch { alert('Erro de conexão.'); }
+        pendingId = null;
     });
 }
 
@@ -151,23 +163,28 @@ function initSelectExtras() {
     SELECT_EXTRAS.forEach(({ selectId, extraId }) => {
         const sel = $(selectId), extra = $(extraId);
         if (!sel || !extra) return;
-        sel.addEventListener('change', () => { extra.classList.toggle('show', sel.value === 'outro'); });
+        sel.addEventListener('change', () => {
+            extra.classList.toggle('hidden', sel.value !== 'outro');
+        });
     });
 }
 
-
 function resolveVal(selectId, customId) {
     const sel = $(selectId); if (!sel) return '';
-    return sel.value === 'outro' ? ($(`${customId}`)?.value.trim() || '') : sel.value;
+    return sel.value === 'outro' ? ($(customId)?.value.trim() || '') : sel.value;
 }
 
 function setSelectOrCustom(selectId, extraId, customId, value, known) {
     const sel = $(selectId), extra = $(extraId), custom = $(customId);
     if (!sel) return;
-    if (known.includes(String(value))) { sel.value = value; }
-    else if (value) { sel.value = 'outro'; extra?.classList.add('show'); if (custom) custom.value = value; }
+    if (known.includes(String(value))) {
+        sel.value = value;
+    } else if (value) {
+        sel.value = 'outro';
+        extra?.classList.remove('hidden');
+        if (custom) custom.value = value;
+    }
 }
-
 
 function buildPayload() {
     return {
@@ -181,10 +198,10 @@ function buildPayload() {
 function validateForm() {
     let ok = true;
     const { name, abbreviation, teacher, semester } = buildPayload();
-    if (!name)                          { showErr('name',         'Selecione ou informe a matéria.'); ok = false; }
-    if (!abbreviation)                  { showErr('abbreviation', 'Selecione ou informe o código.');  ok = false; }
-    if (!teacher)                       { showErr('teacher',      'Informe o professor.');            ok = false; }
-    if (!semester || isNaN(semester) || semester < 1) { showErr('semester', 'Selecione ou informe o semestre.'); ok = false; }
+    if (!name)                                        { showErr('name',         'Selecione ou informe a matéria.'); ok = false; }
+    if (!abbreviation)                                { showErr('abbreviation', 'Selecione ou informe o código.');  ok = false; }
+    if (!teacher)                                     { showErr('teacher',      'Informe o professor.');            ok = false; }
+    if (!semester || isNaN(semester) || semester < 1) { showErr('semester',     'Selecione ou informe o semestre.'); ok = false; }
     return ok;
 }
 
@@ -242,18 +259,21 @@ function initForm() {
         btn.disabled = false; label.textContent = defaultLabel;
     });
 
-    $('deleteBtn')?.addEventListener('click',    () => $('deleteModal')?.classList.remove('hidden'));
-    $('cancelDelete')?.addEventListener('click', () => $('deleteModal')?.classList.add('hidden'));
+    $('deleteBtn')?.addEventListener('click', () => {
+        $('deleteModal').style.display = 'flex';
+    });
+    $('cancelDelete')?.addEventListener('click', () => {
+        $('deleteModal').style.display = 'none';
+    });
     $('confirmDelete')?.addEventListener('click', async () => {
         const id = form?.dataset.id; if (!id) return;
         try {
             const res = await fetch(`${API}/${id}`, { method: 'DELETE', headers: hdrs() });
             if (res.ok) window.location.href = '/subjects';
             else alert('Erro ao excluir.');
-        } catch { console.error('delete error'); }
+        } catch { alert('Erro de conexão.'); }
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     if ($('subjectsTable')) initIndex();
