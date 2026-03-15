@@ -55,9 +55,9 @@ function showToast() {
 const emptyState = (icon, title, sub) => `
     <tr><td colspan="5">
         <div class="flex flex-col items-center justify-center py-16 gap-2">
-            <div class="w-14 h-14 rounded-2xl bg-pink-50 flex items-center justify-center text-3xl mb-1">${icon}</div>
-            <p class="text-gray-700 font-bold text-sm">${title}</p>
-            <p class="text-gray-400 text-xs">${sub}</p>
+            <div class="w-14 h-14 rounded-2xl bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center text-3xl mb-1">${icon}</div>
+            <p class="text-gray-700 dark:text-gray-200 font-bold text-sm">${title}</p>
+            <p class="text-gray-400 dark:text-gray-500 text-xs">${sub}</p>
         </div>
     </td></tr>`;
 
@@ -90,32 +90,32 @@ function renderSubjects(subjects) {
     tbody.innerHTML = subjects.map((s, i) => {
         const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
         return `
-        <tr class="border-b border-gray-50 hover:bg-pink-50/40 transition-colors">
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 text-sm">${s.name}</td>
+        <tr class="border-b border-gray-50 dark:border-gray-800 hover:bg-pink-50/40 dark:hover:bg-pink-900/20 transition-colors">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-gray-100 text-sm">${s.name}</td>
             <td class="px-4 py-4 text-center">
-                <span class="inline-block bg-gray-100 text-gray-500 text-xs font-semibold tracking-wide px-2.5 py-1 rounded-lg">${s.abbreviation}</span>
+                <span class="inline-block bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-semibold tracking-wide px-2.5 py-1 rounded-lg border border-transparent dark:border-gray-700/50">${s.abbreviation}</span>
             </td>
             <td class="px-4 py-4 text-center">
                 <div class="flex items-center justify-center gap-2.5">
                     <div class="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style="background:${color}">
                         ${initials(s.teacher)}
                     </div>
-                    <span class="text-sm text-gray-600">${s.teacher}</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">${s.teacher}</span>
                 </div>
             </td>
             <td class="px-4 py-4 text-center">
-                <span class="inline-flex items-center gap-1.5 bg-pink-50 text-pink-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+                <span class="inline-flex items-center gap-1.5 bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs font-semibold px-2.5 py-1 rounded-full border border-transparent dark:border-pink-800/50">
                     <span class="w-1.5 h-1.5 rounded-full bg-pink-400 inline-block"></span>
                     ${s.semester}º sem.
                 </span>
             </td>
             <td class="px-4 py-4 text-center">
                 <div class="inline-flex gap-1.5 justify-center">
-                    <a href="/subjects/edit/${s.id}" class="inline-flex items-center gap-1 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors">
+                    <a href="/subjects/edit/${s.id}" class="inline-flex items-center gap-1 bg-pink-50 dark:bg-pink-900/30 hover:bg-pink-100 dark:hover:bg-pink-900/50 text-pink-600 dark:text-pink-400 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         Editar
                     </a>
-                    <button data-del="${s.id}" class="inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-500 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border-0 cursor-pointer">
+                    <button data-del="${s.id}" class="inline-flex items-center gap-1 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 dark:text-red-400 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border-0 cursor-pointer">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
                         Excluir
                     </button>

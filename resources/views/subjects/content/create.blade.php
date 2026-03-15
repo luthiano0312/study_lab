@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8]" style="font-family:'DM Sans',sans-serif;">
+    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8] dark:bg-[#121212] transition-colors duration-200" style="font-family:'DM Sans',sans-serif;">
         <div class="absolute inset-0 pointer-events-none"
             style="background-image:radial-gradient(circle,#f9a8d4 1.5px,transparent 1.5px);background-size:32px 32px;opacity:.35;">
         </div>
@@ -44,55 +44,55 @@
                     Voltar para conteúdos
                 </a>
                 <p class="text-[10px] font-black tracking-widest uppercase text-pink-400 mb-1">Novo conteúdo</p>
-                <h1 class="text-4xl font-black text-gray-900 leading-tight" style="font-family:'Syne',sans-serif;">Cadastrar
+                <h1 class="text-4xl font-black text-gray-900 dark:text-gray-100 leading-tight" style="font-family:'Syne',sans-serif;">Cadastrar
                     Conteúdo</h1>
                 <p class="text-sm text-gray-400 font-semibold mt-1">Preencha os campos abaixo</p>
             </div>
 
-            <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 overflow-hidden border border-pink-100 fade-up"
+            <div class="bg-white/90 dark:bg-[#18181b]/95 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 dark:shadow-none overflow-hidden border border-pink-100 dark:border-gray-800 fade-up transition-colors duration-200"
                 style="animation-delay:.1s">
                 <div class="h-1.5 w-full" style="background:linear-gradient(90deg,#db2777 0%,#f472b6 50%,#fda4af 100%);">
                 </div>
                 <form id="contentForm" class="px-8 py-7 flex flex-col gap-5" novalidate>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nome do conteúdo <span
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Nome do conteúdo <span
                                 class="text-pink-500">*</span></label>
                         <input type="text" id="name" name="name"
                             placeholder="Ex: Derivadas e integrais, Orações subordinadas..."
-                            class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100 placeholder:text-gray-400">
+                            class="w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30 placeholder:text-gray-400">
                         <p class="hidden text-xs font-medium text-red-500 mt-1" id="err-name">Informe o nome do conteúdo.
                         </p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Matéria <span
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Matéria <span
                                 class="text-pink-500">*</span></label>
                         <select id="subject_id" name="subject_id"
-                            class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none appearance-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100 mb-2"
+                            class="w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none appearance-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30 mb-2"
                             style="background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center;padding-right:2.2rem;">
                             <option value="">Carregando matérias...</option>
                         </select>
                         <input type="text" id="subject_custom" placeholder="Digite o nome da matéria manualmente"
-                            class="hidden w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100 placeholder:text-gray-400">
+                            class="hidden w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30 placeholder:text-gray-400">
                         <p class="hidden text-xs font-medium text-red-500 mt-1" id="err-subject_id">Selecione ou informe a
                             matéria.</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Professor <span
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Professor <span
                                 class="text-pink-500">*</span></label>
                         <input type="text" id="teacher" name="teacher" placeholder="Ex: Prof. João Silva"
-                            class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100 placeholder:text-gray-400">
+                            class="w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30 placeholder:text-gray-400">
                         <p class="hidden text-xs font-medium text-red-500 mt-1" id="err-teacher">Informe o nome do
                             professor.</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Semestre <span
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Semestre <span
                                 class="text-pink-500">*</span></label>
                         <select id="semester" name="semester"
-                            class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none appearance-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100"
+                            class="w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none appearance-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30"
                             style="background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center;padding-right:2.2rem;">
                             <option value="">Selecione o semestre...</option>
                             @for ($i = 1; $i <= 10; $i++)
@@ -101,16 +101,16 @@
                             <option value="outro">Outro...</option>
                         </select>
                         <input type="number" id="semester_custom" placeholder="Ex: 11" min="1" max="20"
-                            class="hidden mt-2 w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 bg-white outline-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-100 placeholder:text-gray-400">
+                            class="hidden mt-2 w-full border border-gray-200 dark:border-gray-700 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-[#18181b] outline-none transition focus:border-pink-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-pink-100 dark:focus:ring-pink-900/30 placeholder:text-gray-400">
                         <p class="hidden text-xs font-medium text-red-500 mt-1" id="err-semester">Selecione ou informe o
                             semestre.</p>
                     </div>
 
-                    <hr class="border-gray-100">
+                    <hr class="border-gray-100 dark:border-gray-800">
 
                     <div class="flex justify-end gap-2.5">
                         <a href="{{ route('content.index') }}"
-                            class="inline-flex items-center border border-pink-200 hover:border-pink-300 text-pink-500 hover:text-pink-700 font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors">Cancelar</a>
+                            class="inline-flex items-center border border-pink-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-gray-600 text-pink-500 dark:text-gray-300 hover:text-pink-700 font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors">Cancelar</a>
                         <button type="submit" id="submitBtn"
                             class="inline-flex items-center gap-1.5 bg-pink-600 hover:bg-pink-700 text-white font-black text-sm px-6 py-2.5 rounded-xl shadow-lg shadow-pink-200 transition-all hover:-translate-y-0.5 disabled:opacity-60">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -129,14 +129,13 @@
     </div>
 
     <div id="toast"
-        class="fixed bottom-6 right-6 flex items-center gap-3 bg-white border border-gray-100 border-l-4 border-l-pink-500 rounded-xl shadow-lg px-5 py-3.5 z-50"
-        style="display:none;">
+        class="hidden z-50 fixed bottom-6 right-6 items-center gap-3 bg-white dark:bg-[#18181b] border border-gray-100 dark:border-gray-800 border-l-4 border-l-pink-500 rounded-xl shadow-lg px-5 py-3.5">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2.5"
             stroke-linecap="round">
             <polyline points="20 6 9 17 4 12" />
         </svg>
         <div>
-            <p class="text-gray-800 font-bold text-sm">Conteúdo cadastrado!</p>
+            <p class="text-gray-800 dark:text-gray-100 font-bold text-sm">Conteúdo cadastrado!</p>
             <p class="text-gray-400 text-xs">Redirecionando...</p>
         </div>
     </div>

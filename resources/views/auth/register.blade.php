@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro - Studylab</title>
+    <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
     <script src="https://unpkg.com/imask"></script>
     @vite('resources/css/app.css')
 </head>

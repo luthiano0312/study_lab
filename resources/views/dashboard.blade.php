@@ -46,17 +46,20 @@
                 </div>
 
                 <div
-                    class="lg:col-span-2 bg-white rounded-3xl border border-pink-100 shadow-sm p-7 flex flex-col justify-between gap-4">
-                    <div>
+                    class="lg:col-span-2 bg-white  dark:bg-[#18181b] rounded-3xl border border-pink-100 dark:border-gray-800 shadow-sm p-7 flex flex-col justify-between gap-4 transition-colors duration-200">
+                    <div class="flex gap-10">
+                        <div>
                         <p class="text-[10px] font-black uppercase tracking-[.22em] text-pink-400 mb-3">Agora</p>
-                        <div id="clock" class="font-black text-gray-900 tabular-nums leading-none"
+                        <div id="clock" class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none"
                             style="font-family:'Syne',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
                         <p class="text-sm font-semibold text-gray-400 mt-2">{{ now()->translatedFormat('l') }}</p>
                         <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
                     </div>
                     <div>
-
+                        <img class="w-[300px]" src="{{ asset('images/image.png') }}" alt="">
                     </div>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -152,7 +155,7 @@
 
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                <h2 class="text-sm font-black text-gray-800 uppercase tracking-widest"
+                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
                     style="font-family:'Syne',sans-serif;">Seus dados</h2>
             </div>
 
@@ -175,9 +178,9 @@
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl p-4 border border-green-100 ring-1 ring-green-200 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
+                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-green-100 dark:border-gray-800 ring-1 ring-green-200 dark:ring-green-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-green-50 flex items-center justify-center">
+                        <div class="w-8 h-8 rounded-xl bg-green-50 dark:bg-green-900/30 flex items-center justify-center">
                             <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round"
                                     stroke-linejoin="round" />
@@ -185,15 +188,15 @@
                         </div>
                         <span class="w-2 h-2 rounded-full bg-green-400"></span>
                     </div>
-                    <p class="text-3xl font-black tabular-nums text-gray-900 leading-none" id="statDone" data-counter
+                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none" id="statDone" data-counter
                         style="font-family:'Syne',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1.5">Concluídas</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">Concluídas</p>
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl p-4 border border-red-100 ring-1 ring-red-200 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
+                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-red-100 dark:border-gray-800 ring-1 ring-red-200 dark:ring-red-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-red-50 flex items-center justify-center">
+                        <div class="w-8 h-8 rounded-xl bg-red-50 dark:bg-red-900/30 flex items-center justify-center">
                             <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
@@ -206,13 +209,13 @@
                         </div>
                         <span class="w-2 h-2 rounded-full bg-red-400"></span>
                     </div>
-                    <p class="text-3xl font-black tabular-nums text-gray-900 leading-none" id="statOverdue" data-counter
+                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none" id="statOverdue" data-counter
                         style="font-family:'Syne',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1.5">Atrasadas</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">Atrasadas</p>
                 </div>
 
                 <div
-                    class="bg-pink-50 rounded-2xl p-4 border border-pink-100 ring-1 ring-pink-200 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
+                    class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-4 border border-pink-100 dark:border-pink-900/40 ring-1 ring-pink-200 dark:ring-pink-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-8 h-8 rounded-xl bg-pink-100 flex items-center justify-center">
                             <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,33 +235,33 @@
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
                 <div
-                    class="lg:col-span-3 bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-                    <div class="h-[3px] bg-gradient-to-r from-pink-600 via-pink-400 to-pink-200"></div>
-                    <div class="px-6 py-4 flex items-center justify-between border-b border-gray-50">
+                    class="lg:col-span-3 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-colors duration-200">
+                    <div class="h-[3px] bg-linear-to-r from-pink-600 via-pink-400 to-pink-200"></div>
+                    <div class="px-6 py-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
                         <div class="flex items-center gap-2">
                             <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                            <h3 class="text-sm font-black text-gray-900" style="font-family:'Syne',sans-serif;">Atividades
+                            <h3 class="text-sm font-black text-gray-900 dark:text-gray-100" style="font-family:'Syne',sans-serif;">Atividades
                                 recentes</h3>
                         </div>
                         <a href="/activities"
                             class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors flex items-center gap-0.5">Ver
                             todas →</a>
                     </div>
-                    <div id="recentActivities" class="flex-1 divide-y divide-gray-50">
+                    <div id="recentActivities" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800">
                         @for ($i = 0; $i < 4; $i++)
                             <div class="flex items-center justify-between px-6 py-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-pink-100 animate-pulse shrink-0"></div>
+                                    <div class="w-2 h-2 rounded-full bg-pink-100 dark:bg-pink-900 animate-pulse shrink-0"></div>
                                     <div>
-                                        <div class="h-3 w-44 bg-gray-100 rounded animate-pulse mb-1.5"></div>
-                                        <div class="h-2 w-28 bg-gray-100 rounded animate-pulse"></div>
+                                        <div class="h-3 w-44 bg-gray-100 dark:bg-gray-800 rounded animate-pulse mb-1.5"></div>
+                                        <div class="h-2 w-28 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
                                     </div>
                                 </div>
-                                <div class="h-5 w-16 bg-gray-100 rounded-full animate-pulse"></div>
+                                <div class="h-5 w-16 bg-gray-100 dark:bg-gray-800 rounded-full animate-pulse"></div>
                             </div>
                         @endfor
                     </div>
-                    <div class="px-6 py-4 border-t border-gray-50 flex justify-center">
+                    <div class="px-6 py-4 border-t border-gray-50 dark:border-gray-800 flex justify-center">
                         <a href="/activities/create"
                             class="inline-flex items-center gap-1.5 text-[11px] font-bold text-pink-500 border border-pink-200 hover:bg-pink-500 hover:text-white hover:border-pink-500 px-4 py-2 rounded-xl transition-all duration-200">
                             <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="3"
@@ -274,26 +277,26 @@
                 <div class="lg:col-span-2 flex flex-col gap-4">
 
                     <div
-                        class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col flex-1">
-                        <div class="h-[3px] bg-gradient-to-r from-pink-400 to-rose-300"></div>
-                        <div class="px-5 py-3.5 flex items-center justify-between border-b border-gray-50">
+                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col flex-1 transition-colors duration-200">
+                        <div class="h-[3px] bg-linear-to-r from-pink-400 to-rose-300"></div>
+                        <div class="px-5 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-4 rounded-full bg-gradient-to-b from-pink-400 to-pink-200"></span>
-                                <h3 class="text-sm font-black text-gray-900" style="font-family:'Syne',sans-serif;">
+                                <h3 class="text-sm font-black text-gray-900 dark:text-gray-100" style="font-family:'Syne',sans-serif;">
                                     Próximas provas</h3>
                             </div>
                             <a href="/exams"
                                 class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
                                 →</a>
                         </div>
-                        <div id="upcomingExams" class="flex-1 divide-y divide-gray-50">
+                        <div id="upcomingExams" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800">
                             @for ($i = 0; $i < 3; $i++)
                                 <div class="flex items-center justify-between px-5 py-3">
                                     <div>
-                                        <div class="h-3 w-28 bg-gray-100 rounded animate-pulse mb-1.5"></div>
-                                        <div class="h-2 w-20 bg-gray-100 rounded animate-pulse"></div>
+                                        <div class="h-3 w-28 bg-gray-100 dark:bg-gray-800 rounded animate-pulse mb-1.5"></div>
+                                        <div class="h-2 w-20 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
                                     </div>
-                                    <div class="h-3 w-14 bg-gray-100 rounded animate-pulse"></div>
+                                    <div class="h-3 w-14 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
                                 </div>
                             @endfor
                         </div>
@@ -346,7 +349,7 @@
 
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                <h2 class="text-sm font-black text-gray-800 uppercase tracking-widest"
+                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
                     style="font-family:'Syne',sans-serif;">Atalhos</h2>
             </div>
 
@@ -356,30 +359,30 @@
                         [
                             'href' => '/activities',
                             'label' => 'Atividades',
-                            'bg' => 'bg-pink-50 hover:bg-pink-100',
-                            'text' => 'text-pink-600',
-                            'ibg' => 'bg-white',
-                            'ic' => 'text-pink-500',
+                            'bg' => 'bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40',
+                            'text' => 'text-pink-600 dark:text-pink-400',
+                            'ibg' => 'bg-white dark:bg-gray-800',
+                            'ic' => 'text-pink-500 dark:text-pink-400',
                             'icon' =>
                                 '<path d="M9 11l3 3L22 4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2" stroke-linecap="round"/>',
                         ],
                         [
                             'href' => '/exams',
                             'label' => 'Provas',
-                            'bg' => 'bg-rose-50 hover:bg-rose-100',
-                            'text' => 'text-rose-600',
-                            'ibg' => 'bg-white',
-                            'ic' => 'text-rose-500',
+                            'bg' => 'bg-rose-50 dark:bg-rose-900/20 hover:bg-rose-100 dark:hover:bg-rose-900/40',
+                            'text' => 'text-rose-600 dark:text-rose-400',
+                            'ibg' => 'bg-white dark:bg-gray-800',
+                            'ic' => 'text-rose-500 dark:text-rose-400',
                             'icon' =>
                                 '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/>',
                         ],
                         [
                             'href' => '/subject',
                             'label' => 'Matérias',
-                            'bg' => 'bg-fuchsia-50 hover:bg-fuchsia-100',
-                            'text' => 'text-fuchsia-600',
-                            'ibg' => 'bg-white',
-                            'ic' => 'text-fuchsia-500',
+                            'bg' => 'bg-fuchsia-50 dark:bg-fuchsia-900/20 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/40',
+                            'text' => 'text-fuchsia-600 dark:text-fuchsia-400',
+                            'ibg' => 'bg-white dark:bg-gray-800',
+                            'ic' => 'text-fuchsia-500 dark:text-fuchsia-400',
                             'icon' =>
                                 '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2"/>',
                         ],
@@ -395,20 +398,20 @@
                         [
                             'href' => '/profile',
                             'label' => 'Perfil',
-                            'bg' => 'bg-gray-50 hover:bg-gray-100',
-                            'text' => 'text-gray-600',
-                            'ibg' => 'bg-white',
-                            'ic' => 'text-gray-500',
+                            'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800',
+                            'text' => 'text-gray-600 dark:text-gray-300',
+                            'ibg' => 'bg-white dark:bg-gray-800',
+                            'ic' => 'text-gray-500 dark:text-gray-400',
                             'icon' =>
                                 '<circle cx="12" cy="8" r="4" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round"/>',
                         ],
                         [
                             'href' => '/horary',
                             'label' => 'Horários',
-                            'bg' => 'bg-gray-50 hover:bg-gray-100',
-                            'text' => 'text-gray-600',
-                            'ibg' => 'bg-white',
-                            'ic' => 'text-gray-500',
+                            'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800',
+                            'text' => 'text-gray-600 dark:text-gray-300',
+                            'ibg' => 'bg-white dark:bg-gray-800',
+                            'ic' => 'text-gray-500 dark:text-gray-400',
                             'icon' =>
                                 '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01" stroke-width="2.5" stroke-linecap="round"/>',
                         ],

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8]" style="font-family:'DM Sans',sans-serif;">
+    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8] dark:bg-[#121212] transition-colors duration-200" style="font-family:'DM Sans',sans-serif;">
         <div class="absolute inset-0 pointer-events-none"
             style="background-image:radial-gradient(circle,#f9a8d4 1.5px,transparent 1.5px);background-size:32px 32px;opacity:.35;">
         </div>
@@ -79,7 +79,7 @@
             <div class="flex flex-wrap items-end justify-between gap-4 mb-8 fade-up">
                 <div>
 
-                    <h1 class="text-4xl font-black text-gray-900 leading-tight" style="font-family:'Syne',sans-serif;">
+                    <h1 class="text-4xl font-black text-gray-900 dark:text-gray-100 leading-tight" style="font-family:'Syne',sans-serif;">
                         Minhas Matérias</h1>
                     <p class="text-sm text-gray-400 font-semibold mt-1">Gerencie suas matérias cadastradas com facilidade
                     </p>
@@ -97,42 +97,42 @@
 
             <div class="flex flex-wrap gap-3 mb-6 fade-up" style="animation-delay:.1s">
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2" stroke-linecap="round" />
                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2" />
                         </svg>
                     </div>
                     <div>
                         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total de matérias</p>
-                        <p class="text-xl font-black text-gray-900 leading-none" id="totalCount"
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100 leading-none" id="totalCount"
                             style="font-family:'Syne',sans-serif;">—</p>
                     </div>
                 </div>
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <circle cx="12" cy="8" r="4" stroke-width="2" />
                             <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round" />
                         </svg>
                     </div>
                     <div>
                         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Professores</p>
-                        <p class="text-xl font-black text-gray-900 leading-none" id="profCount"
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100 leading-none" id="profCount"
                             style="font-family:'Syne',sans-serif;">—</p>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 overflow-hidden border border-pink-100 fade-up"
+            <div class="bg-white/90 dark:bg-[#18181b]/95 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 dark:shadow-none overflow-hidden border border-pink-100 dark:border-gray-800 fade-up transition-colors duration-200"
                 style="animation-delay:.2s">
                 <div class="h-1.5 w-full" style="background:linear-gradient(90deg,#db2777 0%,#f472b6 50%,#fda4af 100%);">
                 </div>
                 <table class="w-full border-collapse">
                     <thead>
-                        <tr class="border-b border-gray-100">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
                             <th
                                 class="px-6 py-4 text-center text-[11px] font-black uppercase tracking-wider text-gray-400">
                                 Nome</th>
@@ -152,17 +152,17 @@
                     </thead>
                     <tbody id="subjectsTable">
                         @for ($i = 0; $i < 4; $i++)
-                            <tr class="border-b border-gray-50">
+                            <tr class="border-b border-gray-50 dark:border-gray-800">
                                 <td class="px-6 py-4">
-                                    <div class="skel" style="width:65%;"></div>
+                                    <div class="skel dark:bg-gray-800" style="width:65%;"></div>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <div class="skel" style="width:52px;"></div>
+                                    <div class="skel dark:bg-gray-800" style="width:52px;"></div>
                                 </td>
                                 <td class="px-4 py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-pink-100 shrink-0"></div>
-                                        <div class="skel" style="width:55%;height:14px;"></div>
+                                        <div class="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 shrink-0"></div>
+                                        <div class="skel dark:bg-gray-800" style="width:55%;height:14px;"></div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4">
@@ -176,7 +176,7 @@
                         @endfor
                     </tbody>
                 </table>
-                <div class="px-6 py-3 bg-pink-50/50 border-t border-pink-100 flex items-center justify-between">
+                <div class="px-6 py-3 bg-pink-50/50 dark:bg-gray-800/50 border-t border-pink-100 dark:border-gray-800 flex items-center justify-between">
                     <p class="text-[10px] text-gray-400 font-semibold">StudyLab • Matérias</p>
                     <div class="flex gap-1">
                         <span class="w-2 h-2 rounded-full bg-pink-300 inline-block"></span>
@@ -190,8 +190,8 @@
 
     <div id="deleteModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         style="display:none;">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
-            <div class="h-1 bg-gradient-to-r from-red-500 to-rose-400"></div>
+        <div class="bg-white dark:bg-[#18181b] rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-transparent dark:border-gray-800">
+            <div class="h-1 bg-linear-to-r from-red-500 to-rose-400"></div>
             <div class="p-6 text-center">
                 <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
                     <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,12 +200,12 @@
                         <path d="M9 6V4h6v2" stroke-width="2" stroke-linecap="round" />
                     </svg>
                 </div>
-                <h3 class="text-base font-black text-gray-900 mb-1" style="font-family:'Syne',sans-serif;">Excluir
+                <h3 class="text-base font-black text-gray-900 dark:text-gray-100 mb-1" style="font-family:'Syne',sans-serif;">Excluir
                     matéria?</h3>
                 <p class="text-sm text-gray-400 mb-5">Esta ação não pode ser desfeita.</p>
                 <div class="flex gap-2 justify-center">
                     <button id="cancelDelete"
-                        class="border border-gray-200 hover:bg-gray-50 text-gray-600 font-bold text-sm px-5 py-2.5 rounded-xl transition-colors">Cancelar</button>
+                        class="border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 font-bold text-sm px-5 py-2.5 rounded-xl transition-colors">Cancelar</button>
                     <button id="confirmDelete"
                         class="bg-red-500 hover:bg-red-600 text-white font-black text-sm px-5 py-2.5 rounded-xl transition-colors shadow-sm shadow-red-200">Sim,
                         excluir</button>

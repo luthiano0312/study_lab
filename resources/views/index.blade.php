@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Studylab</title>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
     @vite('resources/css/app.css')
 </head>
 
@@ -135,7 +136,7 @@
 
     <section
         class="reveal opacity-0 translate-y-10 transition-all duration-700 h-screen flex items-center justify-center bg-[#f5f5f5] z-40">
-        <div class="relative h-[420px] w-[1200px] bg-gradient-to-r from-[#F40D75] to-[#C7045C] rounded-[20px] px-20">
+        <div class="relative h-[420px] w-[1200px] bg-linear-to-r from-[#F40D75] to-[#C7045C] rounded-[20px] px-20">
             <div class="absolute top-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-center">
                 <h1 class="font-bold text-[40px] text-white">
                     Studylab

@@ -26,8 +26,13 @@ function weekDates(offset = 0) {
 
 function showToast(msg) {
     $('toastMsg').textContent = msg;
-    const t = $('toast'); t.style.display = 'flex';
-    setTimeout(() => { t.style.display = 'none'; }, 2800);
+    const t = $('toast');
+    t.classList.remove('hidden');
+    t.classList.add('flex');
+    setTimeout(() => {
+        t.classList.add('hidden');
+        t.classList.remove('flex');
+    }, 2800);
 }
 
 function renderCalendar() {
@@ -42,9 +47,9 @@ function renderCalendar() {
         const isToday = isoDate(d) === todayISO;
         return `<th style="width:20%;padding:10px 8px;text-align:center;">
       <div class="inline-flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl ${isToday ? 'bg-pink-600' : ''}">
-        <span class="text-[9px] font-black tracking-widest uppercase ${isToday ? 'text-pink-200' : 'text-gray-400'}">${DAYS_PT[d.getDay()]}</span>
-        <span class="font-black leading-none text-xl ${isToday ? 'text-white' : 'text-gray-800'}" style="font-family:'Syne',sans-serif;">${d.getDate()}</span>
-        <span class="text-[9px] font-bold ${isToday ? 'text-pink-200' : 'text-gray-400'}">${MONTHS_PT[d.getMonth()]}</span>
+        <span class="text-[9px] font-black tracking-widest uppercase ${isToday ? 'text-pink-200' : 'text-gray-400 dark:text-gray-300'}">${DAYS_PT[d.getDay()]}</span>
+        <span class="font-black leading-none text-xl ${isToday ? 'text-white' : 'text-gray-800 dark:text-gray-100'}" style="font-family:'Syne',sans-serif;">${d.getDate()}</span>
+        <span class="text-[9px] font-bold ${isToday ? 'text-pink-200' : 'text-gray-400 dark:text-gray-300'}">${MONTHS_PT[d.getMonth()]}</span>
       </div>
     </th>`;
     }).join('');
@@ -79,8 +84,8 @@ function renderCalendar() {
         }).join('');
 
         const addLabel = `${DAYS_FULL[d.getDay()]}, ${d.getDate()} de ${MONTHS_FULL[d.getMonth()]}`;
-        return `<td class="${isToday ? 'bg-pink-50/40' : ''}"
-               style="padding:8px 6px;vertical-align:top;border-top:1px solid #fce7f3;min-height:80px;min-width:120px;">
+        return `<td class="${isToday ? 'bg-pink-50/40 dark:bg-pink-900/20' : ''}"
+               style="padding:8px 6px;vertical-align:top;border-top:1px solid #fce7f3;min-height:80px;min-width:120px;" class="dark:border-t-gray-800">
       <div class="min-h-16">
         ${cards}
         <button onclick="openNew('${iso}','${addLabel}')"
@@ -183,8 +188,15 @@ function updateStatusLabels() {
     });
 }
 
-function showModal() { $('examModal').style.display = 'flex'; setTimeout(() => $('modalDesc').focus(), 80); }
-function hideModal() { $('examModal').style.display = 'none'; }
+function showModal() {
+    $('examModal').classList.remove('hidden');
+    $('examModal').classList.add('flex');
+    setTimeout(() => $('modalDesc').focus(), 80);
+}
+function hideModal() {
+    $('examModal').classList.add('hidden');
+    $('examModal').classList.remove('flex');
+}
 
 function openNew(iso, dateLabel) {
     resetModal();

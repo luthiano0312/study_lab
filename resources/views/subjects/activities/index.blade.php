@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8]">
+    <div class="min-h-screen relative overflow-hidden bg-[#fdf4f8] dark:bg-[#121212] transition-colors duration-200">
 
         <div class="absolute inset-0 pointer-events-none"
             style="background-image:radial-gradient(circle,#f9a8d4 1.5px,transparent 1.5px);background-size:32px 32px;opacity:.35;">
@@ -16,7 +16,7 @@
             <div class="flex items-end justify-between mb-8">
                 <div>
 
-                    <h1 class="text-4xl font-black text-gray-900 leading-tight">Atividades</h1>
+                    <h1 class="text-4xl font-black text-gray-900 dark:text-gray-100 leading-tight">Atividades</h1>
                     <p class="text-sm text-gray-400 font-semibold mt-1">Gerencie suas atividades e prazos</p>
                 </div>
                 <a href="{{ route('activity.create') }}"
@@ -32,58 +32,58 @@
 
             <div class="flex flex-wrap gap-3 mb-6">
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center text-lg">
-                        <img class="opacity-15"
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-lg">
+                        <img class="opacity-15 dark:invert"
                             src="{{ asset('favicons/full_coverage_24dp_000000_FILL0_wght400_GRAD0_opsz24.png') }}">
 
                     </div>
                     <div>
                         <p class="text-xs text-gray-400 font-semibold">Total</p>
-                        <p class="text-xl font-black text-gray-900" id="totalCount">—</p>
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100" id="totalCount">—</p>
                     </div>
                 </div>
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-yellow-100 flex items-center justify-center text-lg">
-                        <img class=""
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-lg">
+                        <img class="dark:invert"
                             src="{{ asset('favicons/hourglass_disabled_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png') }}">
                     </div>
                     <div>
                         <p class="text-xs text-gray-400 font-semibold">Pendentes</p>
-                        <p class="text-xl font-black text-gray-900" id="pendingCount">—</p>
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100" id="pendingCount">—</p>
                     </div>
                 </div>
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-lg">
-                        <img class="opacity-15"
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-lg">
+                        <img class="opacity-15 dark:invert"
                             src="{{ asset('favicons/history_24dp_000000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     </div>
                     <div>
                         <p class="text-xs text-gray-400 font-semibold">Em andamento</p>
-                        <p class="text-xl font-black text-gray-900" id="progressCount">—</p>
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100" id="progressCount">—</p>
                     </div>
                 </div>
                 <div
-                    class="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-lg">
-                        <img class="" src="{{ asset('favicons/check_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png') }}">
+                    class="bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-sm border border-pink-100 dark:border-gray-800 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-lg">
+                        <img class="dark:invert" src="{{ asset('favicons/check_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png') }}">
                     </div>
                     <div>
                         <p class="text-xs text-gray-400 font-semibold">Concluídas</p>
-                        <p class="text-xl font-black text-gray-900" id="completedCount">—</p>
+                        <p class="text-xl font-black text-gray-900 dark:text-gray-100" id="completedCount">—</p>
                     </div>
                 </div>
             </div>
 
             <div
-                class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 overflow-hidden border border-pink-100">
+                class="bg-white/90 dark:bg-[#18181b]/95 backdrop-blur-sm rounded-3xl shadow-xl shadow-pink-100 dark:shadow-none overflow-hidden border border-pink-100 dark:border-gray-800 transition-colors duration-200">
                 <div class="h-1.5 w-full"
                     style="background:linear-gradient(90deg,#db2777 0%,#f472b6 50%,rgb(254,140,248) 100%);"></div>
                 <table class="w-full border-collapse">
                     <thead>
-                        <tr class="border-b border-gray-200">
+                        <tr class="border-b border-gray-200 dark:border-gray-800">
                             <th class="px-6 py-4 text-left   text-xs font-extrabold uppercase tracking-wider text-gray-400">
                                 Descrição</th>
                             <th class="px-4 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-gray-400">
@@ -96,26 +96,26 @@
                     </thead>
                     <tbody id="activitiesTable">
                         @for ($i = 0; $i < 4; $i++)
-                            <tr class="border-b border-gray-50">
+                            <tr class="border-b border-gray-50 dark:border-gray-800">
                                 <td class="px-6 py-4">
-                                    <div class="skel" style="width:70%;"></div>
+                                    <div class="skel dark:bg-gray-800" style="width:70%;"></div>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <div class="skel" style="width:80px;margin:0 auto;"></div>
+                                    <div class="skel dark:bg-gray-800" style="width:80px;margin:0 auto;"></div>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <div class="skel" style="width:90px;height:22px;border-radius:20px;margin:0 auto;">
+                                    <div class="skel dark:bg-gray-800" style="width:90px;height:22px;border-radius:20px;margin:0 auto;">
                                     </div>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <div class="skel" style="width:110px;height:28px;border-radius:10px;margin:0 auto;">
+                                    <div class="skel dark:bg-gray-800" style="width:110px;height:28px;border-radius:10px;margin:0 auto;">
                                     </div>
                                 </td>
                             </tr>
                         @endfor
                     </tbody>
                 </table>
-                <div class="px-6 py-3 bg-pink-50/50 border-t border-pink-100 flex items-center justify-between">
+                <div class="px-6 py-3 bg-pink-50/50 dark:bg-gray-800/50 border-t border-pink-100 dark:border-gray-800 flex items-center justify-between">
                     <p class="text-xs text-gray-400 font-semibold">StudyLab • Atividades</p>
                     <div class="flex gap-1">
                         <span class="w-2 h-2 rounded-full bg-pink-300 inline-block"></span>
@@ -128,8 +128,8 @@
         </div>
     </div>
 
-    <div class="hidden fixed inset-0 bg-black/35 backdrop-blur-sm flex items-center justify-center z-50" id="deleteModal">
-        <div class="bg-white rounded-2xl p-8 max-w-sm w-[90%] shadow-2xl">
+    <div class="hidden z-50 fixed inset-0 bg-black/35 backdrop-blur-sm items-center justify-center flex" id="deleteModal">
+        <div class="bg-white dark:bg-[#18181b] rounded-2xl p-8 max-w-sm w-[90%] shadow-2xl">
             <div class="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center mb-4">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -139,11 +139,11 @@
                     <path d="M9 6V4h6v2" />
                 </svg>
             </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-1">Excluir atividade</h3>
-            <p class="text-sm text-gray-500 mb-6">Tem certeza? Essa ação não pode ser desfeita.</p>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">Excluir atividade</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Tem certeza? Essa ação não pode ser desfeita.</p>
             <div class="flex gap-2.5 justify-end">
                 <button id="cancelDelete"
-                    class="border border-gray-200 hover:border-gray-300 text-gray-600 font-semibold text-sm px-4 py-2 rounded-xl transition-colors">Cancelar</button>
+                    class="border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 font-semibold text-sm px-4 py-2 rounded-xl transition-colors">Cancelar</button>
                 <button id="confirmDelete"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold text-sm px-5 py-2 rounded-xl transition-colors">Sim,
                     excluir</button>

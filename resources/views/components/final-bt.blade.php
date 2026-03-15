@@ -12,7 +12,7 @@
                hover:text-white hover:shadow-[0_0_24px_#ec489966]"
     >
 
-        <span class="absolute inset-0 bg-gradient-to-r from-[#be185d] via-[#ec4899] to-[#f472b6]
+        <span class="absolute inset-0 bg-linear-to-r from-[#be185d] via-[#ec4899] to-[#f472b6]
                      translate-y-full group-hover:translate-y-0
                      transition-transform duration-500 ease-in-out rounded-full z-0"></span>
 
@@ -28,8 +28,8 @@
 </div>
 
 <canvas id="confettiCanvas"
-        class="pointer-events-none fixed inset-0 w-full h-full z-[9999]"
-        style="display:none;"></canvas>
+          class="pointer-events-none fixed inset-0 w-full h-full"
+        style="display:none; z-index:9999;"></canvas>
 
 <style>
 .final-bt { background: transparent; }
@@ -124,8 +124,8 @@
 
     }
 
-    function fireConfetti(btn){
-
+    window.fireConfettiBtn = function(btn) {
+        if(!btn) return;
         initCanvas();
 
         const rect=btn.getBoundingClientRect();
@@ -139,18 +139,15 @@
 
         raf=requestAnimationFrame(drawFrame);
 
-    }
+    };
 
     document.addEventListener("DOMContentLoaded",()=>{
-
         const btn=document.getElementById("{{ $id }}");
 
         if(!btn)return;
 
         btn.addEventListener("mouseenter",()=>{
-
-            fireConfetti(btn);
-
+            window.fireConfettiBtn(btn);
         });
 
     });

@@ -13,11 +13,12 @@
     <a href="{{ $href }}"
        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-[13px]
               transition-all duration-200 whitespace-nowrap
-              {{ $active ? 'bg-pink-50 text-pink-600 shadow-sm' : 'text-gray-500 hover:bg-pink-50 hover:text-pink-600' }}">
+              {{ $active ? 'bg-pink-50 dark:bg-pink-900/30 text-pink-600 shadow-sm dark:shadow-none' : 'text-gray-500 hover:bg-pink-50 dark:hover:bg-pink-900/30 hover:text-pink-600 dark:hover:text-pink-400' }}">
 
         <img src="{{ asset('favicons/' . $icon) }}" alt="{{ $label }}"
-             class="h-4 w-4 flex-shrink-0 transition-opacity duration-200
-                    {{ $active ? 'opacity-80' : 'opacity-50 group-hover/item:opacity-80' }}">
+             class="h-4 w-4 shrink-0 transition-all duration-200
+                    {{ $active ? 'opacity-80' : 'opacity-50 group-hover/item:opacity-80' }}
+                    dark:filter-[invert(43%)_sepia(94%)_saturate(2250%)_hue-rotate(306deg)_brightness(96%)_contrast(97%)] dark:opacity-100">
 
         <span class="overflow-hidden max-w-0 opacity-0
                      group-hover/sidebar:max-w-[160px] group-hover/sidebar:opacity-100
@@ -43,7 +44,7 @@
 
 
         <div class="absolute -left-[5px] top-1/2 -translate-y-1/2 w-2.5 h-2.5
-                    bg-white border-l border-t border-gray-100 rotate-[-45deg]"></div>
+                    bg-white border-l border-t border-gray-100 -rotate-45"></div>
 
 
         <div class="bg-white rounded-xl border border-gray-100 shadow-lg shadow-pink-100/50 p-2 min-w-[180px]">
@@ -53,7 +54,7 @@
                 <li>
                     <a href="{{ $item['href'] }}"
                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-semibold
-                              text-gray-600 hover:bg-pink-50 hover:text-pink-600
+                              text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-pink-900/30 hover:text-pink-600 dark:hover:text-pink-400
                               transition-colors duration-100 whitespace-nowrap">
                         @if(!empty($item['icon']))
                             <img src="{{ asset('favicons/' . $item['icon']) }}" class="h-3.5 w-3.5 opacity-50" alt="">

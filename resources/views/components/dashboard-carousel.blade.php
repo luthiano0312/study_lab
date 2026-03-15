@@ -42,8 +42,8 @@ $slides = [
              :style="`transform: translateX(-${active * 100}%)`">
 
             @foreach($slides as $slide)
-            <div class="w-full flex-shrink-0">
-                <div class="bg-gradient-to-r {{ $slide['bg'] }} rounded-2xl px-6 py-5 flex items-center justify-between gap-4 relative overflow-hidden">
+            <div class="w-full shrink-0">
+                <div class="bg-linear-to-r {{ $slide['bg'] }} rounded-2xl px-6 py-5 flex items-center justify-between gap-4 relative overflow-hidden">
                     <div class="absolute inset-0 opacity-10 pointer-events-none"
                          style="background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:16px 16px;"></div>
                     <div class="relative z-10 flex items-center gap-4">
@@ -55,7 +55,7 @@ $slides = [
                         </div>
                     </div>
                     <a href="{{ $slide['href'] }}"
-                       class="relative z-10 flex-shrink-0 bg-white/20 hover:bg-white/30 border border-white/30
+                       class="relative z-10 shrink-0 bg-white/20 hover:bg-white/30 border border-white/30
                               text-white text-[11px] font-black uppercase tracking-wide
                               px-4 py-2 rounded-xl transition-all duration-200 whitespace-nowrap">
                         {{ $slide['cta'] }} →

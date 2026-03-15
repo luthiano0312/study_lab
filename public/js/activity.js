@@ -15,9 +15,9 @@ const addMonths  = n  => { const d = new Date(); d.setMonth(d.getMonth() + n); r
 
 const STATUS_LABEL = { pending: 'Pendente', in_progress: 'Em andamento', completed: 'Concluída' };
 const STATUS_CLASS = {
-    pending:     'bg-yellow-100 text-yellow-800',
-    in_progress: 'bg-blue-100 text-blue-800',
-    completed:   'bg-green-100 text-green-800',
+    pending:     'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-500 border border-transparent dark:border-yellow-800/50',
+    in_progress: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border border-transparent dark:border-blue-800/50',
+    completed:   'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border border-transparent dark:border-green-800/50',
 };
 
 
@@ -41,9 +41,9 @@ function showToast() {
 const emptyRow = (icon, title, sub) => `
     <tr><td colspan="4">
         <div class="flex flex-col items-center justify-center py-16 gap-2">
-            <div class="w-14 h-14 rounded-2xl bg-pink-50 flex items-center justify-center text-3xl mb-1">${icon}</div>
-            <p class="text-gray-700 font-bold text-sm">${title}</p>
-            <p class="text-gray-400 text-xs">${sub}</p>
+            <div class="w-14 h-14 rounded-2xl bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center text-3xl mb-1">${icon}</div>
+            <p class="text-gray-700 dark:text-gray-200 font-bold text-sm">${title}</p>
+            <p class="text-gray-400 dark:text-gray-500 text-xs">${sub}</p>
         </div>
     </td></tr>`;
 
@@ -80,21 +80,21 @@ function renderActivities(list) {
     const today = todayISO();
     tbody.innerHTML = list.map(a => {
         const overdue = a.status !== 'completed' && a.due_date < today;
-        return `<tr class="border-b border-gray-50 hover:bg-pink-50/40 transition-colors">
-            <td class="px-6 py-3.5 text-sm font-semibold text-gray-800 max-w-xs"><span class="line-clamp-2">${a.description}</span></td>
-            <td class="px-4 py-3.5 text-center text-sm ${overdue ? 'text-red-500 font-bold' : 'text-gray-600'}">${fmtDate(a.due_date)}${overdue ? ' ⚠️' : ''}</td>
+        return `<tr class="border-b border-gray-50 dark:border-gray-800 hover:bg-pink-50/40 dark:hover:bg-pink-900/20 transition-colors">
+            <td class="px-6 py-3.5 text-sm font-semibold text-gray-800 dark:text-gray-100 max-w-xs"><span class="line-clamp-2">${a.description}</span></td>
+            <td class="px-4 py-3.5 text-center text-sm ${overdue ? 'text-red-500 dark:text-red-400 font-bold' : 'text-gray-600 dark:text-gray-300'}">${fmtDate(a.due_date)}${overdue ? ' ⚠️' : ''}</td>
             <td class="px-4 py-3.5 text-center">
-                <span class="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full ${STATUS_CLASS[a.status] || 'bg-gray-100 text-gray-600'}">
+                <span class="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full ${STATUS_CLASS[a.status] || 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-transparent dark:border-gray-700/50'}">
                     ${STATUS_LABEL[a.status] || a.status}
                 </span>
             </td>
             <td class="px-4 py-3.5 text-center">
                 <div class="inline-flex gap-1.5">
-                    <a href="/activities/edit/${a.id}" class="inline-flex items-center gap-1 bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors">
-                        <img src="${editIcon}" class="w-3.5 h-3.5 opacity-60"> Editar
+                    <a href="/activities/edit/${a.id}" class="inline-flex items-center gap-1 bg-pink-50 dark:bg-pink-900/30 hover:bg-pink-100 dark:hover:bg-pink-900/50 text-pink-600 dark:text-pink-400 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border border-transparent dark:border-pink-800/50">
+                        <img src="${editIcon}" class="w-3.5 h-3.5 opacity-60 dark:opacity-80 dark:filter-[invert(63%)_sepia(49%)_saturate(5580%)_hue-rotate(309deg)_brightness(102%)_contrast(97%)]"> Editar
                     </a>
-                    <button data-del="${a.id}" class="inline-flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-500 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border-0 cursor-pointer">
-                        <img src="${deleteIcon}" class="w-3.5 h-3.5 opacity-60"> Excluir
+                    <button data-del="${a.id}" class="inline-flex items-center gap-1 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 dark:text-red-400 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors border border-transparent dark:border-red-900/50 cursor-pointer">
+                        <img src="${deleteIcon}" class="w-3.5 h-3.5 opacity-60 dark:opacity-80 dark:filter-[invert(56%)_sepia(83%)_saturate(3505%)_hue-rotate(338deg)_brightness(94%)_contrast(96%)]"> Excluir
                     </button>
                 </div>
             </td>

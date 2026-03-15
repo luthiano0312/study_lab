@@ -10,6 +10,8 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer components {
 
     .input-field {

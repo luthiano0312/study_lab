@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Studylab</title>
+    <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
     @vite('resources/css/app.css')
 </head>
 

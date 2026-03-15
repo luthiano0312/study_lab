@@ -44,6 +44,15 @@ async function req(path, method = 'GET', body = null, isForm = false) {
     return { ok: res.ok, data };
 }
 
+const themeBtn = $('toggleThemeBtn');
+if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        const h = document.documentElement;
+        h.classList.toggle('dark');
+        localStorage.setItem('theme', h.classList.contains('dark') ? 'dark' : 'light');
+    });
+}
+
 
 const toastSubEl = $('toast')?.querySelector('p.text-gray-400');
 let toastTimer;
@@ -51,8 +60,12 @@ function toast(msg, sub = 'Atualizado com sucesso.') {
     txt('toastMsg', msg);
     if (toastSubEl) toastSubEl.textContent = sub;
     $('toast').classList.remove('hidden');
+    $('toast').classList.add('flex');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => $('toast').classList.add('hidden'), 3000);
+    toastTimer = setTimeout(() => {
+        $('toast').classList.add('hidden');
+        $('toast').classList.remove('flex');
+    }, 3000);
 }
 
 const showErr  = (id, msg) => { const e = $(`err-${id}`); if (e) { e.textContent = msg; e.classList.remove('hidden'); } };
@@ -233,10 +246,14 @@ $('logoutBtn').addEventListener('click', async () => {
     clearAuth();
 });
 
-$('deleteAccountBtn').addEventListener('click', () => $('deleteModal').classList.remove('hidden'));
+$('deleteAccountBtn').addEventListener('click', () => {
+    $('deleteModal').classList.remove('hidden');
+    $('deleteModal').classList.add('flex');
+});
 
 $('cancelDelete').addEventListener('click', () => {
     $('deleteModal').classList.add('hidden');
+    $('deleteModal').classList.remove('flex');
     const inp = $('deletePasswordInput');
     inp.value = '';
     inp.classList.remove('border-red-400');
