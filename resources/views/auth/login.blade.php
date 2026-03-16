@@ -64,7 +64,7 @@
 
 </head>
 
-<body class="h-full bg-white font-sans antialiased">
+<body class="h-full overflow-y-hidden bg-white font-sans antialiased">
 
     <div class="flex h-full">
 
@@ -86,7 +86,7 @@
 
         </div>
 
-        >
+
         <div class="w-full lg:w-2/5 flex items-center justify-center p-10">
 
             <div class="w-[500px] max-w-md animate-fade">
@@ -94,8 +94,6 @@
 
                 <div class="text-center mb-10">
 
-                    <img src="/images/logosemfundo.png"
-                        class="h-[140px] mx-auto animate-logo hover:scale-105 transition">
 
                     <h2 class="text-2xl font-bold text-gray-800">
                         Entrar na conta
