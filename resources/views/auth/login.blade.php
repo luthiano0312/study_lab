@@ -1,89 +1,216 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="h-full">
 
 <head>
     <meta charset="UTF-8">
-    <title>Login - Studylab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Studylab</title>
+
     <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
-    @vite('resources/css/app.css')
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-18px)
+            }
+        }
+
+
+        @keyframes logoPop {
+            0% {
+                opacity: 0;
+                transform: scale(.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeUp .8s ease forwards;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-logo {
+            animation: logoPop .8s ease forwards;
+        }
+    </style>
+
 </head>
 
-<body class="h-screen bg-white flex">
+<body class="h-full bg-white font-sans antialiased">
 
-    <div class="w-1/2 flex items-center justify-center">
+    <div class="flex h-full">
 
-        <div class="w-[380px] mb-8">
 
-            <div class="flex mx-auto justify-center items-center mb-6">
-                <img src="/images/logosemfundo.png" class="w-64">
+        <div class="hidden lg:flex lg:w-3/5 bg-gray-50 items-center justify-center p-16">
+
+            <div class="max-w-xl text-center animate-fade">
+
+                <h1 class="text-[60px] font-extrabold text-gray-900 leading-tight">
+                    Domine seus<br>
+                    <span class="text-[#FF0073]">estudos agora</span>
+                </h1>
+
+                <div class="mt-14 animate-float">
+                    <img src="/images/login.png" class="w-[820px] mx-auto drop-shadow-2xl">
+                </div>
+
             </div>
 
-            <div id="errorBox" class="mx-auto mb-4 hidden flex items-center bg-white shadow-md rounded-md h-10 w-64">
+        </div>
 
-                <img src="{{ asset('favicons/notifications_active_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}"
-                    class="h-5 opacity-50 ml-4" alt="">
+        >
+        <div class="w-full lg:w-2/5 flex items-center justify-center p-10">
 
-                <p id="errorMessage" class="text-pink-500 text-sm pl-2">
+            <div class="w-[500px] max-w-md animate-fade">
+
+
+                <div class="text-center mb-10">
+
+                    <img src="/images/logosemfundo.png"
+                        class="h-[140px] mx-auto animate-logo hover:scale-105 transition">
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Entrar na conta
+                    </h2>
+
+                    <p class="text-sm text-gray-500">
+                        Acesse sua plataforma Studylab
+                    </p>
+
+                </div>
+
+                <form id="loginForm" class="space-y-6">
+
+                    <div class="animate-fade">
+
+                        <label class="text-sm font-semibold text-gray-700">
+                            Email
+                        </label>
+
+                        <input type="email" required placeholder="seuemail@exemplo.com"
+                            class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF0073]/40 focus:border-[#FF0073] focus:scale-[1.02]">
+
+                    </div>
+
+
+                    <div class="animate-fade">
+
+                        <label class="text-sm font-semibold text-gray-700">
+                            Senha
+                        </label>
+
+                        <input type="password" required placeholder="••••••••"
+                            class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF0073]/40 focus:border-[#FF0073] focus:scale-[1.02]">
+
+                    </div>
+
+
+                    <div class="flex items-center justify-between text-sm animate-fade">
+
+                        <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
+                            <input type="checkbox" class="accent-[#FF0073]">
+                            Lembrar de mim
+                        </label>
+
+                        <a href="/forgot" class="text-[#FF0073] font-semibold hover:underline">
+                            Esqueceu a senha?
+                        </a>
+
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-3 bg-[#FF0073] text-white font-semibold rounded-lg hover:bg-[#D1005E] transition transform hover:scale-[1.03] active:scale-[0.97] shadow-lg shadow-pink-200">
+
+                        Entrar
+
+                    </button>
+
+                </form>
+
+
+                <div class="my-7 flex items-center animate-fade">
+
+                    <div class="flex-1 border-t"></div>
+
+                    <span class="px-3 text-sm text-gray-400">
+                        ou
+                    </span>
+
+                    <div class="flex-1 border-t"></div>
+
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 animate-fade">
+
+                    <button
+                        class="flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-50 transition hover:scale-[1.03]">
+
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="h-5">
+                        Google
+
+                    </button>
+
+                    <button
+                        class="flex items-center justify-center gap-2 border py-2 rounded-lg hover:bg-gray-50 transition hover:scale-[1.03]">
+
+                        <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" class="h-5">
+                        Facebook
+
+                    </button>
+
+                </div>
+
+                <p class="text-center text-sm text-gray-600 mt-6 animate-fade">
+
+                    Novo por aqui?
+
+                    <a href="/register" class="text-[#FF0073] font-semibold hover:underline">
+                        Criar conta
+                    </a>
+
+                </p>
+
+
+                <p class="text-center text-xs text-gray-400 mt-10 leading-relaxed animate-fade">
+
+                    Protegido por reCAPTCHA.<br>
+                    Sujeito aos Termos de Serviço e Política de Privacidade Studylab.
+
                 </p>
 
             </div>
 
-
-            <form id="loginForm" class="space-y-6">
-
-                <div>
-                    <label class="text-sm text-gray-600">Email:</label>
-                    <input id="email" type="email"
-                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
-                        placeholder="Seu e-mail cadastrado" required>
-                </div>
-
-                <div>
-                    <label class="text-sm text-gray-600">Senha:</label>
-                    <input id="password" type="password"
-                        class="w-full mt-2 border-b border-gray-300 p-2 bg-transparent focus:outline-none focus:border-[#FF0073]"
-                        placeholder="Sua senha cadastrada" required>
-                </div>
-
-                <div class="flex items-center justify-between text-xs text-gray-500">
-                    <div class="flex items-center gap-2">
-                        <input type="checkbox" class="accent-[#FF0073]">
-                        <span>Mantenha-me logado</span>
-                    </div>
-                    <a href="/forgot" class="text-[#FF0073] hover:underline">Esqueceu sua senha?</a>
-                </div>
-
-                <button onclick type="submit"
-                    class="w-full bg-[#FF0073] text-white py-3 hover:cursor-pointer rounded-full shadow-md hover:scale-105 transition duration-300">
-                    Login
-                </button>
-
-            </form>
-
-            <p class="text-xs text-center mt-6">
-                Ainda não tem conta?
-                <a href="/register" class="text-[#FF0073] font-semibold hover:underline">
-                    Cadastrar
-                </a>
-            </p>
-
-
-
         </div>
-    </div>
-
-    <div class="w-1/2 flex flex-col mr-8 items-center justify-center relative">
-
-        <h2 class="text-[80px] leading-none font-extrabold text-center  text-black">
-            Entre e <br> <span class="text-[#FF0073] ">aproveite</span>
-        </h2>
-
-
-        <img src="/images/login.png" class="w-[670px] mt-10">
 
     </div>
-
-    <script src="{{ asset('js/login.js') }}"></script>
 
 </body>
 

@@ -1,9 +1,7 @@
-/* dashboard.js */
+
 'use strict';
 
-/* ─────────────────────────────
-   CONSTANTES
-───────────────────────────── */
+
 const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 const SUBJECT_COLORS = [
@@ -17,9 +15,7 @@ const STATUS_MAP = {
     completed:   ['#166534','#dcfce7','Concluída' ],
 };
 
-/* ─────────────────────────────
-   HELPERS
-───────────────────────────── */
+
 const $         = id => document.getElementById(id);
 const txt       = (id, v) => { const e=$(id); if(e) e.textContent=v; };
 const hdrs      = () => ({ 'Content-Type':'application/json','Accept':'application/json','Authorization':`Bearer ${localStorage.getItem('auth_token')}` });
@@ -28,9 +24,7 @@ const avatarSrc = u => u.avatar ?? (u.preset_avatar!=null ? `/images/avatar${u.p
 const fmtDate   = s => { if(!s) return '—'; const[y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
 const badge     = (color,bg,label) => `<span class="text-xs font-bold px-2.5 py-1 rounded-full ml-3 shrink-0 whitespace-nowrap" style="color:${color};background:${bg}">${label}</span>`;
 
-/* ─────────────────────────────
-   CARROSSEL
-───────────────────────────── */
+
 (function carousel() {
     const track = $('carouselTrack');
     const dots  = document.querySelectorAll('[data-dot]');
@@ -52,9 +46,7 @@ const badge     = (color,bg,label) => `<span class="text-xs font-bold px-2.5 py-
     go(0); reset();
 })();
 
-/* ─────────────────────────────
-   RELÓGIO
-───────────────────────────── */
+
 function startClock() {
     const el=$('clock'), bar=$('weekBar');
     const tick=()=>{ if(el) el.textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); };
@@ -63,9 +55,7 @@ function startClock() {
     if(bar) setTimeout(()=>bar.style.width='65%',300);
 }
 
-/* ─────────────────────────────
-   USER
-───────────────────────────── */
+
 async function loadUser() {
     try {
         const r=await fetch('/api/user',{headers:hdrs()}); if(!r.ok) return;
@@ -81,9 +71,7 @@ async function loadUser() {
     } catch{}
 }
 
-/* ─────────────────────────────
-   ACTIVITIES
-───────────────────────────── */
+
 async function loadActivities() {
     try {
         const r=await fetch('/api/activities',{headers:hdrs()}); if(!r.ok) return;
@@ -123,9 +111,7 @@ async function loadActivities() {
     } catch{}
 }
 
-/* ─────────────────────────────
-   EXAMS
-───────────────────────────── */
+
 async function loadExams() {
     try {
         const r=await fetch('/api/exams',{headers:hdrs()}); if(!r.ok) return;
@@ -165,9 +151,7 @@ async function loadExams() {
     } catch{}
 }
 
-/* ─────────────────────────────
-   SUBJECTS
-───────────────────────────── */
+
 async function loadSubjects() {
     try {
         const r=await fetch('/api/subjects',{headers:hdrs()}); if(!r.ok) return;
@@ -189,9 +173,7 @@ async function loadSubjects() {
     } catch{}
 }
 
-/* ─────────────────────────────
-   COUNTERS
-───────────────────────────── */
+
 function animateCounters() {
     document.querySelectorAll('[data-counter]').forEach(el=>{
         const target=parseInt(el.textContent)||0; if(!target) return;
@@ -200,9 +182,7 @@ function animateCounters() {
     });
 }
 
-/* ─────────────────────────────
-   INIT
-───────────────────────────── */
+
 document.addEventListener('DOMContentLoaded',async()=>{
     startClock();
     await loadUser();
