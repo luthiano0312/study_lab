@@ -1,163 +1,136 @@
-{{-- resources/views/components/choose-plane.blade.php --}}
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-<div id="planFree"
-     onclick="selectPlan('free')"
-     class="group/card relative flex-1 cursor-pointer rounded-2xl p-[1.5px] transition-all duration-300 hover:-translate-y-1"
-     style="background:linear-gradient(135deg,#f9a8d4,#db2777);">
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-    <div class="relative h-full rounded-2xl bg-white p-5 flex flex-col overflow-hidden">
+    .animate-card {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
 
-        <div class="absolute -left-10 -top-10 w-24 h-24 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
-             style="background:radial-gradient(circle,#fce7f3 0%,transparent 70%);"></div>
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
 
-        <div class="absolute top-3 right-3">
-            <div class="plan-check w-4 h-4 rounded-full bg-pink-500 flex items-center justify-center opacity-100 transition-all duration-200">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+</style>
+
+<div class="w-full flex items-stretch justify-center gap-4 mt-10 font-sans p-4">
+
+    <div
+        class="animate-card delay-1 w-72 rounded-2xl bg-[#0f0f11] border border-zinc-800 p-6 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-zinc-700 cursor-default group">
+        <h3 class="text-lg font-bold text-white group-hover:text-pink-500 transition-colors">Gratuito</h3>
+        <p class="text-xs text-zinc-500 mt-0.5">Perfeito para começar</p>
+
+        <div class="mt-5 flex items-baseline gap-1">
+            <span class="text-3xl font-black text-white tracking-tighter">R$ 0</span>
+            <span class="text-[10px] text-zinc-500 font-medium">para sempre</span>
         </div>
 
-        <span class="text-[10px] font-black uppercase tracking-widest text-pink-500 mb-2">Free</span>
-
-        <div class="flex items-baseline gap-1 mb-0.5">
-            <span class="text-[28px] font-black text-gray-900 leading-none">R$ 0</span>
-        </div>
-        <p class="text-[11px] text-gray-400 mb-4">para sempre</p>
-
-        <ul class="flex flex-col gap-2 flex-1">
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Calendário de provas</span>
+        <ul class="mt-6 space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Até 3 matérias
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Matérias ilimitadas</span>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> 5h de estudo/semana
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Atividades ilimitadas</span>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Flashcards básicos
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Conteúdos ilimitados</span>
-            </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Provas e trabalhos ilimitados</span>
-            </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Notas e boletim</span>
-            </li>
-            <li class="flex items-start gap-2 text-left opacity-40">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center bg-gray-100">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-400 leading-tight">Relatórios avançados</span>
-            </li>
-            <li class="flex items-start gap-2 text-left opacity-40">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center bg-gray-100">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-400 leading-tight">Suporte prioritário</span>
-            </li>
-            <li class="flex items-start gap-2 text-left opacity-40">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center bg-gray-100">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-400 leading-tight">Chat com IA para dúvidas</span>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Dashboard simples
             </li>
         </ul>
 
+        <button
+            class="mt-8 w-full py-2.5 rounded-xl border border-pink-500/20 bg-pink-500/5 text-pink-500 font-bold text-xs hover:bg-pink-500 hover:text-white transition-all duration-300">
+            Criar conta grátis
+        </button>
     </div>
-</div>
 
-<div id="planPremium"
-     onclick="selectPlan('premium')"
-     class="group/card relative flex-1 cursor-pointer rounded-2xl p-[1.5px] transition-all duration-300 hover:-translate-y-1"
-     style="background:linear-gradient(135deg,#e5e7eb,#d1d5db);">
-
-    <div class="relative h-full rounded-2xl bg-white p-5 flex flex-col overflow-hidden">
-
-        <div class="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl"
-             style="background:linear-gradient(90deg,#db2777,#f472b6,#fda4af);"></div>
-
-        <div class="absolute -right-10 -top-10 w-28 h-28 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
-             style="background:radial-gradient(circle,#fce7f3 0%,transparent 70%);"></div>
-
-        <div class="absolute top-3 right-3">
-            <div class="plan-check w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-all duration-200" style="background:#e5e7eb;">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
+    <div
+        class="animate-card delay-2 relative w-72 rounded-2xl bg-pink-600 p-7 flex flex-col shadow-[0_15px_40px_rgba(236,72,153,0.25)] transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02] cursor-default">
+        <div
+            class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0f0f11] border border-pink-400/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg animate-pulse whitespace-nowrap">
+            <span class="text-[10px] text-yellow-400">★</span>
+            <span class="text-[9px] uppercase font-black text-white tracking-widest">Mais Popular</span>
         </div>
 
-        <div class="absolute top-2 left-1/2 -translate-x-1/2">
-            <span class="text-[8px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full text-white"
-                  style="background:linear-gradient(90deg,#db2777,#f472b6);">Popular</span>
+        <h3 class="text-lg font-bold text-white">Pro</h3>
+        <p class="text-xs text-pink-100/80 mt-0.5">Para quem leva a sério</p>
+
+        <div class="mt-5 flex items-baseline gap-1">
+            <span class="text-4xl font-black text-white tracking-tighter">R$ 29</span>
+            <span class="text-[10px] text-pink-100 font-bold">/mês</span>
         </div>
 
-        <span class="text-[10px] font-black uppercase tracking-widest text-pink-500 mb-2 mt-4">Professional</span>
-
-        <div class="flex items-baseline gap-1 mb-0.5">
-            <span class="text-[28px] font-black text-gray-900 leading-none">R$ 14</span>
-            <span class="text-[13px] font-semibold text-gray-400">,90</span>
-        </div>
-        <p class="text-[11px] text-gray-400 mb-4">por mês</p>
-
-        <ul class="flex flex-col gap-2 flex-1">
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Tudo do Free</span>
+        <ul class="mt-6 space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-[13px] text-white font-medium">
+                <span class="bg-white/20 rounded-full p-0.5 text-[8px]">✔</span> Matérias ilimitadas
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Chat com IA para dúvidas</span>
+            <li class="flex items-center gap-2 text-[13px] text-white font-medium">
+                <span class="bg-white/20 rounded-full p-0.5 text-[8px]">✔</span> Horas ilimitadas
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Suporte prioritário</span>
+            <li class="flex items-center gap-2 text-[13px] text-white font-medium">
+                <span class="bg-white/20 rounded-full p-0.5 text-[8px]">✔</span> IA personalizada
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Relatórios avançados</span>
+            <li class="flex items-center gap-2 text-[13px] text-white font-medium">
+                <span class="bg-white/20 rounded-full p-0.5 text-[8px]">✔</span> Grupos de estudo
             </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Criação de grupos de estudos</span>
-            </li>
-            <li class="flex items-start gap-2 text-left">
-                <div class="mt-0.5 w-4 h-4 rounded-full shrink-0 flex items-center justify-center" style="background:#fce7f3;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <span class="text-[11px] text-gray-600 leading-tight">Suporte para estudos</span>
+            <li class="flex items-center gap-2 text-[13px] text-white font-medium">
+                <span class="bg-white/20 rounded-full p-0.5 text-[8px]">✔</span> Análise avançada
             </li>
         </ul>
 
-        <div class="mt-4 flex items-center justify-center gap-1.5">
-            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linejoin="round" stroke-linecap="round"/></svg>
-            <span class="text-[9px] text-gray-400 font-medium">Cancele quando quiser</span>
+        <button
+            class="mt-8 w-full py-3 rounded-xl bg-white text-pink-600 font-black text-xs shadow-md hover:bg-pink-50 transition-all duration-300 active:scale-95">
+            Começar agora
+        </button>
+    </div>
+
+    <div
+        class="animate-card delay-3 w-72 rounded-2xl bg-[#0f0f11] border border-zinc-800 p-6 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-zinc-700 cursor-default group">
+        <h3 class="text-lg font-bold text-white group-hover:text-pink-500 transition-colors">Equipe</h3>
+        <p class="text-xs text-zinc-500 mt-0.5">Para grupos e escolas</p>
+
+        <div class="mt-5 flex items-baseline gap-1">
+            <span class="text-3xl font-black text-white tracking-tighter">R$ 79</span>
+            <span class="text-[10px] text-zinc-500 font-medium">/mês</span>
         </div>
 
+        <ul class="mt-6 space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Tudo do Pro
+            </li>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Até 10 membros
+            </li>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Dashboard do grupo
+            </li>
+            <li class="flex items-center gap-2 text-[13px] text-zinc-400">
+                <span class="text-pink-500 text-[10px]">✔</span> Suporte prioritário
+            </li>
+        </ul>
+
+        <button
+            class="mt-8 w-full py-2.5 rounded-xl border border-zinc-800 bg-transparent text-zinc-400 font-bold text-xs hover:bg-zinc-800 hover:text-white transition-all duration-300">
+            Falar com vendas
+        </button>
     </div>
+
 </div>

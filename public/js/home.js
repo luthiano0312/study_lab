@@ -1,15 +1,94 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const elements = document.querySelectorAll(".reveal");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove("opacity-0", "translate-y-10");
-        entry.target.classList.add("opacity-100", "translate-y-0");
-      } else {
-        entry.target.classList.add("opacity-0", "translate-y-10");
-        entry.target.classList.remove("opacity-100", "translate-y-0");
-      }
-    });
-  }, { threshold: 0.15 });
-  elements.forEach(el => observer.observe(el));
-});
+
+
+        // ── Scroll reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(el => {
+                if (el.isIntersecting) {
+                    el.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ── Sticky header style on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.borderBottomColor = 'rgba(255,255,255,0.06)';
+                header.style.background = 'rgba(10,10,15,0.92)';
+            } else {
+                header.style.borderBottomColor = 'transparent';
+                header.style.background = 'rgba(10,10,15,0.7)';
+            }
+        });
+
+        // ── Mobile menu
+        const toggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+
+        toggle.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.toggle('hidden');
+            iconOpen.classList.toggle('hidden', !isOpen);
+            iconClose.classList.toggle('hidden', isOpen);
+        });
+
+        // Close menu on nav link click
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+
+        // ── Parallax on dashboard mockup
+        const mockup = document.getElementById('dashboard-mockup');
+        if (mockup) {
+            document.addEventListener('mousemove', (e) => {
+                const cx = window.innerWidth / 2;
+                const cy = window.innerHeight / 2;
+                const dx = (e.clientX - cx) / cx;
+                const dy = (e.clientY - cy) / cy;
+                mockup.style.transform = `perspective(1000px) rotateY(${dx * 4}deg) rotateX(${-dy * 3}deg) translateZ(10px)`;
+            });
+            document.addEventListener('mouseleave', () => {
+                mockup.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+            });
+            mockup.style.transition = 'transform 0.15s ease';
+        }
+
+        // ── Floating particles
+        const particleContainer = document.getElementById('particles');
+        function createParticle() {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const x = Math.random() * 100;
+            const duration = 8 + Math.random() * 15;
+            const delay = Math.random() * 10;
+            const size = 1 + Math.random() * 3;
+            p.style.cssText = `
+        left: ${x}%;
+        bottom: -10px;
+        width: ${size}px;
+        height: ${size}px;
+        opacity: ${0.3 + Math.random() * 0.5};
+        animation: particle-drift ${duration}s ${delay}s linear infinite;
+    `;
+            particleContainer.appendChild(p);
+        }
+        for (let i = 0; i < 20; i++) createParticle();
+
+        // ── Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
