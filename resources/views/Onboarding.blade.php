@@ -7,110 +7,12 @@
     <title>Personalizar conta - StudyLab</title>
     <link rel="icon" type="image/png" href="{{ asset('favicons/icone-onbarding.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        @keyframes ob-fade-up {
-            from {
-                opacity: 0;
-                transform: translateY(14px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        @keyframes ob-shimmer {
-            0% {
-                background-position: 200% 0
-            }
-
-            100% {
-                background-position: -200% 0
-            }
-        }
-
-        @keyframes ob-spin {
-            from {
-                transform: rotate(0deg)
-            }
-
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        @keyframes ob-spin-r {
-            from {
-                transform: rotate(0deg)
-            }
-
-            to {
-                transform: rotate(-360deg)
-            }
-        }
-
-        @keyframes ob-dot {
-
-            0%,
-            100% {
-                opacity: .3;
-                transform: scale(.8)
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.2)
-            }
-        }
-
-        @keyframes ob-prog {
-            0% {
-                background-position: 0% 50%
-            }
-
-            100% {
-                background-position: 100% 50%
-            }
-        }
-
-        .ob-step {
-            transition: opacity .35s cubic-bezier(.22, 1, .36, 1), transform .35s cubic-bezier(.22, 1, .36, 1);
-        }
-
-        .ob-skel {
-            background: linear-gradient(90deg, #18181f 25%, #1e1e2a 50%, #18181f 75%);
-            background-size: 200% 100%;
-            animation: ob-shimmer 1.4s infinite;
-        }
-
-        .ob-orbit {
-            position: absolute;
-            border-radius: 50%;
-            animation: ob-spin 5s linear infinite;
-        }
-
-        .ob-orbit-r {
-            position: absolute;
-            border-radius: 50%;
-            animation: ob-spin-r 8s linear infinite;
-        }
-
-        .ob-dot-anim {
-            animation: ob-dot 1.2s ease-in-out infinite;
-        }
-
-        .ob-prog-bar {
-            background: linear-gradient(90deg, #db2777, #f472b6, #db2777);
-            background-size: 200% 100%;
-            animation: ob-prog .9s linear infinite;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/onboarding.css') }}">
 </head>
 
 <body class="bg-[#09090e] text-slate-200 h-screen w-screen overflow-hidden font-sans">
 
-    <!-- ── STEP 0 — BOAS-VINDAS ── -->
+
     <div id="step0" class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
             <div class="w-[130px] h-[130px] mb-2">
@@ -127,7 +29,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 1 — NOME ── -->
     <div id="step1"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-start justify-center w-full max-w-lg px-10">
@@ -152,7 +53,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 2 — TEMA ── -->
     <div id="step2"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -168,7 +68,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 3 — AVATAR ── -->
     <div id="step3"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -203,7 +102,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 4 — COR DA CARTEIRA ── -->
     <div id="step4"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -244,7 +142,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 5 — PLANO ── -->
     <div id="step5"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -263,7 +160,6 @@
         </div>
     </div>
 
-    <!-- ── STEP 6 — CONCLUÍDO ── -->
     <div id="step6"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -286,12 +182,11 @@
         </div>
     </div>
 
-    <!-- ── LOADING SCREEN ── -->
     <div id="loadingScreen" class="hidden fixed inset-0 z-50 bg-[#09090e] flex-col items-center justify-center gap-5">
         <div class="relative w-44 h-44 flex items-center justify-center">
             <div class="ob-orbit w-36 h-36 border border-pink-500/20"></div>
             <div class="ob-orbit-r absolute w-44 h-44 border border-pink-500/10"></div>
-            <img src="{{ asset('images/logosemfundo.png') }}" class="relative z-10 w-20 h-auto" alt="StudyLab">
+            <img src="{{ asset('images/logo-dark-mode.png') }}" class="relative z-10 w-26 h-auto" alt="StudyLab">
         </div>
         <div class="w-48 h-0.5 bg-white/5 rounded-full overflow-hidden">
             <div id="progressBar" class="h-full w-0 ob-prog-bar rounded-full transition-all duration-300"></div>

@@ -279,8 +279,8 @@
                     <div class="text-center reveal reveal-delay-{{ $i + 1 }}">
                         <div class="relative inline-flex w-20 h-20 rounded-full items-center justify-center mb-5 mx-auto"
                             style="background: {{ $i === 0 ? 'linear-gradient(135deg, #ec4899, #9333ea)' : 'rgba(255,255,255,0.04)' }};
-                                                                                                                                    border: 1px solid {{ $i === 0 ? 'transparent' : 'rgba(255,255,255,0.08)' }};
-                                                                                                                                    box-shadow: {{ $i === 0 ? '0 0 40px rgba(236,72,153,0.4)' : 'none' }};">
+                                                                                                                                        border: 1px solid {{ $i === 0 ? 'transparent' : 'rgba(255,255,255,0.08)' }};
+                                                                                                                                        box-shadow: {{ $i === 0 ? '0 0 40px rgba(236,72,153,0.4)' : 'none' }};">
                             <span
                                 class="font-display font-extrabold text-xl {{ $i === 0 ? 'text-white' : 'text-slate-500' }}">
                                 {{ $step['num'] }}

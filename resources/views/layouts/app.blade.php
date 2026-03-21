@@ -35,13 +35,10 @@
 
             <div class="flex items-center gap-4">
                 <div>
-                    <x-chat-ia-bt />
-                </div>
-                <div>
                     <x-planes-bt />
                 </div>
                 <div>
-                    <x-grupe-bt />
+                    <x-active-bar />
                 </div>
                 <button
                     class="relative w-9 h-9 rounded-xl hover:bg-gray-100 flex items-center justify-center transition">

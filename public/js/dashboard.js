@@ -101,8 +101,8 @@ async function loadActivities() {
                 <div class="flex items-center gap-3 min-w-0">
                     <div class="w-2 h-2 rounded-full shrink-0" style="background:${dot}"></div>
                     <div class="min-w-0">
-                        <p class="text-sm font-semibold text-gray-800 truncate">${a.title||a.description||'—'}</p>
-                        <p class="text-xs text-gray-400">${a.subject_name||''}${a.due_date?' · '+fmtDate(a.due_date):''}</p>
+                        <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${a.title||a.description||'—'}</p>
+                        <p class="text-xs text-gray-400 dark:text-white">${a.subject_name||''}${a.due_date?' · '+fmtDate(a.due_date):''}</p>
                     </div>
                 </div>
                 ${badge(color,bg,label)}
@@ -137,11 +137,11 @@ async function loadExams() {
             return `<div class="flex items-center justify-between px-5 py-3 hover:bg-pink-50/60 transition-colors">
                 <div class="flex items-center gap-3 min-w-0">
                     <div class="text-center shrink-0 w-10">
-                        <div class="font-black text-gray-900 leading-none" style="font-family:'Syne',sans-serif;font-size:1.3rem">${day}</div>
+                        <div class="font-black text-gray-900 dark:text-white leading-none" style="font-family:'Syne',sans-serif;font-size:1.3rem">${day}</div>
                         <div class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">${mon}</div>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-sm font-semibold text-gray-800 truncate">${e.type||'Prova'}</p>
+                        <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${e.type||'Prova'}</p>
                         <p class="text-xs text-gray-400 truncate">${e.description||''}</p>
                     </div>
                 </div>
@@ -165,8 +165,8 @@ async function loadSubjects() {
             return `<div class="flex items-center gap-3 px-5 py-2.5 hover:bg-pink-500/10 transition-colors">
                 <div class="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-black shrink-0" style="background:${bg};color:${color}">${abbr}</div>
                 <div class="min-w-0">
-                    <p class="text-sm font-semibold text-white truncate">${s.name}</p>
-                    <p class="text-xs text-pink-200">${s.teacher||'Sem professor'}</p>
+                    <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${s.name}</p>
+                    <p class="text-xs text-gray-400 dark:text-white truncate">${s.teacher||'Sem professor'}</p>
                 </div>
             </div>`;
         }).join('');

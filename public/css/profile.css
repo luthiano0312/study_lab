@@ -1,0 +1,247 @@
+/* ── ANIMATIONS ── */
+@keyframes float-particle {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: .3
+    }
+
+    50% {
+        transform: translateY(-80px) translateX(15px);
+        opacity: .7
+    }
+}
+
+@keyframes spinCW {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes spinCCW {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(-360deg)
+    }
+}
+
+@keyframes blobDrift {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1)
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.06)
+    }
+}
+
+@keyframes dotDrift {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0)
+    }
+
+    50% {
+        transform: translateY(-12px) translateX(6px)
+    }
+}
+
+.animate-particle {
+    animation: float-particle var(--duration) ease-in-out infinite
+}
+
+.spin-cw {
+    animation: spinCW 22s linear infinite
+}
+
+.spin-ccw {
+    animation: spinCCW 28s linear infinite
+}
+
+.blob-drift {
+    animation: blobDrift 8s ease-in-out infinite
+}
+
+.dot-drift {
+    animation: dotDrift 5s ease-in-out infinite
+}
+
+.input-glass:focus {
+    box-shadow: 0 0 15px -3px rgba(236, 72, 153, .3);
+    border-color: rgba(236, 72, 153, .5) !important
+}
+
+.perspective-1000 {
+    perspective: 1000px
+}
+
+/* ── LIGHT MODE — fundo rosado suave com dot pattern ── */
+.profile-page {
+    background: #fdf4f8;
+    color: #0f172a;
+    transition: background .35s, color .35s;
+}
+
+.profile-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(219, 39, 119, .14) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.profile-card-bg {
+    background: #ffffff;
+    border-color: rgba(219, 39, 119, .12)
+}
+
+.profile-input {
+    background: #fff0f6;
+    border-color: rgba(219, 39, 119, .15);
+    color: #0f172a
+}
+
+.profile-input::placeholder {
+    color: #cbd5e1
+}
+
+.profile-label {
+    color: #64748b
+}
+
+.profile-muted {
+    color: #94a3b8
+}
+
+.profile-section {
+    background: rgba(255, 255, 255, .9);
+    border-color: rgba(219, 39, 119, .1);
+    backdrop-filter: blur(12px)
+}
+
+.profile-section-header {
+    border-color: rgba(219, 39, 119, .08)
+}
+
+.profile-picker {
+    background: rgba(255, 255, 255, .7);
+    border-color: rgba(219, 39, 119, .12)
+}
+
+/* glows light */
+.profile-glow-top {
+    background: radial-gradient(ellipse 60% 50% at 0% 0%, rgba(219, 39, 119, .12) 0, transparent 70%)
+}
+
+.profile-glow-bot {
+    background: radial-gradient(ellipse 60% 50% at 100% 100%, rgba(139, 92, 246, .1) 0, transparent 70%)
+}
+
+.profile-glow-mid {
+    background: radial-gradient(ellipse 40% 40% at 50% 60%, rgba(244, 114, 182, .07) 0, transparent 70%)
+}
+
+/* blobs light */
+.blob-light-1 {
+    background: radial-gradient(circle, rgba(249, 168, 212, .55) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(55px)
+}
+
+.blob-light-2 {
+    background: radial-gradient(circle, rgba(196, 181, 253, .45) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(65px)
+}
+
+.blob-light-3 {
+    background: radial-gradient(circle, rgba(253, 164, 175, .4) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(50px)
+}
+
+/* ── DARK MODE — preto profundo com dot pattern ── */
+html.dark .profile-page {
+    background: #09090e;
+    color: #e2e8f0
+}
+
+html.dark .profile-page::before {
+    background-image: radial-gradient(circle, rgba(219, 39, 119, .18) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+}
+
+html.dark .profile-card-bg {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .1)
+}
+
+html.dark .profile-input {
+    background: #18181f;
+    border-color: rgba(255, 255, 255, .1);
+    color: #e2e8f0
+}
+
+html.dark .profile-input::placeholder {
+    color: #334155
+}
+
+html.dark .profile-label {
+    color: #64748b
+}
+
+html.dark .profile-muted {
+    color: #475569
+}
+
+html.dark .profile-section {
+    background: rgba(255, 255, 255, .032);
+    border-color: rgba(255, 255, 255, .07);
+    backdrop-filter: blur(14px)
+}
+
+html.dark .profile-section-header {
+    border-color: rgba(255, 255, 255, .05)
+}
+
+html.dark .profile-picker {
+    background: rgba(255, 255, 255, .05);
+    border-color: rgba(255, 255, 255, .1)
+}
+
+html.dark .profile-glow-top {
+    background: radial-gradient(ellipse 60% 50% at 0% 0%, rgba(219, 39, 119, .12) 0, transparent 70%)
+}
+
+html.dark .profile-glow-bot {
+    background: radial-gradient(ellipse 60% 50% at 100% 100%, rgba(139, 92, 246, .1) 0, transparent 70%)
+}
+
+html.dark .profile-glow-mid {
+    background: radial-gradient(ellipse 40% 40% at 50% 60%, rgba(219, 39, 119, .06) 0, transparent 70%)
+}
+
+html.dark .blob-light-1 {
+    background: radial-gradient(circle, rgba(219, 39, 119, .15) 0%, transparent 70%)
+}
+
+html.dark .blob-light-2 {
+    background: radial-gradient(circle, rgba(124, 58, 237, .12) 0%, transparent 70%)
+}
+
+html.dark .blob-light-3 {
+    background: radial-gradient(circle, rgba(219, 39, 119, .08) 0%, transparent 70%)
+}

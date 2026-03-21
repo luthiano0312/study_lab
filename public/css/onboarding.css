@@ -1,106 +1,97 @@
-/* ── Loading Screen ── */
-.logo-img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    animation: logoPulse 2.4s ease-in-out infinite;
+@keyframes ob-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(14px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
 }
 
-@keyframes logoPulse {
-    0%,100% { transform: scale(1);     filter: drop-shadow(0 0 6px #ec489980); }
-    50%      { transform: scale(1.06); filter: drop-shadow(0 0 22px #ec4899cc); }
+@keyframes ob-shimmer {
+    0% {
+        background-position: 200% 0
+    }
+
+    100% {
+        background-position: -200% 0
+    }
 }
 
-.orbit-ring {
+@keyframes ob-spin {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes ob-spin-r {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(-360deg)
+    }
+}
+
+@keyframes ob-dot {
+
+    0%,
+    100% {
+        opacity: .3;
+        transform: scale(.8)
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2)
+    }
+}
+
+@keyframes ob-prog {
+    0% {
+        background-position: 0% 50%
+    }
+
+    100% {
+        background-position: 100% 50%
+    }
+}
+
+.ob-step {
+    transition: opacity .35s cubic-bezier(.22, 1, .36, 1), transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+
+.ob-skel {
+    background: linear-gradient(90deg, #18181f 25%, #1e1e2a 50%, #18181f 75%);
+    background-size: 200% 100%;
+    animation: ob-shimmer 1.4s infinite;
+}
+
+.ob-orbit {
     position: absolute;
-    inset: 0;
     border-radius: 50%;
-    animation: orbitSpin 2.2s linear infinite;
+    animation: ob-spin 5s linear infinite;
 }
-.orbit-ring::before {
-    content: '';
+
+.ob-orbit-r {
     position: absolute;
-    top: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 10px; height: 10px;
     border-radius: 50%;
-    background: #ec4899;
-    box-shadow: 0 0 12px 4px #ec489966;
+    animation: ob-spin-r 8s linear infinite;
 }
 
-.orbit-ring-2 {
-    position: absolute;
-    inset: 14px;
-    border-radius: 50%;
-    animation: orbitSpinR 3.5s linear infinite;
-}
-.orbit-ring-2::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #f9a8d4;
-    box-shadow: 0 0 8px 3px #f9a8d480;
+.ob-dot-anim {
+    animation: ob-dot 1.2s ease-in-out infinite;
 }
 
-@keyframes orbitSpin  { to { transform: rotate(360deg);  } }
-@keyframes orbitSpinR { to { transform: rotate(-360deg); } }
-
-.progress-wrap {
-    margin-top: 28px;
-    width: 160px;
-    height: 3px;
-    background: #fce7f3;
-    border-radius: 999px;
-    overflow: hidden;
-}
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #f472b6, #ec4899, #db2777);
-    border-radius: 999px;
-    box-shadow: 0 0 8px #ec489966;
-    transition: width .4s ease;
-}
-
-.dots-wrap {
-    display: flex;
-    gap: 5px;
-    margin-top: 22px;
-}
-.dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #f9a8d4;
-    animation: dotBounce 1.4s ease-in-out infinite;
-}
-.dot:nth-child(1) { animation-delay: 0s;   }
-.dot:nth-child(2) { animation-delay: .18s; }
-.dot:nth-child(3) { animation-delay: .36s; }
-
-@keyframes dotBounce {
-    0%,80%,100% { transform: translateY(0);    background: #f9a8d4; }
-    40%          { transform: translateY(-7px); background: #ec4899; }
-}
-
-.label {
-    margin-top: 16px;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: #d1d5db;
-    animation: labelFade 3s ease-in-out infinite;
-}
-@keyframes labelFade {
-    0%,100% { opacity: .5; }
-    50%      { opacity: 1;  }
-}
-
-#loadingScreen.done {
-    animation: screenFadeOut .5s ease forwards;
-}
-@keyframes screenFadeOut {
-    to { opacity: 0; pointer-events: none; }
+.ob-prog-bar {
+    background: linear-gradient(90deg, #db2777, #f472b6, #db2777);
+    background-size: 200% 100%;
+    animation: ob-prog .9s linear infinite;
 }
