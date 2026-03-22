@@ -10,12 +10,12 @@ class GradeController extends Controller
 {
     public function index()
     {
-        return Grade::all();
+        return auth()->user()->grades()->get();
     }
 
     public function store(GradeRequest $request)
     {
-        $grade = Grade::create($request->validated());
+        $grade = auth()->user()->grades()->create($request->validated());
 
         return response()->json([
             'message' => 'Nota cadastrada com sucesso',
