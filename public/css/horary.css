@@ -1,0 +1,219 @@
+ @keyframes floatA {
+
+     0%,
+     100% {
+         transform: translateY(0) rotate(0deg)
+     }
+
+     50% {
+         transform: translateY(-14px) rotate(4deg)
+     }
+ }
+
+ @keyframes floatB {
+
+     0%,
+     100% {
+         transform: translateY(0)
+     }
+
+     50% {
+         transform: translateY(-9px)
+     }
+ }
+
+ @keyframes spinCW {
+     from {
+         transform: rotate(0deg)
+     }
+
+     to {
+         transform: rotate(360deg)
+     }
+ }
+
+ @keyframes spinCCW {
+     from {
+         transform: rotate(0deg)
+     }
+
+     to {
+         transform: rotate(-360deg)
+     }
+ }
+
+ @keyframes fadeUp {
+     from {
+         opacity: 0;
+         transform: translateY(18px)
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0)
+     }
+ }
+
+ @keyframes shimmer {
+     0% {
+         background-position: 200% 0
+     }
+
+     100% {
+         background-position: -200% 0
+     }
+ }
+
+ @keyframes pulse {
+
+     0%,
+     100% {
+         opacity: .4
+     }
+
+     50% {
+         opacity: .9
+     }
+ }
+
+ .fa {
+     animation: floatA 4.5s ease-in-out infinite
+ }
+
+ .fb {
+     animation: floatB 6s ease-in-out infinite
+ }
+
+ .spin-cw {
+     animation: spinCW 22s linear infinite
+ }
+
+ .spin-ccw {
+     animation: spinCCW 28s linear infinite
+ }
+
+ .pulse-dot {
+     animation: pulse 3s ease-in-out infinite
+ }
+
+ .fade-up {
+     animation: fadeUp .6s cubic-bezier(.22, 1, .36, 1) both
+ }
+
+ .skel {
+     background: linear-gradient(90deg, var(--skel-a) 25%, var(--skel-b) 50%, var(--skel-a) 75%);
+     background-size: 200% 100%;
+     animation: shimmer 1.4s infinite
+ }
+
+ /* ── LIGHT ── */
+ :root {
+     --bg: #fdf4f8;
+     --card: #ffffff;
+     --card-border: rgba(219, 39, 119, .1);
+     --input-bg: #fff0f6;
+     --input-border: rgba(219, 39, 119, .2);
+     --text: #111827;
+     --muted: #64748b;
+     --faint: #94a3b8;
+     --section: rgba(255, 255, 255, .9);
+     --skel-a: #fce7f3;
+     --skel-b: #fdf2f8;
+     --drop-bg: rgba(219, 39, 119, .04);
+     --drop-border: rgba(219, 39, 119, .25);
+ }
+
+ html.dark {
+     --bg: #09090e;
+     --card: rgba(255, 255, 255, .04);
+     --card-border: rgba(255, 255, 255, .08);
+     --input-bg: #18181f;
+     --input-border: rgba(255, 255, 255, .1);
+     --text: #e2e8f0;
+     --muted: #64748b;
+     --faint: #334155;
+     --section: rgba(255, 255, 255, .032);
+     --skel-a: #18181f;
+     --skel-b: #1e1e2a;
+     --drop-bg: rgba(219, 39, 119, .06);
+     --drop-border: rgba(219, 39, 119, .35);
+ }
+
+ body {
+     background: var(--bg);
+     color: var(--text);
+     font-family: 'DM Sans', sans-serif;
+     transition: background .3s, color .3s
+ }
+
+ .hl-card {
+     background: var(--card);
+     border: 1px solid var(--card-border);
+     border-radius: 1.5rem;
+     backdrop-filter: blur(12px)
+ }
+
+ .hl-input {
+     background: var(--input-bg);
+     border: 1px solid var(--input-border);
+     color: var(--text)
+ }
+
+ .hl-input::placeholder {
+     color: var(--faint)
+ }
+
+ .hl-input:focus {
+     outline: none;
+     border-color: #db2777;
+     box-shadow: 0 0 0 3px rgba(219, 39, 119, .15)
+ }
+
+ .hl-label {
+     color: var(--muted)
+ }
+
+ .hl-muted {
+     color: var(--muted)
+ }
+
+ .hl-faint {
+     color: var(--faint)
+ }
+
+ .hl-section {
+     background: var(--section);
+     border: 1px solid var(--card-border)
+ }
+
+ .drop-zone {
+     background: var(--drop-bg);
+     border: 2px dashed var(--drop-border);
+     border-radius: 1.25rem;
+     transition: all .2s;
+     cursor: pointer;
+ }
+
+ .drop-zone:hover,
+ .drop-zone.drag-over {
+     background: rgba(219, 39, 119, .1);
+     border-color: #db2777;
+ }
+
+ .drop-zone.drag-over {
+     transform: scale(1.01)
+ }
+
+ /* scrollbar */
+ ::-webkit-scrollbar {
+     width: 5px
+ }
+
+ ::-webkit-scrollbar-track {
+     background: transparent
+ }
+
+ ::-webkit-scrollbar-thumb {
+     background: rgba(219, 39, 119, .3);
+     border-radius: 3px
+ }

@@ -48,3 +48,10 @@ Route::get('/contents/edit/{id}', function ($id) {
     $content = Content::findOrFail($id);
     return view('subjects.content.edit', compact('content'));
 })->name('content.edit');
+
+Route::get('/horary', fn() => view('horary.photo.index'))->name('horary.index');
+Route::get('/horary/create', fn() => view('horary.photo.create'))->name('horary.create');
+Route::get('/horary/edit/{id}', function ($id) {
+    $horary = Horary::findOrFail($id);
+    return view('horary.photo.edit', compact('horary'));
+})->name('horary.edit');

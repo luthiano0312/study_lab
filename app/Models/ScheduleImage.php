@@ -3,30 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class ScheduleImage extends Model
 {
-    protected $fillable = ['user_id', 'title', 'image_path'];
+    protected $fillable = [
+        'user_id',
+        'title',
+        'image_path',
+    ];
 
-    /**
-     * Get the user that owns the schedule image.
-     */
-    public function user(): BelongsTo
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Retorna a URL pública da imagem armazenada no Supabase Storage.
-     */
-    public function getImageUrlAttribute(): ?string
-    {
-        if (!$this->image_path) {
-            return null;
-        }
 
-        return Storage::disk('supabase')->url($this->image_path);
+    public function getImageUrlAttribute(): string
+    {
+        return Storage::disk('public')->url($this->image_path);
     }
 }

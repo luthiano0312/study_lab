@@ -14,7 +14,7 @@ class ScheduleImageController extends Controller
         $schedules = auth()->user()->scheduleImages()->latest()->get();
 
         return response()->json([
-            'data' => $schedules->map(fn ($s) => [
+            'data' => $schedules->map(fn($s) => [
                 'id'         => $s->id,
                 'title'      => $s->title,
                 'image_url'  => $s->image_url,
@@ -26,9 +26,10 @@ class ScheduleImageController extends Controller
 
     public function store(ScheduleImageRequest $request)
     {
+        // Salva em storage/app/public/schedules/{user_id}/
         $path = $request->file('image')->store(
             'schedules/' . auth()->id(),
-            'supabase'
+            'public'
         );
 
         $schedule = auth()->user()->scheduleImages()->create([
@@ -49,23 +50,30 @@ class ScheduleImageController extends Controller
 
     public function update(ScheduleImageRequest $request, ScheduleImage $scheduleImage)
     {
+        if ($scheduleImage->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Não autorizado.'], 403);
+        }
+
         $data = [];
 
-        if ($request->has('title')) {
+        if ($request->filled('title')) {
             $data['title'] = $request->title;
         }
 
         if ($request->hasFile('image')) {
-            // Remove a imagem antiga do Supabase
             if ($scheduleImage->image_path) {
-                Storage::disk('supabase')->delete($scheduleImage->image_path);
+                Storage::disk('public')->delete($scheduleImage->image_path);
             }
 
             $path = $request->file('image')->store(
                 'schedules/' . auth()->id(),
-                'supabase'
+                'public'
             );
             $data['image_path'] = $path;
+        }
+
+        if (empty($data)) {
+            return response()->json(['message' => 'Nenhum dado para atualizar.'], 422);
         }
 
         $scheduleImage->update($data);
@@ -84,9 +92,12 @@ class ScheduleImageController extends Controller
 
     public function destroy(ScheduleImage $scheduleImage)
     {
-        // Remove a imagem do Supabase
+        if ($scheduleImage->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Não autorizado.'], 403);
+        }
+
         if ($scheduleImage->image_path) {
-            Storage::disk('supabase')->delete($scheduleImage->image_path);
+            Storage::disk('public')->delete($scheduleImage->image_path);
         }
 
         $scheduleImage->delete();
