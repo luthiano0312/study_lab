@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\ExamController;
 use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\ScheduleImageController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\UserController;
@@ -22,10 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/photo',  [UserController::class, 'updatePhoto']);
     Route::delete('/profile',      [UserController::class, 'delete']);
 
-    Route::apiResource('subjects',   SubjectController::class);
-    Route::apiResource('activities', ActivityController::class);
-    Route::apiResource('exams',      ExamController::class);
-    Route::apiResource('grades',     GradeController::class);
-    Route::apiResource('contents',  ContentController::class);
+    Route::apiResource('subjects',       SubjectController::class);
+    Route::apiResource('activities',     ActivityController::class);
+    Route::apiResource('exams',          ExamController::class);
+    Route::apiResource('grades',         GradeController::class);
+    Route::apiResource('contents',       ContentController::class);
     Route::apiResource('scheduleImages', ScheduleImageController::class);
+    Route::apiResource('schedules',      ScheduleController::class)->except(['show']);
 });

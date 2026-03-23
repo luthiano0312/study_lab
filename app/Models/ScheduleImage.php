@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Traits\BelongsToUser;
 
 class ScheduleImage extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'title',
-        'image_path',
-    ];
+    use BelongsToUser;
+    protected $fillable = ['user_id', 'title', 'image_path'];
 
-
-    public function user()
+    /**
+     * Get the user that owns the schedule image.
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

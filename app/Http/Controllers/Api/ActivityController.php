@@ -10,7 +10,7 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        return Activity::all();
+        return auth()->user()->activities()->get();
     }
 
     public function store(ActivityRequest $request)
