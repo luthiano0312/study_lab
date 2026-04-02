@@ -16,7 +16,7 @@ class MessageController extends Controller
         }
 
         $message = Message::create([
-            'user' => $request->user ?? 'Anonimo',
+            'user' => $request->user ?? 'Anônimo',
             'text' => $request->text ?? '',
             'file' => $path
         ]);
