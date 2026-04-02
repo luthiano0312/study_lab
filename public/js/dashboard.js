@@ -1,6 +1,14 @@
-
 'use strict';
 
+// Captura token OAuth redirecionado pelo Google callback (?token=...)
+(function () {
+    const params = new URLSearchParams(window.location.search);
+    const oauthToken = params.get('token');
+    if (oauthToken) {
+        localStorage.setItem('auth_token', oauthToken);
+        window.history.replaceState(null, '', window.location.pathname);
+    }
+})();
 
 const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -14,7 +22,6 @@ const STATUS_MAP = {
     in_progress: ['#1d4ed8','#dbeafe','Progresso' ],
     completed:   ['#166534','#dcfce7','Concluída' ],
 };
-
 
 const $         = id => document.getElementById(id);
 const txt       = (id, v) => { const e=$(id); if(e) e.textContent=v; };
@@ -51,7 +58,6 @@ function startClock() {
     const el=$('clock'), bar=$('weekBar');
     const tick=()=>{ if(el) el.textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); };
     tick(); setInterval(tick,1000);
-    // anima barra de meta
     if(bar) setTimeout(()=>bar.style.width='65%',300);
 }
 

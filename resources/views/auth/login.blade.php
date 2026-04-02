@@ -202,11 +202,11 @@
                 </form>
 
                 <div class="mt-7 pt-7 border-t border-white/5 space-y-3 fade-up" style="animation-delay:.2s">
-                    <button
+                    <a href="/auth/google/redirect"
                         class="w-full bg-[#16161D] hover:bg-[#1C1C26] border border-white/5 text-white font-medium py-3 rounded-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-3 text-sm">
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
                         Entrar com Google
-                    </button>
+                    </a>
                 </div>
 
                 <p class="mt-7 text-center text-sm text-slate-500 fade-up" style="animation-delay:.3s">

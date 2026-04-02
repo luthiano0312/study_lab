@@ -1,5 +1,17 @@
 'use strict';
 
+// Captura token OAuth redirecionado pelo Google callback (?token=...)
+(function () {
+    const params = new URLSearchParams(window.location.search);
+    const oauthToken = params.get('token');
+    if (oauthToken) {
+        localStorage.setItem('auth_token', oauthToken);
+        // Limpa o token da URL sem recarregar a página
+        const clean = window.location.pathname;
+        window.history.replaceState(null, '', clean);
+    }
+})();
+
 const API_BASE = '/api';
 
 function authHeaders(extra = {}) {
