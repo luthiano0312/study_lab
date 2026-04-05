@@ -242,33 +242,40 @@
           </div>
 
           {{-- rodapé --}}
-          <div class="flex flex-wrap items-center justify-between gap-6 px-4">
-            <div class="flex items-center gap-8">
+          <div class="flex items-center gap-6 mt-4 pb-2">
 
-              {{-- toggle tema --}}
-              <button id="toggleThemeBtn" class="flex items-center gap-3 group cursor-pointer">
-                <div class="w-10 h-5 bg-pink-600/20 border border-pink-500/30 rounded-full relative transition-colors">
-                  <div id="themeKnob"
-                    class="absolute top-1 left-1 w-2.5 h-2.5 bg-pink-500 rounded-full shadow-[0_0_8px_rgba(236,72,153,1)] transition-transform duration-300"
-                    style="transform:translateX(20px)">
-                  </div>
+            {{-- toggle tema --}}
+            <button id="toggleThemeBtn" class="flex items-center gap-3 group cursor-pointer">
+              <div class="w-10 h-5 bg-pink-600/20 border border-pink-500/30 rounded-full relative transition-colors">
+                <div id="themeKnob"
+                  class="absolute top-1 left-1 w-2.5 h-2.5 bg-pink-500 rounded-full shadow-[0_0_8px_rgba(236,72,153,1)] transition-transform duration-300"
+                  style="transform:translateX(20px)">
                 </div>
-                <span id="themeLabel"
-                  class="text-xs font-bold profile-muted group-hover:text-pink-500 transition-colors uppercase">
-                  Modo Dark
-                </span>
-              </button>
+              </div>
+              <span id="themeLabel"
+                class="text-xs font-bold profile-muted group-hover:text-pink-500 transition-colors uppercase">
+                Modo Dark
+              </span>
+            </button>
 
-              <button id="logoutBtn"
-                class="text-xs font-bold cursor-pointer profile-muted hover:text-red-500 transition-colors uppercase tracking-widest">
-                Desconectar
-              </button>
-            </div>
+            <button id="logoutBtn"
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-400 dark:border-gray-700 bg-white dark:bg-[#18181b] hover:bg-gray-300 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] font-bold uppercase tracking-widest transition-all shadow-sm ml-auto">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Desconectar
+            </button>
 
             <button id="deleteAccountBtn"
-              class="text-[9px] font-black cursor-pointer uppercase tracking-[0.2em] profile-muted hover:text-red-600 transition-all border-b border-transparent hover:border-red-600">
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-red-400 dark:border-red-900/30 bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-widest transition-all shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
               Excluir Conta Permanentemente
             </button>
+
           </div>
         </div>
       </div>
