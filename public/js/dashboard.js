@@ -66,7 +66,7 @@ async function loadUser() {
     try {
         const r=await fetch('/api/user',{headers:hdrs()}); if(!r.ok) return;
         const u=await r.json();
-        txt('userName',  u.name||'Estudante');
+        txt('welcomeName',  u.name||'Estudante');
         txt('greetName', u.name?.split(' ')[0]||'Estudante');
         const src=avatarSrc(u);
         if(src){

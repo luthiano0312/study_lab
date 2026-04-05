@@ -37,7 +37,7 @@
                             </div>
                             <div class="leading-tight">
                                 <p class="text-pink-200 text-[10px] font-semibold">Bem-vindo de volta</p>
-                                <p id="userName" class="text-white text-[13px] font-black">Estudante</p>
+                                <p id="welcomeName" class="text-white text-[13px] font-black">Estudante</p>
                             </div>
                         </div>
                     </div>
@@ -126,8 +126,8 @@
                                     </div>
                                     <a href="{{ $slide['href'] }}"
                                         class="relative z-10 flex-shrink-0 bg-white/20 hover:bg-white/30 border border-white/30
-                                                                                                                                                                              text-white text-[11px] font-black uppercase tracking-wide
-                                                                                                                                                                              px-4 py-2 rounded-xl transition-all duration-200 whitespace-nowrap">
+                                                                                                                                                                                              text-white text-[11px] font-black uppercase tracking-wide
+                                                                                                                                                                                              px-4 py-2 rounded-xl transition-all duration-200 whitespace-nowrap">
                                         {{ $slide['cta'] }} →
                                     </a>
                                 </div>
@@ -223,7 +223,7 @@
                 @foreach ($shortcuts as $s)
                     <a href="{{ $s['href'] }}"
                         class="flex flex-col items-center gap-2.5 rounded-2xl p-5 shadow-sm border border-transparent
-                                                                                                                                                              hover:border-pink-100 hover:-translate-y-1 transition-all duration-200 group {{ $s['bg'] }}">
+                                                                                                                                                                              hover:border-pink-100 hover:-translate-y-1 transition-all duration-200 group {{ $s['bg'] }}">
                         <div
                             class="w-10 h-10 rounded-xl {{ $s['ibg'] }} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-200">
                             <svg class="w-5 h-5 {{ $s['ic'] }}" fill="none" stroke="currentColor"
