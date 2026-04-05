@@ -66,6 +66,24 @@
                         <p class="text-xs text-gray-400 dark:text-gray-500 leading-tight">StudyLab</p>
                     </div>
                 </a>
+                <script>
+                    (function() {
+                        const cached = localStorage.getItem('user_cache');
+                        if (cached) {
+                            try {
+                                const user = JSON.parse(cached);
+                                if (user.name) document.getElementById('headerUserName').textContent = user.name;
+                                if (user.avatarUrl) {
+                                    const img = document.getElementById('headerAvatar');
+                                    const fb  = document.getElementById('headerAvatarFallback');
+                                    img.src = user.avatarUrl;
+                                    img.classList.remove('hidden');
+                                    fb.style.display = 'none';
+                                }
+                            } catch(e) {}
+                        }
+                    })();
+                </script>
 
             </div>
         </header>

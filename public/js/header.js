@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (img) { img.src = avatarUrl; img.classList.remove('hidden'); }
             if (fb)  { fb.style.display = 'none'; }
         }
+
+        // Salva cache para o próximo carregamento instantâneo
+        localStorage.setItem('user_cache', JSON.stringify({
+            name: user.name,
+            avatarUrl: avatarUrl
+        }));
     } catch (e) {
         // silently fail — fallback já está no HTML
     }
