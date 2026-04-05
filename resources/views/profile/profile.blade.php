@@ -191,33 +191,35 @@
                     Completo</label>
                   <div class="relative">
                     <input type="text" id="nameInput" value="{{ Auth::check() ? Auth::user()->name : '' }}"
-                      class="input-glass profile-input w-full border rounded-2xl px-5 py-3.5 text-sm focus:outline-none transition-all pr-12">
-                    <button type="submit"
-                      class="absolute right-3 top-3.5 text-pink-500 hover:text-pink-400 transition-colors">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </button>
+                      class="input-glass profile-input w-full border rounded-2xl px-5 py-3.5 text-sm focus:outline-none transition-all">
                   </div>
+                  <button type="submit"
+                    class="w-full flex items-center justify-center gap-2 bg-pink-600 hover:bg-pink-500 cursor-pointer text-white font-black py-2.5 rounded-2xl text-[11px] uppercase tracking-wider transition-all shadow-lg shadow-pink-600/20 hover:-translate-y-0.5 active:translate-y-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Atualizar Nome
+                  </button>
                   <p id="err-name" class="hidden text-[11px] text-red-500 font-semibold"></p>
                 </form>
 
                 {{-- email --}}
                 <form id="emailForm" class="space-y-3">
-                  <label class="text-[10px] font-black uppercase tracking-widest profile-label block">E-mail
-                    Institucional</label>
+                  <label class="text-[10px] font-black uppercase tracking-widest profile-label block">E-mail</label>
                   <div class="relative">
                     <input type="email" id="emailInput" value="{{ Auth::check() ? Auth::user()->email : '' }}"
-                      class="input-glass profile-input w-full border rounded-2xl px-5 py-3.5 text-sm focus:outline-none transition-all pr-12">
-                    <button type="submit"
-                      class="absolute right-3 top-3.5 text-pink-500 hover:text-pink-400 transition-colors">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </button>
+                      class="input-glass profile-input w-full border rounded-2xl px-5 py-3.5 text-sm focus:outline-none transition-all">
                   </div>
+                  <button type="submit"
+                    class="w-full flex items-center justify-center gap-2 bg-pink-600 hover:bg-pink-500 cursor-pointer text-white font-black py-2.5 rounded-2xl text-[11px] uppercase tracking-wider transition-all shadow-lg shadow-pink-600/20 hover:-translate-y-0.5 active:translate-y-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Atualizar E-mail
+                  </button>
                   <p id="err-email" class="hidden text-[11px] text-red-500 font-semibold"></p>
                 </form>
+
               </div>
 
               {{-- senha --}}
