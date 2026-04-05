@@ -48,19 +48,21 @@
                         class="absolute -top-0.5 -right-0.5 bg-pink-500 text-white text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">3</span>
                 </button>
                 <a href="/profile"
-                    class="flex items-center gap-2.5 bg-gray-50 dark:bg-[#27272a] hover:bg-pink-50 dark:hover:bg-pink-950/40 px-3 py-1.5 rounded-xl transition cursor-pointer border border-transparent hover:border-pink-100 dark:border-gray-700 dark:hover:border-pink-800">
+                    class="flex items-center gap-2.5 bg-gray-50 dark:bg-[#27272a] hover:bg-pink-50 dark:hover:bg-pink-950/40 px-3 py-1.5 rounded-xl transition cursor-pointer border border-gray-300 hover:border-pink-300 dark:border-gray-700 dark:hover:border-pink-800">
                     <div class="relative w-8 h-8 flex-shrink-0">
                         <img id="headerAvatar" src="" alt=""
                             class="w-8 h-8 rounded-full object-cover ring-2 ring-pink-200 dark:ring-pink-800 hidden">
                         <div id="headerAvatarFallback"
                             class="w-8 h-8 rounded-full ring-2 ring-pink-200 dark:ring-pink-800 bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                         </div>
                     </div>
                     <div class="text-sm">
-                        <p class="font-semibold text-gray-700 dark:text-gray-100 leading-tight" id="headerUserName">Estudante</p>
+                        <p class="font-semibold text-gray-700 dark:text-gray-100 leading-tight" id="headerUserName">
+                            Estudante</p>
                         <p class="text-xs text-gray-400 dark:text-gray-500 leading-tight">StudyLab</p>
                     </div>
                 </a>
