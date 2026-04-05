@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="min-w-0">
                                             <p class="text-white font-black text-base leading-tight truncate"
-                                                style="font-family:'Syne',sans-serif;">{{ $slide['title'] }}</p>
+                                                style="font-famkily:'Syne',sans-serif;">{{ $slide['title'] }}</p>
                                             <p class="text-white/65 text-xs mt-0.5 line-clamp-1">{{ $slide['sub'] }}</p>
                                         </div>
                                     </div>

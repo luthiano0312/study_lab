@@ -16,8 +16,8 @@
 <body class="bg-[#0a0a0f] text-slate-200 font-body">
 
     <!-- ════════════════════════════════════════════
-     STICKY HEADER
-════════════════════════════════════════════ -->
+        STICKY HEADER
+    ════════════════════════════════════════════ -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style="background: rgba(10,10,15,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid transparent;">
         <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -68,8 +68,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     HERO SECTION
-════════════════════════════════════════════ -->
+        HERO SECTION
+    ════════════════════════════════════════════ -->
     <section class="relative min-h-screen flex items-center overflow-hidden pt-16">
 
         {{-- Background mesh --}}
@@ -163,8 +163,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     FEATURES SECTION
-════════════════════════════════════════════ -->
+        FEATURES SECTION
+    ════════════════════════════════════════════ -->
     <section id="features" class="py-32 relative">
         <div class="shape-blob absolute w-80 h-80 bg-violet-600 right-0 top-20"
             style="opacity:0.07; filter:blur(80px);"></div>
@@ -243,8 +243,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     HOW IT WORKS
-════════════════════════════════════════════ -->
+        HOW IT WORKS
+    ════════════════════════════════════════════ -->
     <section id="how-it-works" class="py-32 relative overflow-hidden">
         <div class="shape-blob absolute w-96 h-96 bg-pink-500 -left-20 bottom-0"
             style="opacity:0.06; filter:blur(100px);"></div>
@@ -279,8 +279,8 @@
                     <div class="text-center reveal reveal-delay-{{ $i + 1 }}">
                         <div class="relative inline-flex w-20 h-20 rounded-full items-center justify-center mb-5 mx-auto"
                             style="background: {{ $i === 0 ? 'linear-gradient(135deg, #ec4899, #9333ea)' : 'rgba(255,255,255,0.04)' }};
-                                                                                                                                        border: 1px solid {{ $i === 0 ? 'transparent' : 'rgba(255,255,255,0.08)' }};
-                                                                                                                                        box-shadow: {{ $i === 0 ? '0 0 40px rgba(236,72,153,0.4)' : 'none' }};">
+                                                                                                                                                                    border: 1px solid {{ $i === 0 ? 'transparent' : 'rgba(255,255,255,0.08)' }};
+                                                                                                                                                                    box-shadow: {{ $i === 0 ? '0 0 40px rgba(236,72,153,0.4)' : 'none' }};">
                             <span
                                 class="font-display font-extrabold text-xl {{ $i === 0 ? 'text-white' : 'text-slate-500' }}">
                                 {{ $step['num'] }}
@@ -306,15 +306,15 @@
                     </div>
                     <pre class="p-6 text-sm overflow-x-auto"
                         style="font-family: 'JetBrains Mono', monospace; line-height: 1.6;"><code><span style="color:#718096;">{</span>
-  <span style="color:#ec4899;">"aluno"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Natan"</span><span style="color:#718096;">,</span>
-  <span style="color:#ec4899;">"meta_semanal"</span><span style="color:#718096;">:</span> <span style="color:#60a5fa;">"20 horas"</span><span style="color:#718096;">,</span>
-  <span style="color:#ec4899;">"sequencia"</span><span style="color:#718096;">:</span> <span style="color:#f59e0b;">14</span><span style="color:#718096;">,</span>
-  <span style="color:#ec4899;">"plano_ia"</span><span style="color:#718096;">:</span> <span style="color:#718096;">{</span>
-    <span style="color:#ec4899;">"proxima_revisao"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Cálculo · 19:00"</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"prioridade"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Física · Eletromagnetismo"</span>
-  <span style="color:#718096;">},</span>
-  <span style="color:#ec4899;">"status"</span><span style="color:#718096;">:</span> <span style="color:#10b981;">"🚀 No caminho certo"</span>
-<span style="color:#718096;">}</span></code></pre>
+    <span style="color:#ec4899;">"aluno"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Natan"</span><span style="color:#718096;">,</span>
+    <span style="color:#ec4899;">"meta_semanal"</span><span style="color:#718096;">:</span> <span style="color:#60a5fa;">"20 horas"</span><span style="color:#718096;">,</span>
+    <span style="color:#ec4899;">"sequencia"</span><span style="color:#718096;">:</span> <span style="color:#f59e0b;">14</span><span style="color:#718096;">,</span>
+    <span style="color:#ec4899;">"plano_ia"</span><span style="color:#718096;">:</span> <span style="color:#718096;">{</span>
+        <span style="color:#ec4899;">"proxima_revisao"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Cálculo · 19:00"</span><span style="color:#718096;">,</span>
+        <span style="color:#ec4899;">"prioridade"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Física · Eletromagnetismo"</span>
+    <span style="color:#718096;">},</span>
+    <span style="color:#ec4899;">"status"</span><span style="color:#718096;">:</span> <span style="color:#10b981;">"🚀 No caminho certo"</span>
+    <span style="color:#718096;">}</span></code></pre>
                 </div>
             </div>
         </div>
@@ -322,8 +322,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════════════ -->
+        TESTIMONIALS
+    ════════════════════════════════════════════ -->
     <section id="testimonials" class="py-32 relative">
         <div class="max-w-7xl mx-auto px-6">
 
@@ -390,8 +390,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     PRICING
-════════════════════════════════════════════ -->
+        PRICING
+    ════════════════════════════════════════════ -->
     <section id="pricing" class="py-32 relative overflow-hidden">
         <div class="shape-blob absolute w-96 h-96 bg-pink-500 right-0 top-0" style="opacity:0.06; filter:blur(100px);">
         </div>
@@ -506,8 +506,8 @@
 
 
     <!-- ════════════════════════════════════════════
-     FINAL CTA
-════════════════════════════════════════════ -->
+        FINAL CTA
+    ════════════════════════════════════════════ -->
     <section class="py-40 relative overflow-hidden">
         <div class="hero-mesh"></div>
         <div class="shape-blob absolute w-[500px] h-[500px] bg-pink-500 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -550,21 +550,13 @@
 
 
     <!-- ════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
+        FOOTER
+    ════════════════════════════════════════════ -->
     <footer class="border-t py-12" style="border-color: var(--border);">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <a href="#" class="flex items-center gap-2.5">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"
-                        style="background: linear-gradient(135deg, #ec4899, #9333ea);">
-                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <span class="font-display font-extrabold text-white">Study<span
-                            style="color: #ec4899;">Lab</span></span>
+                <a href="#">
+                    <img src="{{ asset('images/logo-dark-mode.png') }}" alt="StudyLab" class="h-28">
                 </a>
 
                 <div class="flex gap-6 text-sm text-slate-500">
