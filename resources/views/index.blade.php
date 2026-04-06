@@ -136,20 +136,7 @@
                     </a>
                 </div>
 
-                {{-- Social proof mini --}}
-                <div class="flex items-center gap-3 mt-10" style="animation: fade-up 0.7s 0.4s ease both;">
-                    <div class="flex -space-x-2">
-                        @foreach(['#ec4899', '#9333ea', '#06b6d4', '#10b981'] as $color)
-                            <div class="w-8 h-8 rounded-full border-2 border-[#0a0a0f] flex items-center justify-center text-xs font-bold"
-                                style="background: {{ $color }};">
-                                {{ chr(65 + $loop->index) }}
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="text-sm text-slate-400">
-                        <span class="text-white font-semibold">+2.400</span> estudantes já estão evoluindo
-                    </div>
-                </div>
+                
             </div>
 
             {{-- Right: Dashboard Mockup --}}
@@ -188,8 +175,8 @@
                     $features = [
                         [
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>',
-                            'title' => 'IA Personalizada',
-                            'desc' => 'Planos de estudo gerados por inteligência artificial, adaptados ao seu ritmo e objetivos.',
+                            'title' => 'IA de Suporte',
+                            'desc' => 'Planos de estudo auxiliados por inteligência artificial, adaptados ao seu ritmo e objetivos.',
                             'color' => '#ec4899',
                         ],
                         [
@@ -302,19 +289,10 @@
                             <div class="w-3 h-3 rounded-full" style="background: #ffbd2e;"></div>
                             <div class="w-3 h-3 rounded-full" style="background: #28c840;"></div>
                         </div>
-                        <span class="text-xs text-slate-500 ml-2">plano-de-estudos.json</span>
+                        <span class="text-xs text-slate-500 ml-2">plano-de-estudos</span>
                     </div>
                     <pre class="p-6 text-sm overflow-x-auto"
-                        style="font-family: 'JetBrains Mono', monospace; line-height: 1.6;"><code><span style="color:#718096;">{</span>
-    <span style="color:#ec4899;">"aluno"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Natan"</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"meta_semanal"</span><span style="color:#718096;">:</span> <span style="color:#60a5fa;">"20 horas"</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"sequencia"</span><span style="color:#718096;">:</span> <span style="color:#f59e0b;">14</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"plano_ia"</span><span style="color:#718096;">:</span> <span style="color:#718096;">{</span>
-        <span style="color:#ec4899;">"proxima_revisao"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Cálculo · 19:00"</span><span style="color:#718096;">,</span>
-        <span style="color:#ec4899;">"prioridade"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Física · Eletromagnetismo"</span>
-    <span style="color:#718096;">},</span>
-    <span style="color:#ec4899;">"status"</span><span style="color:#718096;">:</span> <span style="color:#10b981;">"🚀 No caminho certo"</span>
-    <span style="color:#718096;">}</span></code></pre>
+                        style="font-family: 'JetBrains Mono', monospace; line-height: 1.6;"><code><span style="color:#718096;"></span></code></pre>
                 </div>
             </div>
         </div>

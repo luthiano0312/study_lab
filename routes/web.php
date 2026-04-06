@@ -5,11 +5,7 @@ use App\Models\Subject;
 use App\Models\Activity;
 use App\Models\Exam;
 use App\Models\Content;
-<<<<<<< HEAD
-use App\Models\Horary;
-=======
 use App\Http\Controllers\Api\SocialAuthController;
->>>>>>> c0f3adea4d2951527a9914afc587d6dfee29583a
 
 Route::get('/', fn() => view('index'));
 
