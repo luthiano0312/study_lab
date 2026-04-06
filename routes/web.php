@@ -7,6 +7,7 @@ use App\Models\Exam;
 use App\Models\Content;
 use App\Http\Controllers\Api\SocialAuthController;
 
+    Route::get('/', fn() => view('index'));
     Route::get('/login', fn() => view('auth/login'))->name('login');
     Route::get('/register', fn() => view('auth/register'))->name('register');
     Route::get('/forgot', fn() => view('auth/forgot-password'));

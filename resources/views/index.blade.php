@@ -421,10 +421,7 @@
                     <div class="reveal  reveal-delay-{{ $i + 1 }} {{ $plan['recommended'] ? '-mt-4' : '' }}">
                         @if($plan['recommended'])
                             <div class="text-center mb-3">
-                                <span class="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
-                                    style="background: rgba(236,72,153,0.2); color: #ec4899; border: 1px solid rgba(236,72,153,0.4);">
-                                    ⭐ Mais popular
-                                </span>
+                                
                             </div>
                         @endif
 
