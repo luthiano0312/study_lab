@@ -9,9 +9,10 @@ use App\Http\Controllers\Api\SocialAuthController;
 
     Route::get('/', fn() => view('index'));
     Route::get('/login', fn() => view('auth/login'))->name('login');
+    Route::get('/logout', fn() => view('auth/login'))->name('logout');
     Route::get('/register', fn() => view('auth/register'))->name('register');
     Route::get('/forgot', fn() => view('auth/forgot-password'));
-    Route::get('/dashboard', fn() => view('dashboard'));
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/profile', fn() => view('profile.profile'))->name('profile');
 
     // Google OAuth (viam web routes para ter acesso à session)
