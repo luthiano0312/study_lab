@@ -16,8 +16,8 @@
     Route::get('/profile', fn() => view('profile.profile'))->name('profile');
 
     // Google OAuth (viam web routes para ter acesso à session)
-    Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('auth.google.redirect');
-    Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('auth.google.callback');
+    Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('google.redirect');
+    Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('google.callback');
 
     Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
     Route::get('/focus', fn() => view('focus.index'))->name('focus');

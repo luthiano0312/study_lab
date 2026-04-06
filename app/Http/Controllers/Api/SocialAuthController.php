@@ -4,50 +4,95 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use GuzzleHttp\Client;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\GoogleProvider;
+use Laravel\Socialite\Two\User as SocialiteUser;
 
 class SocialAuthController extends Controller
 {
-    public function redirect()
+    public function redirect(): RedirectResponse
     {
-        $url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
-        return redirect($url);
+        return Socialite::driver('google')->redirect();
     }
 
-    public function callback()
+    public function callback(): RedirectResponse
     {
-        \Log::info('Google callback chamado', ['query' => request()->all()]);
-
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
-            \Log::info('Google user ok', ['email' => $googleUser->getEmail()]);
-        } catch (\Exception $e) {
-            \Log::error('Erro Socialite callback: ' . $e->getMessage());
-            return redirect('/login?error=google_auth_failed');
-        }
+            $googleUser = $this->getSocialiteUser();
+        } catch (\Throwable $e) {
+            Log::error('Google OAuth callback failed', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
 
-        $user = User::where('google_id', $googleUser->getId())->first()
-            ?? User::where('email', $googleUser->getEmail())->first();
-
-        if ($user) {
-            if (!$user->google_id) {
-                $user->update(['google_id' => $googleUser->getId()]);
-            }
-        } else {
-            $user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'avatar' => $googleUser->getAvatar(),
-                'google_id' => $googleUser->getId(),
-                'password' => Hash::make(Str::random(32)),
+            return redirect()->route('login')->withErrors([
+                'google' => 'Falha na autenticação com o Google. Tente novamente.',
             ]);
         }
 
-        $user->tokens()->delete();
-        $token = $user->createToken('google_auth')->plainTextToken;
+        $user  = $this->findOrCreateUser($googleUser);
+        $isNew = $user->wasRecentlyCreated;
+        $token = $this->issueToken($user);
 
-        return redirect('/dashboard?token=' . $token);
+        return redirect()->to(
+            $isNew
+                ? route('onboarding', ['token' => $token])
+                : route('dashboard', ['token' => $token])
+        );
+    }
+
+    private function getSocialiteUser(): SocialiteUser
+    {
+        /** @var GoogleProvider $driver */
+        $driver = Socialite::driver('google');
+
+        if (app()->environment('local')) {
+            $driver->setHttpClient(new Client([
+                'verify' => 'C:\php\ssl\cacert.pem',
+            ]));
+        }
+
+        return $driver->user();
+    }
+
+    private function findOrCreateUser(SocialiteUser $googleUser): User
+    {
+        $user = User::where('google_id', $googleUser->getId())
+            ->orWhere('email', $googleUser->getEmail())
+            ->first();
+
+        if ($user) {
+            $this->syncGoogleId($user, $googleUser->getId());
+            return $user;
+        }
+
+        return User::create([
+            'name'      => $googleUser->getName(),
+            'email'     => $googleUser->getEmail(),
+            'avatar'    => $googleUser->getAvatar(),
+            'google_id' => $googleUser->getId(),
+            'password'  => Hash::make(Str::random(32)),
+        ]);
+    }
+
+    private function syncGoogleId(User $user, string $googleId): void
+    {
+        if ($user->google_id) {
+            return;
+        }
+
+        $user->updateQuietly(['google_id' => $googleId]);
+    }
+
+    private function issueToken(User $user): string
+    {
+        $user->tokens()->delete();
+
+        return $user->createToken('google_auth')->plainTextToken;
     }
 }
