@@ -54,7 +54,7 @@
                             <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
                         </div>
                         <div>
-                            <img class="w-[300px]" src="{{ asset('images/image.png') }}" alt="">
+                            <img class="w-[300px]" src="{{ asset('images/mascote-versao-2.png') }}" alt="">
                         </div>
                     </div>
 
@@ -62,87 +62,7 @@
             </div>
 
             <div class="relative">
-                <div class="overflow-hidden rounded-2xl">
-                    <div id="carouselTrack" class="flex" style="transition:transform .42s cubic-bezier(.4,0,.2,1);">
-
-                        @php
-                            $slides = [
-                                [
-                                    'grad' => '#be185d,#ec4899',
-                                    'title' => 'Mantenha o foco',
-                                    'sub' => 'Revise suas atividades pendentes e priorize o que importa hoje.',
-                                    'href' => '/activities',
-                                    'cta' => 'Ver atividades',
-                                    'icon' =>
-                                        '<path d="M9 11l3 3L22 4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2" stroke-linecap="round"/>',
-                                ],
-                                [
-                                    'grad' => '#7c3aed,#db2777',
-                                    'title' => 'Provas chegando',
-                                    'sub' => 'Confira o calendário e planeje seus estudos com antecedência.',
-                                    'href' => '/exams',
-                                    'cta' => 'Ver provas',
-                                    'icon' =>
-                                        '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2.5" stroke-linecap="round"/>',
-                                ],
-                                [
-                                    'grad' => '#9d174d,#7c3aed',
-                                    'title' => 'Organize as matérias',
-                                    'sub' => 'Mantenha suas matérias atualizadas para não perder nenhum prazo.',
-                                    'href' => '/subject',
-                                    'cta' => 'Ver matérias',
-                                    'icon' =>
-                                        '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2.5" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2.5"/>',
-                                ],
-                                [
-                                    'grad' => '#db2777,#f43f5e',
-                                    'title' => 'Nova atividade',
-                                    'sub' => 'Registre tarefas rapidamente antes de esquecer.',
-                                    'href' => '/activities/create',
-                                    'cta' => 'Criar agora',
-                                    'icon' => '<path d="M12 5v14M5 12h14" stroke-width="2.5" stroke-linecap="round"/>',
-                                ],
-                            ];
-                        @endphp
-
-                        @foreach ($slides as $slide)
-                            <div class="min-w-full">
-                                <div class="rounded-2xl px-6 py-5 flex items-center justify-between gap-4 relative overflow-hidden"
-                                    style="background:linear-gradient(120deg,{{ $slide['grad'] }});">
-                                    <div class="absolute inset-0 pointer-events-none opacity-[.08]"
-                                        style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:16px 16px;">
-                                    </div>
-                                    <div class="relative z-10 flex items-center gap-4 min-w-0">
-                                        <div
-                                            class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">{!! $slide['icon'] !!}</svg>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="text-white font-black text-base leading-tight truncate"
-                                                style="font-famkily:'Syne',sans-serif;">{{ $slide['title'] }}</p>
-                                            <p class="text-white/65 text-xs mt-0.5 line-clamp-1">{{ $slide['sub'] }}</p>
-                                        </div>
-                                    </div>
-                                    <a href="{{ $slide['href'] }}"
-                                        class="relative z-10 flex-shrink-0 bg-white/20 hover:bg-white/30 border border-white/30
-                                                                                                                                                                                              text-white text-[11px] font-black uppercase tracking-wide
-                                                                                                                                                                                              px-4 py-2 rounded-xl transition-all duration-200 whitespace-nowrap">
-                                        {{ $slide['cta'] }} →
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div>
-                <div id="carouselDots" class="flex items-center justify-center gap-1.5 mt-2.5">
-                    @foreach ($slides as $i => $_)
-                        <button data-dot="{{ $i }}"
-                            class="h-1.5 rounded-full transition-all duration-300 {{ $i === 0 ? 'bg-pink-500 w-4' : 'bg-pink-200 w-1.5' }}">
-                        </button>
-                    @endforeach
-                </div>
+                
             </div>
 
         </section>

@@ -44,7 +44,7 @@
                     <x-active-bar />
                 </div>
                 <button
-                    class="relative w-9 h-9 rounded-xl hover:bg-gray-100 flex items-center justify-center transition">
+                    class="relative w-9 h-9 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition">
                     <img class="h-5 opacity-50 dark:opacity-100 transition-all dark:filter-[invert(43%)_sepia(94%)_saturate(2250%)_hue-rotate(306deg)_brightness(96%)_contrast(97%)]"
                         src="{{ asset('favicons/notifications_24dp_00000_FILL0_wght400_GRAD0_opsz24.png') }}">
                     <span
