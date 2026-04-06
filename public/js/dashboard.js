@@ -1,6 +1,4 @@
-
-'use strict';
-
+// Token OAuth já capturado pelo header.js (carregado antes)
 
 const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -14,7 +12,6 @@ const STATUS_MAP = {
     in_progress: ['#1d4ed8','#dbeafe','Progresso' ],
     completed:   ['#166534','#dcfce7','Concluída' ],
 };
-
 
 const $         = id => document.getElementById(id);
 const txt       = (id, v) => { const e=$(id); if(e) e.textContent=v; };
@@ -51,7 +48,6 @@ function startClock() {
     const el=$('clock'), bar=$('weekBar');
     const tick=()=>{ if(el) el.textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); };
     tick(); setInterval(tick,1000);
-    // anima barra de meta
     if(bar) setTimeout(()=>bar.style.width='65%',300);
 }
 
@@ -60,16 +56,32 @@ async function loadUser() {
     try {
         const r=await fetch('/api/user',{headers:hdrs()}); if(!r.ok) return;
         const u=await r.json();
-        txt('userName',  u.name||'Estudante');
+
+        // Header profile box
+        txt('headerUserName', u.name||'Estudante');
+
+        // Dashboard card
+        txt('welcomeName',  u.name||'Estudante');
         txt('greetName', u.name?.split(' ')[0]||'Estudante');
+
         const src=avatarSrc(u);
+
+        // Avatar no card do dashboard
         if(src){
             const el=$('userAvatar'), fb=$('avatarFallback');
             if(el){el.src=src;el.classList.remove('hidden');}
             if(fb) fb.style.display='none';
         }
+
+        // Avatar no header
+        if(src){
+            const hAvatar=$('headerAvatar'), hFb=$('headerAvatarFallback');
+            if(hAvatar){hAvatar.src=src;hAvatar.classList.remove('hidden');}
+            if(hFb) hFb.style.display='none';
+        }
     } catch{}
 }
+
 
 
 async function loadActivities() {

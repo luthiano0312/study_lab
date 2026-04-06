@@ -223,11 +223,11 @@
                 </form>
 
                 <div class="mt-8 pt-8 border-t border-white/5 animate-fade-up" style="animation-delay:.2s;">
-                    <button
+                    <a href="/auth/google/redirect"
                         class="w-full bg-[#16161D] hover:bg-[#1C1C26] border border-white/5 text-white font-medium py-3 rounded-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-3 text-sm">
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
                         Cadastrar com Google
-                    </button>
+                    </a>
                 </div>
 
                 <p class="mt-8 text-center text-sm text-slate-500 animate-fade-up" style="animation-delay:.3s;">

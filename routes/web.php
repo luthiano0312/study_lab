@@ -5,15 +5,23 @@ use App\Models\Subject;
 use App\Models\Activity;
 use App\Models\Exam;
 use App\Models\Content;
+<<<<<<< HEAD
 use App\Models\Horary;
+=======
+use App\Http\Controllers\Api\SocialAuthController;
+>>>>>>> c0f3adea4d2951527a9914afc587d6dfee29583a
 
 Route::get('/', fn() => view('index'));
 
-Route::get('/login',    fn() => view('auth/login'))->name('login');
+Route::get('/login', fn() => view('auth/login'))->name('login');
 Route::get('/register', fn() => view('auth/register'))->name('register');
-Route::get('/forgot',   fn() => view('auth/forgot-password'));
+Route::get('/forgot', fn() => view('auth/forgot-password'));
 Route::get('/dashboard', fn() => view('dashboard'));
-Route::get('/profile',  fn() => view('profile.profile'))->name('profile');
+Route::get('/profile', fn() => view('profile.profile'))->name('profile');
+
+// Google OAuth (viam web routes para ter acesso à session)
+Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('auth.google.callback');
 
 Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
 Route::get('/focus', fn() => view('focus.index'))->name('focus');
