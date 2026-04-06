@@ -93,7 +93,7 @@
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-6 border"
                     style="background: rgba(236,72,153,0.1); border-color: rgba(236,72,153,0.3); color: #ec4899; animation: fade-up 0.5s ease forwards;">
                     <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-                    Powered by IA · Feito para estudantes
+                    Feito por Estudantes para Estudantes
                 </div>
 
                 <h1 class="font-display text-5xl sm:text-6xl xl:text-7xl font-extrabold leading-[1.05] text-white mb-6"
@@ -108,7 +108,7 @@
 
                 <p class="text-lg text-slate-400 leading-relaxed mb-10 max-w-lg"
                     style="animation: fade-up 0.7s 0.2s ease both;">
-                    Study Lab usa inteligência artificial para personalizar sua jornada de aprendizado, rastrear seu
+                    Study Lab usa praticidade e rapidez para auxiliar  sua jornada de aprendizado, rastrear seu
                     progresso e transformar horas de estudo em resultados reais.
                 </p>
 
@@ -257,7 +257,7 @@
                     $steps = [
                         ['num' => '01', 'title' => 'Crie sua conta', 'desc' => 'Cadastre-se em segundos, sem cartão de crédito.'],
                         ['num' => '02', 'title' => 'Configure seu perfil', 'desc' => 'Informe suas matérias, objetivos e disponibilidade de tempo.'],
-                        ['num' => '03', 'title' => 'Receba seu plano', 'desc' => 'Nossa IA monta um plano de estudos personalizado para você.'],
+                        ['num' => '03', 'title' => 'Entre no foco', 'desc' => 'Acesse nossa pagina de focus para começar os estudos da melhor forma possivel.'],
                         ['num' => '04', 'title' => 'Evolua com dados', 'desc' => 'Acompanhe métricas reais e ajuste sua estratégia continuamente.'],
                     ];
                 @endphp
@@ -316,22 +316,22 @@
                 @php
                     $testimonials = [
                         [
-                            'name' => 'Ana Carolina',
-                            'role' => 'Estudante de Medicina · UFCE',
+                            'name' => 'Indefinido',
+                            'role' => '*',
                             'text' => 'O Study Lab mudou completamente minha forma de estudar. O plano da IA é absurdamente preciso e os dashboards me motivam todo dia.',
                             'avatar' => '#ec4899',
                             'letter' => 'A',
                         ],
                         [
-                            'name' => 'Pedro Alves',
-                            'role' => 'Concurseiro · Aprovado TRT',
+                            'name' => 'indefinido',
+                            'role' => '#',
                             'text' => 'Passei no concurso em 8 meses seguindo o cronograma inteligente. Nunca tinha conseguido manter uma sequência tão longa de estudos.',
                             'avatar' => '#9333ea',
                             'letter' => 'P',
                         ],
                         [
-                            'name' => 'Juliana Costa',
-                            'role' => 'Engenharia de Software · UFC',
+                            'name' => 'indefinido',
+                            'role' => '#',
                             'text' => 'Os flashcards com repetição espaçada são incríveis. Minha retenção de conteúdo aumentou tanto que minha média foi de 7 para 9,4.',
                             'avatar' => '#06b6d4',
                             'letter' => 'J',
