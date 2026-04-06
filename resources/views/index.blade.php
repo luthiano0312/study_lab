@@ -93,7 +93,7 @@
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-6 border"
                     style="background: rgba(236,72,153,0.1); border-color: rgba(236,72,153,0.3); color: #ec4899; animation: fade-up 0.5s ease forwards;">
                     <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-                    Powered by IA · Feito para estudantes
+                    Feito por Estudantes para Estudantes
                 </div>
 
                 <h1 class="font-display text-5xl sm:text-6xl xl:text-7xl font-extrabold leading-[1.05] text-white mb-6"
@@ -108,7 +108,7 @@
 
                 <p class="text-lg text-slate-400 leading-relaxed mb-10 max-w-lg"
                     style="animation: fade-up 0.7s 0.2s ease both;">
-                    Study Lab usa inteligência artificial para personalizar sua jornada de aprendizado, rastrear seu
+                    Study Lab usa praticidade e rapidez para auxiliar  sua jornada de aprendizado, rastrear seu
                     progresso e transformar horas de estudo em resultados reais.
                 </p>
 
@@ -136,20 +136,7 @@
                     </a>
                 </div>
 
-                {{-- Social proof mini --}}
-                <div class="flex items-center gap-3 mt-10" style="animation: fade-up 0.7s 0.4s ease both;">
-                    <div class="flex -space-x-2">
-                        @foreach(['#ec4899', '#9333ea', '#06b6d4', '#10b981'] as $color)
-                            <div class="w-8 h-8 rounded-full border-2 border-[#0a0a0f] flex items-center justify-center text-xs font-bold"
-                                style="background: {{ $color }};">
-                                {{ chr(65 + $loop->index) }}
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="text-sm text-slate-400">
-                        <span class="text-white font-semibold">+2.400</span> estudantes já estão evoluindo
-                    </div>
-                </div>
+                
             </div>
 
             {{-- Right: Dashboard Mockup --}}
@@ -188,8 +175,8 @@
                     $features = [
                         [
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>',
-                            'title' => 'IA Personalizada',
-                            'desc' => 'Planos de estudo gerados por inteligência artificial, adaptados ao seu ritmo e objetivos.',
+                            'title' => 'IA de Suporte',
+                            'desc' => 'Planos de estudo auxiliados por inteligência artificial, adaptados ao seu ritmo e objetivos.',
                             'color' => '#ec4899',
                         ],
                         [
@@ -270,7 +257,7 @@
                     $steps = [
                         ['num' => '01', 'title' => 'Crie sua conta', 'desc' => 'Cadastre-se em segundos, sem cartão de crédito.'],
                         ['num' => '02', 'title' => 'Configure seu perfil', 'desc' => 'Informe suas matérias, objetivos e disponibilidade de tempo.'],
-                        ['num' => '03', 'title' => 'Receba seu plano', 'desc' => 'Nossa IA monta um plano de estudos personalizado para você.'],
+                        ['num' => '03', 'title' => 'Entre no foco', 'desc' => 'Acesse nossa pagina de focus para começar os estudos da melhor forma possivel.'],
                         ['num' => '04', 'title' => 'Evolua com dados', 'desc' => 'Acompanhe métricas reais e ajuste sua estratégia continuamente.'],
                     ];
                 @endphp
@@ -302,19 +289,10 @@
                             <div class="w-3 h-3 rounded-full" style="background: #ffbd2e;"></div>
                             <div class="w-3 h-3 rounded-full" style="background: #28c840;"></div>
                         </div>
-                        <span class="text-xs text-slate-500 ml-2">plano-de-estudos.json</span>
+                        <span class="text-xs text-slate-500 ml-2">plano-de-estudos</span>
                     </div>
                     <pre class="p-6 text-sm overflow-x-auto"
-                        style="font-family: 'JetBrains Mono', monospace; line-height: 1.6;"><code><span style="color:#718096;">{</span>
-    <span style="color:#ec4899;">"aluno"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Natan"</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"meta_semanal"</span><span style="color:#718096;">:</span> <span style="color:#60a5fa;">"20 horas"</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"sequencia"</span><span style="color:#718096;">:</span> <span style="color:#f59e0b;">14</span><span style="color:#718096;">,</span>
-    <span style="color:#ec4899;">"plano_ia"</span><span style="color:#718096;">:</span> <span style="color:#718096;">{</span>
-        <span style="color:#ec4899;">"proxima_revisao"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Cálculo · 19:00"</span><span style="color:#718096;">,</span>
-        <span style="color:#ec4899;">"prioridade"</span><span style="color:#718096;">:</span> <span style="color:#a3e635;">"Física · Eletromagnetismo"</span>
-    <span style="color:#718096;">},</span>
-    <span style="color:#ec4899;">"status"</span><span style="color:#718096;">:</span> <span style="color:#10b981;">"🚀 No caminho certo"</span>
-    <span style="color:#718096;">}</span></code></pre>
+                        style="font-family: 'JetBrains Mono', monospace; line-height: 1.6;"><code><span style="color:#718096;"></span></code></pre>
                 </div>
             </div>
         </div>
@@ -338,22 +316,22 @@
                 @php
                     $testimonials = [
                         [
-                            'name' => 'Ana Carolina',
-                            'role' => 'Estudante de Medicina · UFCE',
+                            'name' => 'Indefinido',
+                            'role' => '*',
                             'text' => 'O Study Lab mudou completamente minha forma de estudar. O plano da IA é absurdamente preciso e os dashboards me motivam todo dia.',
                             'avatar' => '#ec4899',
                             'letter' => 'A',
                         ],
                         [
-                            'name' => 'Pedro Alves',
-                            'role' => 'Concurseiro · Aprovado TRT',
+                            'name' => 'indefinido',
+                            'role' => '#',
                             'text' => 'Passei no concurso em 8 meses seguindo o cronograma inteligente. Nunca tinha conseguido manter uma sequência tão longa de estudos.',
                             'avatar' => '#9333ea',
                             'letter' => 'P',
                         ],
                         [
-                            'name' => 'Juliana Costa',
-                            'role' => 'Engenharia de Software · UFC',
+                            'name' => 'indefinido',
+                            'role' => '#',
                             'text' => 'Os flashcards com repetição espaçada são incríveis. Minha retenção de conteúdo aumentou tanto que minha média foi de 7 para 9,4.',
                             'avatar' => '#06b6d4',
                             'letter' => 'J',
@@ -443,10 +421,7 @@
                     <div class="reveal  reveal-delay-{{ $i + 1 }} {{ $plan['recommended'] ? '-mt-4' : '' }}">
                         @if($plan['recommended'])
                             <div class="text-center mb-3">
-                                <span class="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
-                                    style="background: rgba(236,72,153,0.2); color: #ec4899; border: 1px solid rgba(236,72,153,0.4);">
-                                    ⭐ Mais popular
-                                </span>
+                                
                             </div>
                         @endif
 
