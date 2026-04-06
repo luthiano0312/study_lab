@@ -35,6 +35,9 @@
 
             <div class="flex items-center gap-4">
                 <div>
+                    <x-bt-focus-mode />
+                </div>
+                <div>
                     <x-planes-bt />
                 </div>
                 <div>

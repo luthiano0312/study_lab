@@ -5,6 +5,7 @@ use App\Models\Subject;
 use App\Models\Activity;
 use App\Models\Exam;
 use App\Models\Content;
+use App\Models\Horary;
 
 Route::get('/', fn() => view('index'));
 
@@ -15,6 +16,7 @@ Route::get('/dashboard', fn() => view('dashboard'));
 Route::get('/profile',  fn() => view('profile.profile'))->name('profile');
 
 Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
+Route::get('/focus', fn() => view('focus.index'))->name('focus');
 
 
 

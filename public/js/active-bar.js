@@ -1,14 +1,19 @@
-    const btn = document.getElementById('activeBar');
-    const grid = document.getElementById('appsGrid');
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("activeBar");
+    const panel = document.getElementById("appsGrid");
 
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita que o clique no botão feche o menu imediatamente
-        grid.classList.toggle('hidden');
+    if (!btn || !panel) return;
+
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        panel.classList.toggle("open");
     });
 
-    // Fecha se clicar fora do menu
-    document.addEventListener('click', (e) => {
-        if (!grid.contains(e.target) && e.target !== btn) {
-            grid.classList.add('hidden');
-        }
+    document.addEventListener("click", () => {
+        panel.classList.remove("open");
     });
+
+    panel.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+});
