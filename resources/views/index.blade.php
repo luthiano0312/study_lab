@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyLab — Estude com inteligência</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicons/logo/dar-logo.ico') }}">
     <meta name="description" content="Plataforma de estudos com IA para estudantes que querem evoluir com dados.">
 
 

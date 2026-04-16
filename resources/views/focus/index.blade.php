@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyLab · Focus</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicons/logo/focus-logo.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/hologram_intro.css') }}">
 </head>
