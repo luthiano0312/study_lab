@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalizar conta - StudyLab</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicons/icone-onbarding.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicons/icone-onbording.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/onboarding.css') }}">
 </head>
 
 <body class="bg-[#09090e] text-slate-200 h-screen w-screen overflow-hidden font-sans">
-
 
     <div id="step0" class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
@@ -70,28 +69,33 @@
 
     <div id="step3"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
-        <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
+        <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10">
             <h2 class="text-[22px] font-semibold text-slate-100 mb-2">Escolha seu avatar</h2>
-            <p class="text-[13px] text-slate-500 mb-5">Selecione um dos avatares ou envie uma foto sua.</p>
-            <div class="w-full border border-white/[.08] rounded-xl overflow-hidden">
-                <div class="px-5 pb-5 pt-4 flex flex-col gap-2.5 bg-[#111118]">
-                    <div class="grid grid-cols-4 gap-2" id="avatarGrid">
-                        @for($i = 0; $i < 16; $i++)
-                            <div class="aspect-square rounded-lg ob-skel"></div>
-                        @endfor
-                    </div>
+            <p class="text-[13px] text-slate-500 mb-5">Selecione uma categoria ou envie uma foto sua.</p>
 
+            <div class="w-full">
+                <div id="categoryView" class="flex flex-col gap-4 w-full">
+                    <div id="currentCategoryName"
+                        class="text-[13px] font-semibold text-slate-400 uppercase tracking-widest"></div>
+                    <div class="grid grid-cols-4 gap-2" id="avatarGrid"></div>
+                </div>
 
-                    
+                <div id="allCategoriesView" class="hidden grid grid-cols-2 gap-3 w-full"></div>
+
+                <div class="flex gap-2 w-full mt-4">
+                    <button id="toggleViewBtn" onclick="toggleAvatarView()"
+                        class="flex-1 px-4 py-2.5 text-[12px] font-semibold text-slate-200 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
+                        Ver Todos
+                    </button>
                     <label for="avatarFileInput"
-                        class="flex items-center justify-center gap-2 w-full py-2.5 border border-dashed border-white/10 hover:border-pink-500 text-slate-500 hover:text-pink-500 text-[12px] rounded-xl cursor-pointer transition-colors">
+                        class="flex-1 px-4 py-2.5 text-[12px] font-semibold text-slate-200 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round">
                             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                             <polyline points="17 8 12 3 7 8" />
                             <line x1="12" y1="3" x2="12" y2="15" />
                         </svg>
-                        Upload de foto própria
+                        Upload
                     </label>
                     <input type="file" id="avatarFileInput" accept="image/*" class="hidden">
                 </div>
@@ -108,33 +112,11 @@
     <div id="step4"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
-            <h2 class="text-[22px] font-semibold text-slate-100 mb-2">Cor da carteira</h2>
-            <p class="text-[13px] text-slate-500 mb-5">Escolha a paleta da sua carteira de estudante.</p>
-            <div class="grid grid-cols-4 gap-2.5 w-full mb-4" id="colorGrid"></div>
-            <div id="cardPreview" class="w-full rounded-xl overflow-hidden p-3.5 relative transition-all duration-500"
-                style="background:linear-gradient(135deg,#be185d 0%,#db2777 40%,#f472b6 100%);">
-                <div class="absolute inset-0 opacity-5"
-                    style="background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:10px 10px;">
-                </div>
-                <div class="relative flex items-center gap-3">
-                    <div id="previewPhotoMini"
-                        class="w-9 h-11 rounded-lg border-2 border-white/25 bg-white/15 shrink-0 flex items-center justify-center overflow-hidden">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)"
-                            stroke-width="1.5">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0 text-left">
-                        <div id="previewName"
-                            class="text-[10.5px] font-black text-white tracking-wide uppercase truncate">SEU NOME</div>
-                        <div class="text-[7.5px] text-white/50 mt-0.5">STUDYLAB ACADEMY · GRADUAÇÃO</div>
-                        <div class="text-[7px] text-white/30 mt-1">SL-000001</div>
-                    </div>
-                    <div class="text-[8px] font-black text-white/60 bg-white/15 px-2 py-0.5 rounded shrink-0">
-                        {{ date('Y') }}
-                    </div>
-                </div>
+            <p class="text-[10px] font-black tracking-widest uppercase text-pink-500 mb-1">Planos</p>
+            <h2 class="text-[22px] font-semibold text-slate-100 mb-1">Escolha seu plano</h2>
+            <p class="text-[13px] text-slate-500 mb-6">Você pode mudar de plano a qualquer momento.</p>
+            <div class="flex gap-3 w-full">
+                <x-choose-plane />
             </div>
         </div>
         <div class="w-full px-11 pb-8 flex items-center justify-between shrink-0">
@@ -146,24 +128,6 @@
     </div>
 
     <div id="step5"
-        class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
-        <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
-            <p class="text-[10px] font-black tracking-widest uppercase text-pink-500 mb-1">Planos</p>
-            <h2 class="text-[22px] font-semibold text-slate-100 mb-1">Escolha seu plano</h2>
-            <p class="text-[13px] text-slate-500 mb-6">Você pode mudar de plano a qualquer momento.</p>
-            <div class="flex gap-3 w-[full] h-[full]">
-                <x-choose-plane />
-            </div>
-        </div>
-        <div class="w-full px-11 pb-8 flex items-center justify-between shrink-0">
-            <button onclick="goStep(4)"
-                class="text-[13px] text-slate-500 hover:text-slate-200 bg-transparent border-none cursor-pointer transition-colors">Voltar</button>
-            <div class="flex gap-2 items-center" id="dots5"></div>
-            <x-ob-btn :step="6" label="PRÓXIMO" />
-        </div>
-    </div>
-
-    <div id="step6"
         class="ob-step fixed inset-0 bg-[#09090e] flex flex-col items-center justify-center opacity-0 pointer-events-none">
         <div class="flex-1 flex flex-col items-center justify-center w-full max-w-lg px-10 text-center">
             <div
@@ -178,9 +142,9 @@
             <x-final-bt id="finishBtn" />
         </div>
         <div class="w-full px-11 pb-8 flex items-center justify-between shrink-0">
-            <button onclick="goStep(5)"
+            <button onclick="goStep(4)"
                 class="text-[13px] text-slate-500 hover:text-slate-200 bg-transparent border-none cursor-pointer transition-colors">Voltar</button>
-            <div class="flex gap-2 items-center" id="dots6"></div>
+            <div class="flex gap-2 items-center" id="dots5"></div>
             <span class="invisible text-sm">X</span>
         </div>
     </div>
