@@ -96,7 +96,7 @@
     <div class="app flex h-screen">
 
         <!-- SIDEBAR -->
-        <aside id="sidebar" class="sidebar flex flex-col items-center py-4 gap-1 flex-shrink-0 z-10 relative"
+        <aside id="sidebar" class="sidebar flex flex-col   items-center py-4 gap-1 flex-shrink-0 z-10 relative"
             style="background:rgba(255,255,255,0.03);border-right:1px solid rgba(255,255,255,0.08);">
 
             <div class="w-9 h-9 rounded-[10px] flex items-center justify-center mb-3 flex-shrink-0 ml-4"></div>
@@ -108,7 +108,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                         d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <span class="sidebar-label opacity-0 transition-opacity duration-200 text-[13px]">Focus</span>
+                <span class="sidebar-label  opacity-0 transition-opacity duration-200 text-[13px]">Focus</span>
             </div>
 
             {{-- Lousa virtual --}}
@@ -309,12 +309,13 @@
 
                             <div class="flex items-center gap-3 px-4 h-12 cursor-pointer border-l-2 border-pink-500 text-pink-500 text-[13px] font-medium whitespace-nowrap"
                                 style="background:rgba(236,72,153,0.12);">
+                                <a class=" flex gap-2"  href="/math">
                                 <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                         d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
-                                Matemática
+                                Matemática</a>
                             </div>
 
                             <div class="h-px mx-4 my-1.5" style="background:rgba(255,255,255,0.08);"></div>

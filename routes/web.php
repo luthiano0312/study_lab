@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\SocialAuthController;
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/profile', fn() => view('profile.profile'))->name('profile');
 
-    // Google OAuth (viam web routes para ter acesso à session)
+
     Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('google.redirect');
     Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('google.callback');
 
@@ -61,3 +61,12 @@ use App\Http\Controllers\Api\SocialAuthController;
         $horary = Horary::findOrFail($id);
         return view('horary.photo.edit', compact('horary'));
     })->name('horary.edit');
+
+    // BD-QUESTIONS
+    Route::get('/math', fn() => view('database_questions.math.index'))->name('math.index');
+    Route::get('/horary/create', fn() => view('horary.photo.create'))->name('horary.create');
+    Route::get('/horary/edit/{id}', function ($id) {
+        $horary = Horary::findOrFail($id);
+        return view('horary.photo.edit', compact('horary'));
+    })->name('horary.edit');
+

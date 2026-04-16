@@ -80,6 +80,9 @@
                             <div class="aspect-square rounded-lg ob-skel"></div>
                         @endfor
                     </div>
+
+
+                    
                     <label for="avatarFileInput"
                         class="flex items-center justify-center gap-2 w-full py-2.5 border border-dashed border-white/10 hover:border-pink-500 text-slate-500 hover:text-pink-500 text-[12px] rounded-xl cursor-pointer transition-colors">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
