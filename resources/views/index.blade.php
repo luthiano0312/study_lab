@@ -9,6 +9,7 @@
 
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pro-max.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -510,6 +511,11 @@
          HERO
     ══════════════════════════════════════ -->
     <section id="hero">
+        <!-- Aurora mesh layer -->
+        <div id="hero-aurora"></div>
+        <!-- Ambient orbs -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
 
         <!-- Left copy -->
         <div class="hl">
@@ -520,8 +526,8 @@
             <h1 class="d1" style="margin-bottom:44px;">
                 <span class="cw ca1"><span class="ci">ESTUDE</span></span>
                 <span class="cw ca2"><span class="ci">COM</span></span>
-                <span class="cw ca3"><span class="ci" style="color:var(--acc);">INTELI-</span></span>
-                <span class="cw ca4"><span class="ci" style="color:var(--acc);">GÊNCIA.</span></span>
+                <span class="cw ca3"><span class="ci shimmer-acc">INTELI-</span></span>
+                <span class="cw ca4"><span class="ci shimmer-acc">GÊNCIA.</span></span>
             </h1>
 
             <div style="width:44px;height:2px;background:var(--acc);margin-bottom:22px;" class="sr d1s"></div>
@@ -1090,6 +1096,8 @@
          CTA
     ══════════════════════════════════════ -->
     <section id="cta" class="sec" style="padding:160px 0;text-align:center;">
+        <!-- CTA aurora mesh -->
+        <div id="cta-aurora"></div>
         <div class="cta-ghost">ESTUDE</div>
 
         <!-- Floating glass cards in CTA -->
@@ -1350,6 +1358,100 @@
         });
 
     })();
+
+        /* ── Cursor trail ── */
+        (function() {
+            const N = 8;
+            const dots = [];
+            const positions = Array.from({length:N}, () => ({x:0,y:0}));
+            for (let i = 0; i < N; i++) {
+                const d = document.createElement('div');
+                d.classList.add('c-trail');
+                const s = (1 - i/N) * 7;
+                d.style.width = s + 'px'; d.style.height = s + 'px';
+                d.style.opacity = (1 - i/N) * 0.5;
+                d.style.zIndex = 9998 - i;
+                document.body.appendChild(d);
+                dots.push(d);
+            }
+            let mx = 0, my = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            function tickT() {
+                positions[0] = {x: mx, y: my};
+                for (let i = 1; i < N; i++) {
+                    positions[i] = {
+                        x: positions[i].x + (positions[i-1].x - positions[i].x) * 0.25,
+                        y: positions[i].y + (positions[i-1].y - positions[i].y) * 0.25
+                    };
+                }
+                dots.forEach((d,i) => { d.style.left = positions[i].x + 'px'; d.style.top = positions[i].y + 'px'; });
+                requestAnimationFrame(tickT);
+            }
+            tickT();
+        })();
+
+        /* ── Ripple on btn-r click ── */
+        document.querySelectorAll('.btn-r').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const r = btn.getBoundingClientRect();
+                const rip = document.createElement('span');
+                rip.classList.add('btn-ripple');
+                const size = Math.max(r.width, r.height);
+                rip.style.width = rip.style.height = size + 'px';
+                rip.style.left = (e.clientX - r.left - size/2) + 'px';
+                rip.style.top = (e.clientY - r.top - size/2) + 'px';
+                btn.appendChild(rip);
+                setTimeout(() => rip.remove(), 700);
+            });
+        });
+
+        /* ── Mouse glow on glass cards ── */
+        document.querySelectorAll('.bcard, .tcard, .pcol, .fmb').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                card.style.setProperty('--mx', x + '%');
+                card.style.setProperty('--my', y + '%');
+                const glow = `radial-gradient(circle at ${x}% ${y}%, rgba(255,28,75,0.07) 0%, transparent 55%)`;
+                if (!card.classList.contains('bcard-a')) {
+                    card.style.background = glow + ', ' + getComputedStyle(card).background.split(',').slice(1).join(',');
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = '';
+            });
+        });
+
+        /* ── 3D tilt on app mockup (upgraded) ── */
+        const appSh2 = document.getElementById('app-sh');
+        if (appSh2) {
+            document.addEventListener('mousemove', e => {
+                const cx = window.innerWidth/2, cy = window.innerHeight/2;
+                const ry2 = -((e.clientX - cx) / cx) * 12;
+                const rx2 = ((e.clientY - cy) / cy) * 7;
+                appSh2.style.transform = `rotate(${2 - ry2*.12}deg) translateY(-6px) rotateX(${rx2}deg) rotateY(${ry2}deg) translateZ(10px)`;
+                appSh2.style.transition = 'transform .06s linear';
+            });
+        }
+
+        /* ── Magnetic effect on all btn-r ── */
+        document.querySelectorAll('.btn-r,.btn-od').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const r = btn.getBoundingClientRect();
+                const dx = (e.clientX - (r.left + r.width/2)) * 0.25;
+                const dy = (e.clientY - (r.top + r.height/2)) * 0.25;
+                btn.style.transform = `translate(${dx}px,${dy}px)`;
+            });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+        });
+
+        /* ── Count-up enhancement: easing ── */
+        /* already handled above, extra glow on count ── */
+        document.querySelectorAll('.stn').forEach(el => {
+            el.style.transition = 'text-shadow .6s';
+        });
+
     </script>
 
     <script src="{{ asset('js/home.js') }}"></script>
