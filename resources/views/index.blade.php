@@ -679,7 +679,7 @@
                     <span class="lbl sr" style="display:block;margin-bottom:10px;">Recursos</span>
                     <h2 class="d2 sr d1s">Tudo que você<br>precisa para vencer.</h2>
                 </div>
-                <p class="body-l sr d2s" style="max-width:320px;text-align:right;">Ferramentas construídas para estudantes que levam a sério o próprio desenvolvimento.</p>
+                <p class="body-l sr d2s" style="max-width:320px;text-align:left;">Ferramentas construídas para estudantes que levam a sério o próprio desenvolvimento.</p>
             </div>
 
             <!-- Tabs -->
