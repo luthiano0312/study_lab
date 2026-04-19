@@ -118,6 +118,10 @@ class User extends Authenticatable
             return null;
         }
 
+        if (str_starts_with($this->avatar, '/') || str_starts_with($this->avatar, 'http')) {
+             return $this->avatar;
+        }
+
         return Storage::disk('public')->url($this->avatar);
     }
 }

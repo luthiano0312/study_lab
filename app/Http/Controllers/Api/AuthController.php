@@ -70,7 +70,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'created_at' => $user->created_at,
             'avatar' => $user->avatar
-                ? Storage::disk('public')->url($user->avatar)
+                ? (str_starts_with($user->avatar, '/') || str_starts_with($user->avatar, 'http') ? $user->avatar : Storage::disk('public')->url($user->avatar))
                 : null,
             'card_color' => $user->card_color ?? 'rosa',
             'preset_avatar' => $user->preset_avatar,

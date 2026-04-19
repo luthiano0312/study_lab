@@ -1044,11 +1044,11 @@ async function finish(skip = false) {
                 headers: authHeaders(),
                 body: f,
             });
-        } else if (!skip && state.avatarType === "preset" && state.avatarId) {
+        } else if (!skip && state.avatarType === "preset" && state.avatarUrl) {
             await fetch(`${API_BASE}/profile`, {
                 method: "PUT",
                 headers: authHeaders({ "Content-Type": "application/json" }),
-                body: JSON.stringify({ preset_avatar: state.avatarId }),
+                body: JSON.stringify({ avatar_url: state.avatarUrl }),
             });
         }
         setP(78);

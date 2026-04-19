@@ -18,10 +18,17 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('avatars', 'public');
-            if ($user->avatar) {
+            if ($user->avatar && !str_starts_with($user->avatar, '/')) {
                 Storage::disk('public')->delete($user->avatar);
             }
             $data['avatar'] = $path;
+        }
+
+        if ($request->has('avatar_url')) {
+            if ($user->avatar && !str_starts_with($user->avatar, '/')) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $data['avatar'] = $request->input('avatar_url');
         }
 
         $user->update($data);
@@ -40,7 +47,7 @@ class UserController extends Controller
         $user = $request->user();
         $path = $request->file('photo')->store('avatars', 'public');
 
-        if ($user->avatar) {
+        if ($user->avatar && !str_starts_with($user->avatar, '/')) {
             Storage::disk('public')->delete($user->avatar);
         }
 
@@ -61,7 +68,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Senha incorreta.'], 403);
         }
 
-        if ($user->avatar) {
+        if ($user->avatar && !str_starts_with($user->avatar, '/')) {
             Storage::disk('public')->delete($user->avatar);
         }
 
@@ -79,7 +86,7 @@ class UserController extends Controller
             'email'      => $user->email,
             'created_at' => $user->created_at,
             'avatar'     => $user->avatar
-                ? Storage::disk('public')->url($user->avatar)
+                ? (str_starts_with($user->avatar, '/') || str_starts_with($user->avatar, 'http') ? $user->avatar : Storage::disk('public')->url($user->avatar))
                 : null,
         ];
     }

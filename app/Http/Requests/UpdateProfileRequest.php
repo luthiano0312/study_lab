@@ -28,8 +28,9 @@ class UpdateProfileRequest extends FormRequest
         'email'            => 'sometimes|email|unique:users,email,' . $this->user()->id,
         'password'         => 'sometimes|min:8|confirmed',
         'current_password' => 'required_with:password',
-        'card_color'       => 'sometimes|string|in:rosa,roxo,azul,verde,laranja,preto',
-        'preset_avatar'    => 'sometimes|integer|min:0|max:7',
+        'card_color'       => 'sometimes|string|in:rosa,roxo,azul,verde,laranja,preto,vermelho,branco,ciano,amarelo,indigo,rosegold',
+        'preset_avatar'    => 'sometimes|integer|min:0|max:20',
+        'avatar_url'       => 'sometimes|string',
         'onboarding_done'  => 'sometimes|boolean',
         'avatar'           => 'sometimes|image|max:2097152',
         ];
