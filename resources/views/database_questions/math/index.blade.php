@@ -1,180 +1,42 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyLab · Conteúdos</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicons/logo/focus-logo.ico') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Mono:ital,opsz,wght@0,14,300;0,14,400;0,14,500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --ink: #020408; --ink-2: #0a0d14; --ink-3: #111827;
-            --acc: #ec4899; --acc2: #9333ea; --white: #f8fafc;
-            --md: rgba(248,250,252,0.4); --ld: rgba(255,255,255,0.07);
-            --fh: 'Unbounded', sans-serif; --fb: 'DM Mono', monospace;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--ink); color: var(--white); font-family: var(--fb); }
-        body::after {
-            content: ''; position: fixed; inset: 0; z-index: 9000; pointer-events: none;
-            opacity: 0.04; mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            background-size: 180px 180px;
-        }
-        /* Orbs */
-        .orb { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(100px); z-index: 0; }
-        .orb-1 { width: 600px; height: 600px; top: -250px; right: -150px; background: rgba(236,72,153,0.06); }
-        .orb-2 { width: 400px; height: 400px; bottom: -200px; left: -100px; background: rgba(147,51,234,0.05); }
+@extends('layouts.bq')
 
-        /* SIDEBAR */
-        #sidebar { width: 56px; transition: width 0.25s ease; position: relative; z-index: 10; flex-shrink: 0; }
-        #sidebar.expanded { width: 200px; }
-        .sidebar-label { opacity: 0; transition: opacity 0.2s; white-space: nowrap; }
-        #sidebar.expanded .sidebar-label { opacity: 1; }
-
-        /* SEARCH */
-        #search-input:focus { border-color: rgba(236,72,153,0.4) !important; outline: none; box-shadow: 0 0 0 3px rgba(236,72,153,0.08); }
-
-        /* CONTENT CARDS */
-        .content-card { transition: all 0.2s cubic-bezier(0.23,1,0.32,1); }
-        .content-card.card-hidden { display: none; }
-        .area-section.section-hidden { display: none; }
-        .search-highlight { background: rgba(236,72,153,0.25); color: #f9a8d4; border-radius: 3px; padding: 0 2px; }
-        mark.search-highlight { background: rgba(236,72,153,0.25); color: #f9a8d4; border-radius: 3px; padding: 0 2px; }
-
-        /* TAGS */
-        .difficulty-tag {
-            font-size: 0.5rem; font-family: var(--fh); letter-spacing: 0.1em;
-            text-transform: uppercase; padding: 2px 8px; border-radius: 100px;
-            font-weight: 700;
-        }
-
-        /* FILTER TABS */
-        .filter-tab {
-            font-family: var(--fb); font-size: 0.65rem; padding: 6px 14px; border-radius: 8px;
-            cursor: pointer; border: 1px solid transparent; transition: all 0.2s;
-            color: var(--md); background: transparent;
-        }
-        .filter-tab.active {
-            background: rgba(236,72,153,0.1); border-color: rgba(236,72,153,0.25); color: #ec4899;
-        }
-        .filter-tab:not(.active):hover { background: rgba(255,255,255,0.04); color: var(--white); }
-
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(236,72,153,0.4); border-radius: 2px; }
-
-        @keyframes fadeUp { from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
-        .anim-fade-up { animation: fadeUp 0.5s cubic-bezier(0.23,1,0.32,1) both; }
-    </style>
-</head>
-
-<body class="h-screen relative" style="overflow:hidden;">
+@section('content')
 
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
-    <div class="flex h-screen" style="position:relative;z-index:1;">
+    <div style="display:flex;height:100vh;position:relative;z-index:1;">
 
-        <!-- SIDEBAR -->
-        <aside id="sidebar" class="flex flex-col items-center py-4 gap-1"
-               style="background:rgba(255,255,255,0.02);border-right:1px solid var(--ld);">
 
-            <div class="w-9 h-9 rounded-[10px] flex items-center justify-center mb-3 flex-shrink-0 ml-4"></div>
-
-            @php $navItems = [
-                ['Focus', '/focus', 'M13 10V3L4 14h7v7l9-11h-7z', false],
-                ['Conteúdos', '/contents', 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', true],
-                ['Lousa virtual', '/whiteboard', 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', false],
-                ['Caderno', '/notebook', 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', false],
-                ['Flashcards', '/flashcards', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', false],
-                ['Dashboard', '/dashboard', 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', false],
-            ]; @endphp
-
-            @foreach($navItems as $item)
-                <div class="sidebar-item w-full h-11 flex items-center gap-3 px-4 cursor-pointer border-l-2 whitespace-nowrap text-sm font-medium transition-colors
-                            {{ $item[3] ? 'border-pink-500 text-pink-500' : 'border-transparent text-[#64748b] hover:text-slate-200' }}"
-                     style="{{ $item[3] ? 'background:rgba(236,72,153,0.1);' : '' }}">
-                    <a class="flex items-center gap-3 w-full" href="{{ $item[1] }}" style="text-decoration:none;color:inherit;">
-                        <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="{{ $item[2] }}"/>
-                        </svg>
-                        <span class="sidebar-label text-[13px]">{{ $item[0] }}</span>
-                    </a>
-                </div>
-            @endforeach
-
-            <div id="sidebar-toggle" class="mt-auto w-full flex items-center px-4 h-10 cursor-pointer text-[#64748b] gap-3 hover:text-slate-200 transition-colors">
-                <svg id="toggle-arrow" class="w-[18px] h-[18px] flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-                <span class="sidebar-label text-[12px]">Recolher</span>
-            </div>
-        </aside>
-
-        <!-- MAIN -->
-        <div class="flex flex-1 flex-col overflow-hidden">
-
-            <!-- TOPBAR -->
-            <div class="h-14 flex items-center justify-between px-6 gap-4 flex-shrink-0"
-                 style="border-bottom:1px solid var(--ld);background:rgba(2,4,8,0.6);backdrop-filter:blur(20px);">
-                <div class="flex items-center gap-3">
-                    <span style="font-family:var(--fh);font-weight:900;font-size:0.65rem;letter-spacing:0.12em;">CONTEÚDOS</span>
-                    <div class="px-3 py-1 rounded-full"
-                         style="background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.25);">
-                        <span style="font-size:0.58rem;font-family:var(--fh);font-weight:700;color:#ec4899;letter-spacing:0.08em;">Biblioteca</span>
-                    </div>
-                </div>
-
-                <!-- SEARCH + FILTERS -->
-                <div class="flex items-center gap-3 flex-1 max-w-xl">
-                    <div class="relative flex-1">
-                        <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                            <svg class="w-3.5 h-3.5 text-[#64748b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                            </svg>
-                        </div>
-                        <input id="search-input" type="text" placeholder="Pesquisar conteúdos..."
-                               class="w-full h-9 pl-9 pr-4 rounded-[10px] text-xs text-slate-200 placeholder-[#475569] transition-all"
-                               style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-family:var(--fb);" />
-                        <div id="search-clear" class="hidden absolute inset-y-0 right-2.5 flex items-center cursor-pointer text-[#64748b] hover:text-slate-200">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div id="search-count" class="text-[11px] text-[#64748b] whitespace-nowrap hidden">
-                        <span id="search-count-num">0</span> resultados
-                    </div>
-                </div>
-            </div>
+        <!-- ═══ MAIN ═══ -->
+        <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;">
 
             <!-- FILTER BAR -->
-            <div class="flex items-center gap-2 px-6 py-3 flex-shrink-0 overflow-x-auto"
-                 style="border-bottom:1px solid var(--ld);">
-                <span style="font-size:0.6rem;color:var(--md);font-family:var(--fb);white-space:nowrap;margin-right:4px;">Filtrar:</span>
+            <div
+                style="display:flex;align-items:center;gap:8px;padding:10px 24px;flex-shrink:0;overflow-x:auto;border-bottom:1px solid var(--ld);">
+                <span
+                    style="font-size:0.58rem;color:var(--md);font-family:var(--fb);white-space:nowrap;margin-right:4px;">Filtrar:</span>
                 @foreach(['Todos', 'Matemática', 'Física', 'Química', 'Biologia', 'Linguagens', 'Humanas', 'Tecnologia', 'Redação'] as $fi => $f)
                     <button class="filter-tab {{ $fi === 0 ? 'active' : '' }}" data-filter="{{ $f }}">{{ $f }}</button>
                 @endforeach
             </div>
 
             <!-- CONTENT -->
-            <div class="flex-1 overflow-y-auto p-6">
+            <div style="flex:1;overflow-y:auto;padding:28px 28px 40px;">
 
                 <!-- No results -->
-                <div id="no-results" class="hidden flex flex-col items-center justify-center h-64 gap-3">
-                    <svg class="w-10 h-10 text-[#334155]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <div id="no-results"
+                    style="display:none;flex-direction:column;align-items:center;justify-content:center;height:240px;gap:12px;">
+                    <svg width="40" height="40" fill="none" stroke="#334155" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <p style="font-size:0.8rem;color:#475569;">Nenhum conteúdo encontrado para "<span id="no-results-term" style="color:#ec4899;"></span>"</p>
+                    <p style="font-size:0.78rem;color:#475569;">Nenhum resultado para "<span id="no-results-term"
+                            style="color:#ec4899;"></span>"</p>
                 </div>
 
-                <div id="sections-wrapper" class="flex flex-col gap-10">
+                <div id="sections-wrapper" style="display:flex;flex-direction:column;gap:36px;">
 
-                    {{-- ═══ MATEMÁTICA ═══ --}}
                     @php $sections = [
                         [
                             'area' => 'matematica',
@@ -273,7 +135,7 @@
                             'icon_path' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064',
                             'cards' => [
                                 ['História do Brasil', 'Colonização, independência, república e história contemporânea', 'Médio'],
-                                ['História Mundial — Antiga', 'Mesopotâmia, Egito, Grécia e Roma', 'Médio'],
+                                ['História Antiga', 'Mesopotâmia, Egito, Grécia e Roma', 'Médio'],
                                 ['História Medieval', 'Feudalismo, Cruzadas, Igreja e Baixa Idade Média', 'Fácil'],
                                 ['História Moderna', 'Renascimento, Reformas, Absolutismo e Iluminismo', 'Médio'],
                                 ['História Contemporânea', 'Guerras Mundiais, Guerra Fria e globalização', 'Difícil'],
@@ -334,211 +196,65 @@
                         ],
                     ]; @endphp
 
-                    @foreach($sections as $sidx => $section)
-                        @if($sidx > 0)
-                            <div class="section-divider h-px" style="background:var(--ld);"></div>
-                        @endif
+                                            @foreach($sections as $sidx => $section)
+                                                @if($sidx > 0)
+                                                    <div class="section-divider" style="height:1px;background:var(--ld);"></div>
+                                                @endif
 
-                        <section class="area-section anim-fade-up" data-area="{{ $section['area'] }}"
-                                 style="animation-delay:{{ $sidx * 0.08 }}s;">
-                            <div class="flex items-center gap-3 mb-5">
-                                <div class="w-9 h-9 rounded-[12px] flex items-center justify-center flex-shrink-0"
-                                     style="background:{{ $section['bg_color'] }};border:1px solid {{ $section['border_color'] }};">
-                                    <svg class="w-4 h-4" style="color:{{ $section['icon_color'] }};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="{{ $section['icon_path'] }}"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h2 style="font-family:var(--fh);font-size:0.75rem;font-weight:900;color:var(--white);letter-spacing:-0.01em;">{{ $section['label'] }}</h2>
-                                    <p style="font-size:0.6rem;color:var(--md);margin-top:1px;">{{ $section['sublabel'] }}</p>
-                                </div>
-                                <div class="ml-auto px-3 py-1 rounded-full"
-                                     style="background:{{ $section['badge_color'] }};border:1px solid {{ $section['border_color'] }};">
-                                    <span class="badge-count" style="font-family:var(--fh);font-size:0.5rem;font-weight:700;color:{{ $section['icon_color'] }};letter-spacing:0.08em;">{{ count($section['cards']) }}</span>
-                                    <span style="font-family:var(--fh);font-size:0.5rem;font-weight:700;color:{{ $section['icon_color'] }};letter-spacing:0.08em;"> tópicos</span>
-                                </div>
-                            </div>
+                                                <section class="area-section anim-fade-up" data-area="{{ $section['area'] }}"
+                                                         style="animation-delay:{{ $sidx * 0.07 }}s;">
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 content-grid"
-                                 data-color="{{ $section['hover_color'] }}">
-                                @foreach($section['cards'] as $card)
-                                    <div class="content-card group rounded-[16px] p-4 cursor-pointer"
-                                         data-title="{{ $card[0] }}" data-area="{{ $section['area'] }}"
-                                         style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);">
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-2 h-2 rounded-full flex-shrink-0"
-                                                     style="background:{{ $section['dot_color'] }};box-shadow:0 0 6px {{ $section['dot_shadow'] }};"></div>
-                                                <span class="difficulty-tag"
-                                                      style="background:{{ $card[2] === 'Fácil' ? 'rgba(34,197,94,0.1)' : ($card[2] === 'Difícil' ? 'rgba(248,113,113,0.1)' : 'rgba(251,191,36,0.1)') }};
-                                                             color:{{ $card[2] === 'Fácil' ? '#4ade80' : ($card[2] === 'Difícil' ? '#f87171' : '#fbbf24') }};
-                                                             border:1px solid {{ $card[2] === 'Fácil' ? 'rgba(34,197,94,0.2)' : ($card[2] === 'Difícil' ? 'rgba(248,113,113,0.2)' : 'rgba(251,191,36,0.2)') }};">
-                                                    {{ $card[2] }}
-                                                </span>
-                                            </div>
-                                            <svg class="w-3.5 h-3.5 text-[#334155] group-hover:text-current transition-colors flex-shrink-0"
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                 style="color:#334155;">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                            </svg>
+                                                    {{-- Section header --}}
+                                                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+                                                        <div style="width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ $section['bg_color'] }};border:1px solid {{ $section['border_color'] }};">
+                                                            <svg width="16" height="16" fill="none" stroke="{{ $section['icon_color'] }}" stroke-width="1.8" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="{{ $section['icon_path'] }}"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <h2 style="font-family:var(--fh);font-size:0.72rem;font-weight:900;color:var(--white);letter-spacing:-0.01em;">{{ $section['label'] }}</h2>
+                                                            <p style="font-size:0.58rem;color:var(--md);margin-top:1px;">{{ $section['sublabel'] }}</p>
+                                                        </div>
+                                                        <div style="margin-left:auto;padding:3px 12px;border-radius:100px;background:{{ $section['badge_color'] }};border:1px solid {{ $section['border_color'] }};">
+                                                            <span class="badge-count" style="font-family:var(--fh);font-size:0.48rem;font-weight:700;color:{{ $section['icon_color'] }};letter-spacing:0.08em;">{{ count($section['cards']) }} tópicos</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- Cards grid --}}
+                                                    <div class="content-grid" data-color="{{ $section['hover_color'] }}"
+                                                         style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+                                                        @foreach($section['cards'] as $card)
+                                                            <div class="content-card" data-title="{{ $card[0] }}" data-area="{{ $section['area'] }}"
+                                                                 style="border-radius:14px;padding:16px 18px;cursor:pointer;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);">
+
+                                                                {{-- Top row: dot + difficulty + arrow --}}
+                                                                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                                        <div style="width:7px;height:7px;border-radius:50%;background:{{ $section['dot_color'] }};box-shadow:0 0 6px {{ $section['dot_shadow'] }};flex-shrink:0;"></div>
+                                                                        <span class="difficulty-tag"
+                                                                              style="background:{{ $card[2] === 'Fácil' ? 'rgba(34,197,94,0.1)' : ($card[2] === 'Difícil' ? 'rgba(248,113,113,0.1)' : 'rgba(251,191,36,0.1)') }};
+                                                                                     color:{{ $card[2] === 'Fácil' ? '#4ade80' : ($card[2] === 'Difícil' ? '#f87171' : '#fbbf24') }};
+                                                                                     border:1px solid {{ $card[2] === 'Fácil' ? 'rgba(34,197,94,0.2)' : ($card[2] === 'Difícil' ? 'rgba(248,113,113,0.2)' : 'rgba(251,191,36,0.2)') }};">
+                                                                            {{ $card[2] }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <svg class="card-arrow" width="14" height="14" fill="none" stroke="#334155" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;transition:color 0.18s;">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                                                    </svg>
+                                                                </div>
+
+                                                                <h3 style="font-size:0.78rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.3;font-family:var(--fh);letter-spacing:-0.01em;">{{ $card[0] }}</h3>
+                                                                <p style="font-size:0.62rem;color:var(--md);line-height:1.65;">{{ $card[1] }}</p>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                </section>
+                                            @endforeach
+
                                         </div>
-                                        <h3 class="text-[13px] font-semibold mb-1.5 leading-snug" style="color:var(--white);">{{ $card[0] }}</h3>
-                                        <p style="font-size:0.65rem;color:var(--md);line-height:1.6;">{{ $card[1] }}</p>
                                     </div>
-                                @endforeach
+                                </div>
                             </div>
-                        </section>
-                    @endforeach
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    (() => {
-        'use strict';
-
-        /* ── SIDEBAR ── */
-        const sidebar = document.getElementById('sidebar');
-        const toggle  = document.getElementById('sidebar-toggle');
-        const arrow   = document.getElementById('toggle-arrow');
-        let expanded  = false;
-        toggle?.addEventListener('click', () => {
-            expanded = !expanded;
-            sidebar.classList.toggle('expanded', expanded);
-            if (arrow) arrow.style.transform = expanded ? 'rotate(180deg)' : '';
-            document.querySelectorAll('.sidebar-label').forEach(l => l.style.opacity = expanded ? '1' : '0');
-        });
-
-        /* ── SEARCH ── */
-        const searchInput   = document.getElementById('search-input');
-        const searchClear   = document.getElementById('search-clear');
-        const searchCount   = document.getElementById('search-count');
-        const searchCountNum= document.getElementById('search-count-num');
-        const noResults     = document.getElementById('no-results');
-        const noResultsTerm = document.getElementById('no-results-term');
-        const sectionsWrapper = document.getElementById('sections-wrapper');
-        const allCards      = document.querySelectorAll('.content-card');
-        const allSections   = document.querySelectorAll('.area-section');
-
-        function normalize(str) {
-            return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        }
-        function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
-        function performSearch(query) {
-            const q = normalize(query.trim());
-            if (!q) { resetSearch(); return; }
-            searchClear.classList.remove('hidden'); searchClear.classList.add('flex');
-            searchCount.classList.remove('hidden');
-            let total = 0;
-            allSections.forEach(section => {
-                const cards = section.querySelectorAll('.content-card');
-                const badge = section.querySelector('.badge-count');
-                let vis = 0;
-                cards.forEach(card => {
-                    const title = normalize(card.dataset.title || '');
-                    const desc  = normalize(card.querySelector('p')?.textContent || '');
-                    const match = title.includes(q) || desc.includes(q);
-                    card.classList.toggle('card-hidden', !match);
-                    if (match) {
-                        vis++; total++;
-                        const h3 = card.querySelector('h3');
-                        if (h3) {
-                            const orig = h3.dataset.original || h3.textContent;
-                            h3.dataset.original = orig;
-                            h3.innerHTML = orig.replace(new RegExp(`(${escapeRegex(query.trim())})`, 'gi'), '<mark class="search-highlight">$1</mark>');
-                        }
-                    } else {
-                        const h3 = card.querySelector('h3');
-                        if (h3 && h3.dataset.original) { h3.textContent = h3.dataset.original; delete h3.dataset.original; }
-                    }
-                });
-                section.classList.toggle('section-hidden', vis === 0);
-                if (badge) badge.textContent = vis;
-            });
-            // dividers
-            Array.from(sectionsWrapper.children).forEach((el, i, arr) => {
-                if (!el.classList.contains('section-divider')) return;
-                const prev = arr.slice(0,i).reverse().find(c => c.classList.contains('area-section'));
-                const next = arr.slice(i+1).find(c => c.classList.contains('area-section'));
-                el.style.display = (prev?.classList.contains('section-hidden') || next?.classList.contains('section-hidden')) ? 'none' : '';
-            });
-            if (searchCountNum) searchCountNum.textContent = total;
-            noResults.classList.toggle('hidden', total !== 0);
-            noResults.classList.toggle('flex', total === 0);
-            if (noResultsTerm) noResultsTerm.textContent = query.trim();
-        }
-
-        function resetSearch() {
-            searchClear.classList.add('hidden'); searchClear.classList.remove('flex');
-            searchCount.classList.add('hidden');
-            noResults.classList.add('hidden'); noResults.classList.remove('flex');
-            allCards.forEach(card => {
-                card.classList.remove('card-hidden');
-                const h3 = card.querySelector('h3');
-                if (h3?.dataset.original) { h3.textContent = h3.dataset.original; delete h3.dataset.original; }
-            });
-            allSections.forEach(s => {
-                s.classList.remove('section-hidden');
-                const badge = s.querySelector('.badge-count');
-                if (badge) badge.textContent = s.querySelectorAll('.content-card').length;
-            });
-            document.querySelectorAll('.section-divider').forEach(d => d.style.display = '');
-        }
-
-        let debounceTimer;
-        searchInput?.addEventListener('input', e => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => performSearch(e.target.value), 150);
-        });
-        searchClear?.addEventListener('click', () => { searchInput.value = ''; resetSearch(); searchInput.focus(); });
-
-        /* ── FILTER TABS ── */
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                const f = tab.dataset.filter;
-                if (f === 'Todos') { allSections.forEach(s => s.classList.remove('section-hidden')); document.querySelectorAll('.section-divider').forEach(d => d.style.display = ''); return; }
-                const map = { 'Matemática': 'matematica', 'Física': 'natureza', 'Química': 'natureza', 'Biologia': 'natureza', 'Linguagens': 'linguagens', 'Humanas': 'humanas', 'Tecnologia': 'tecnologia', 'Redação': 'redacao' };
-                const target = map[f];
-                allSections.forEach(s => s.classList.toggle('section-hidden', s.dataset.area !== target));
-                document.querySelectorAll('.section-divider').forEach(d => {
-                    const arr = Array.from(sectionsWrapper.children);
-                    const idx = arr.indexOf(d);
-                    const prev = arr.slice(0,idx).reverse().find(c => c.classList.contains('area-section'));
-                    const next = arr.slice(idx+1).find(c => c.classList.contains('area-section'));
-                    d.style.display = (prev?.classList.contains('section-hidden') || next?.classList.contains('section-hidden')) ? 'none' : '';
-                });
-            });
-        });
-
-        /* ── CARD HOVER ── */
-        document.querySelectorAll('.content-grid').forEach(grid => {
-            const rgb = grid.dataset.color || '255,255,255';
-            grid.querySelectorAll('.content-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.background   = `rgba(${rgb},0.07)`;
-                    card.style.borderColor  = `rgba(${rgb},0.22)`;
-                    card.style.transform    = 'translateY(-2px)';
-                    card.style.boxShadow    = `0 8px 28px rgba(${rgb},0.1)`;
-                    const arrow = card.querySelector('svg:last-child');
-                    if (arrow) arrow.style.color = `rgb(${rgb})`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.background  = 'rgba(255,255,255,0.025)';
-                    card.style.borderColor = 'rgba(255,255,255,0.06)';
-                    card.style.transform   = '';
-                    card.style.boxShadow   = '';
-                    const arrow = card.querySelector('svg:last-child');
-                    if (arrow) arrow.style.color = '#334155';
-                });
-            });
-        });
-
-    })();
-    </script>
-</body>
-</html>
+@endsection
