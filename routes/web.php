@@ -1,11 +1,11 @@
     <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Models\Subject;
-use App\Models\Activity;
-use App\Models\Exam;
-use App\Models\Content;
-use App\Http\Controllers\Api\SocialAuthController;
+    use Illuminate\Support\Facades\Route;
+    use App\Models\Subject;
+    use App\Models\Activity;
+    use App\Models\Exam;
+    use App\Models\Content;
+    use App\Http\Controllers\Api\SocialAuthController;
 
     Route::get('/', fn() => view('index'));
     Route::get('/login', fn() => view('auth/login'))->name('login');
@@ -63,10 +63,8 @@ use App\Http\Controllers\Api\SocialAuthController;
     })->name('horary.edit');
 
     // BD-QUESTIONS
-    Route::get('/math', fn() => view('database_questions.math.index'))->name('math.index');
-    Route::get('/horary/create', fn() => view('horary.photo.create'))->name('horary.create');
-    Route::get('/horary/edit/{id}', function ($id) {
-        $horary = Horary::findOrFail($id);
-        return view('horary.photo.edit', compact('horary'));
-    })->name('horary.edit');
+    Route::get('/central', fn() => view('database_questions.index'))->name('central.index');
 
+
+    // math
+    Route::get('/algebra', fn() => view('database_questions.math.index'))->name('algebra.index');

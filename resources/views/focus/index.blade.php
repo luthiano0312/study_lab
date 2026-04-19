@@ -4,8 +4,8 @@
     <div class="orb orb2"></div>
 
     <!-- ════════════════
-                                                                                                                                                                                                         LOADING
-                                                                                                                                                                                                    ════════════════ -->
+                                                                                                                                                                                                             LOADING
+                                                                                                                                                                                                        ════════════════ -->
     <div id="loading">
         <div class="hc hc-tl"></div>
         <div class="hc hc-tr"></div>
@@ -460,7 +460,7 @@
                         </div>
                     </div>
                     <div style="overflow-y:auto;flex:1;padding-bottom:20px;">
-                        @php $bq = [['Exatas', '#ec4899', [['Matematica', '/math'], ['Fisica', '/fisica'], ['Quimica', '/quimica']]], ['Linguagens', '#fbbf24', [['Gramatica', '/gramatica'], ['Literatura', '/literatura'], ['Ingles', '/ingles'], ['Espanhol', '/espanhol'], ['Redacao', '/redacao']]], ['Humanas', '#818cf8', [['Historia', '/historia'], ['Geografia', '/geografia'], ['Sociologia', '/sociologia'], ['Filosofia', '/filosofia']]], ['Natureza', '#34d399', [['Biologia', '/biologia'], ['Ecologia', '/ecologia'], ['Fisica Moderna', '/fisica-moderna']]], ['Tecnologia', '#38bdf8', [['Algoritmos', '/algoritmos'], ['Prog. Web', '/prog-web'], ['Banco de Dados', '/banco-dados']]]]; @endphp
+                        @php $bq = [['Exatas', '#ec4899', [['Matematica', '/central'], ['Fisica', '/central'], ['Quimica', '/central']]], ['Linguagens', '#fbbf24', [['Gramatica', '/central'], ['Literatura', '/central'], ['Ingles', '/central'], ['Espanhol', '/central'], ['Redacao', '/central']]], ['Humanas', '#818cf8', [['Historia', '/central'], ['Geografia', '/central'], ['Sociologia', '/central'], ['Filosofia', '/central']]], ['Natureza', '#34d399', [['Biologia', '/central'], ['Ecologia', '/central'], ['Fisica Moderna', '/central']]], ['Tecnologia', '#38bdf8', [['Algoritmos', '/central'], ['Prog. Web', '/central'], ['Banco de Dados', '/central']]]]; @endphp
                         @foreach($bq as $a)
                             <div
                                 style="font-size:0.48rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#475569;padding:14px 20px 4px;">

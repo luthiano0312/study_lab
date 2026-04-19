@@ -3,8 +3,8 @@
 
     /* ── SIDEBAR ── */
     const sidebar = document.getElementById("sidebar");
-    const toggle = document.getElementById("sidebar-toggle");
-    const arrow = document.getElementById("toggle-arrow");
+    const toggle = document.getElementById("sb-toggle");
+    const arrow = document.getElementById("sb-arrow");
     let expanded = false;
 
     toggle?.addEventListener("click", () => {
@@ -126,10 +126,8 @@
         allSections.forEach((s) => {
             s.classList.remove("section-hidden");
             const badge = s.querySelector(".badge-count");
-            if (badge) {
-                const count = s.querySelectorAll(".content-card").length;
-                badge.textContent = `${count} tópicos`;
-            }
+            if (badge)
+                badge.textContent = `${s.querySelectorAll(".content-card").length} tópicos`;
         });
 
         document
@@ -167,7 +165,6 @@
                 .forEach((t) => t.classList.remove("active"));
             tab.classList.add("active");
             const f = tab.dataset.filter;
-
             allSections.forEach((s) => {
                 const hide = f !== "Todos" && s.dataset.area !== areaMap[f];
                 s.classList.toggle("section-hidden", hide);
@@ -176,11 +173,12 @@
         });
     });
 
-    /* ── CARD HOVER ── */
+    /* ── CARD HOVER + CLICK ── */
     document.querySelectorAll(".content-grid").forEach((grid) => {
         const rgb = grid.dataset.color || "255,255,255";
         grid.querySelectorAll(".content-card").forEach((card) => {
             const arrowEl = card.querySelector(".card-arrow");
+
             card.addEventListener("mouseenter", () => {
                 card.style.background = `rgba(${rgb},0.07)`;
                 card.style.borderColor = `rgba(${rgb},0.22)`;
@@ -188,12 +186,18 @@
                 card.style.boxShadow = `0 8px 28px rgba(${rgb},0.1)`;
                 if (arrowEl) arrowEl.style.stroke = `rgb(${rgb})`;
             });
+
             card.addEventListener("mouseleave", () => {
                 card.style.background = "rgba(255,255,255,0.025)";
                 card.style.borderColor = "rgba(255,255,255,0.06)";
                 card.style.transform = "";
                 card.style.boxShadow = "";
                 if (arrowEl) arrowEl.style.stroke = "#334155";
+            });
+
+            card.addEventListener("click", () => {
+                const slug = card.dataset.slug;
+                if (slug) window.location.href = `/${slug}`;
             });
         });
     });
