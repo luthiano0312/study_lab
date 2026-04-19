@@ -1,149 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-full space-y-10" style="font-family:'DM Sans',sans-serif;">
+    <div class="min-h-full space-y-8" style="font-family:'DM Sans',sans-serif;">
 
+        {{-- ══ HERO ══ --}}
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
-        <section class="space-y-4">
-
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
-
-                <div class="lg:col-span-3 relative rounded-3xl overflow-hidden min-h-[200px]"
-                    style="background:linear-gradient(130deg,#9d174d 0%,#db2777 42%,#ec4899 74%,#fda4af 100%);">
-                    <div class="absolute inset-0 pointer-events-none opacity-[.08]"
-                        style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:20px 20px;"></div>
-                    <div class="absolute -top-10 -right-10 w-52 h-52 rounded-full pointer-events-none opacity-[.15]"
-                        style="background:radial-gradient(circle,#fff,transparent 70%);"></div>
-                    <div class="relative z-10 p-7 flex flex-col justify-between h-full gap-5">
-                        <div>
-                            <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">StudyLab</p>
-                            <h1 class="text-white font-black leading-[1.1] mb-1.5"
-                                style="font-family:'Syne',sans-serif;font-size:clamp(1.65rem,3.5vw,2.4rem);">
-                                Olá, <span id="greetName">Estudante</span>
-                            </h1>
-                            <p class="text-pink-100/80 text-sm">Pronto pra mais um dia de foco?</p>
-                        </div>
+            {{-- Saudação --}}
+            <div class="lg:col-span-3 relative rounded-3xl overflow-hidden min-h-[200px]"
+                style="background:linear-gradient(130deg,#9d174d 0%,#db2777 42%,#ec4899 74%,#fda4af 100%);">
+                <div class="absolute inset-0 pointer-events-none opacity-[.08]"
+                    style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:20px 20px;"></div>
+                <div class="absolute -top-10 -right-10 w-52 h-52 rounded-full pointer-events-none opacity-[.15]"
+                    style="background:radial-gradient(circle,#fff,transparent 70%);"></div>
+                <div class="relative z-10 p-7 flex flex-col justify-between h-full gap-5">
+                    <div>
+                        <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">StudyLab</p>
+                        <h1 class="text-white font-black leading-[1.1] mb-1.5"
+                            style="font-family:'Syne',sans-serif;font-size:clamp(1.65rem,3.5vw,2.4rem);">
+                            Olá, <span id="greetName">Estudante</span>
+                        </h1>
+                        <p class="text-pink-100/80 text-sm">Pronto pra mais um dia de foco?</p>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-2.5 w-fit backdrop-blur-sm">
                         <div
-                            class="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-2.5 w-fit backdrop-blur-sm">
-                            <div
-                                class="w-8 h-8 rounded-xl overflow-hidden bg-white/20 flex-shrink-0 flex items-center justify-center border border-white/20">
-                                <img id="userAvatar" src="" alt="" class="w-full h-full object-cover hidden">
-                                <div id="avatarFallback">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="8" r="4" stroke-width="2" />
-                                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round" />
-                                    </svg>
-                                </div>
+                            class="w-8 h-8 rounded-xl overflow-hidden bg-white/20 flex-shrink-0 flex items-center justify-center border border-white/20">
+                            <img id="userAvatar" src="" alt="" class="w-full h-full object-cover hidden">
+                            <div id="avatarFallback">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="8" r="4" stroke-width="2" />
+                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round" />
+                                </svg>
                             </div>
-                            <div class="leading-tight">
-                                <p class="text-pink-200 text-[10px] font-semibold">Bem-vindo de volta</p>
-                                <p id="welcomeName" class="text-white text-[13px] font-black">Estudante</p>
-                            </div>
+                        </div>
+                        <div class="leading-tight">
+                            <p class="text-pink-200 text-[10px] font-semibold">Bem-vindo de volta</p>
+                            <p id="welcomeName" class="text-white text-[13px] font-black">Estudante</p>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div
-                    class="lg:col-span-2 bg-white  dark:bg-[#18181b] rounded-3xl border border-pink-100 dark:border-gray-800 shadow-sm p-7 flex flex-col justify-between gap-4 transition-colors duration-200">
-                    <div class="flex gap-10">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-[.22em] text-pink-400 mb-3">Agora</p>
-                            <div id="clock" class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none"
-                                style="font-family:'Syne',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
-                            <p class="text-sm font-semibold text-gray-400 mt-2">{{ now()->translatedFormat('l') }}</p>
-                            <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
-                        </div>
-                        <div>
-                            <img class="w-[300px]" src="{{ asset('images/mascote-versao-2.png') }}" alt="">
-                        </div>
+            {{-- Relógio --}}
+            <div
+                class="lg:col-span-2 bg-white dark:bg-[#18181b] rounded-3xl border border-pink-100 dark:border-gray-800 shadow-sm p-7 flex flex-col justify-between gap-4 transition-colors duration-200">
+                <div class="flex gap-10">
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-[.22em] text-pink-400 mb-3">Agora</p>
+                        <div id="clock" class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none"
+                            style="font-family:'Syne',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
+                        <p class="text-sm font-semibold text-gray-400 mt-2">{{ now()->translatedFormat('l') }}</p>
+                        <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
                     </div>
 
                 </div>
             </div>
-
-            <div class="relative">
-                
-            </div>
-
         </section>
 
+        {{-- ══ ATALHOS ══ --}}
         <section class="space-y-4">
-
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                 <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
                     style="font-family:'Syne',sans-serif;">Atalhos</h2>
             </div>
-
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                 @php
                     $shortcuts = [
-                        [
-                            'href' => '/activities',
-                            'label' => 'Atividades',
-                            'bg' => 'bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40',
-                            'text' => 'text-pink-600 dark:text-pink-400',
-                            'ibg' => 'bg-white dark:bg-gray-800',
-                            'ic' => 'text-pink-500 dark:text-pink-400',
-                            'icon' =>
-                                '<path d="M9 11l3 3L22 4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2" stroke-linecap="round"/>',
-                        ],
-                        [
-                            'href' => '/exams',
-                            'label' => 'Provas',
-                            'bg' => 'bg-rose-50 dark:bg-rose-900/20 hover:bg-rose-100 dark:hover:bg-rose-900/40',
-                            'text' => 'text-rose-600 dark:text-rose-400',
-                            'ibg' => 'bg-white dark:bg-gray-800',
-                            'ic' => 'text-rose-500 dark:text-rose-400',
-                            'icon' =>
-                                '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/>',
-                        ],
-                        [
-                            'href' => '/subject',
-                            'label' => 'Matérias',
-                            'bg' => 'bg-fuchsia-50 dark:bg-fuchsia-900/20 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/40',
-                            'text' => 'text-fuchsia-600 dark:text-fuchsia-400',
-                            'ibg' => 'bg-white dark:bg-gray-800',
-                            'ic' => 'text-fuchsia-500 dark:text-fuchsia-400',
-                            'icon' =>
-                                '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2"/>',
-                        ],
-                        [
-                            'href' => '/profile',
-                            'label' => 'Perfil',
-                            'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800',
-                            'text' => 'text-gray-600 dark:text-gray-300',
-                            'ibg' => 'bg-white dark:bg-gray-800',
-                            'ic' => 'text-gray-500 dark:text-gray-400',
-                            'icon' =>
-                                '<circle cx="12" cy="8" r="4" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round"/>',
-                        ],
-                        [
-                            'href' => '/horary',
-                            'label' => 'Horários',
-                            'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800',
-                            'text' => 'text-gray-600 dark:text-gray-300',
-                            'ibg' => 'bg-white dark:bg-gray-800',
-                            'ic' => 'text-gray-500 dark:text-gray-400',
-                            'icon' =>
-                                '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01" stroke-width="2.5" stroke-linecap="round"/>',
-                        ],
-                        [
-                            'href' => '/activities/create',
-                            'label' => 'Nova Ativ.',
-                            'bg' => 'bg-pink-600 hover:bg-pink-700',
-                            'text' => 'text-white',
-                            'ibg' => 'bg-white/20',
-                            'ic' => 'text-white',
-                            'icon' => '<path d="M12 5v14M5 12h14" stroke-width="2.5" stroke-linecap="round"/>',
-                        ],
+                        ['href' => '/activities', 'label' => 'Atividades', 'bg' => 'bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40', 'text' => 'text-pink-600 dark:text-pink-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-pink-500 dark:text-pink-400', 'icon' => '<path d="M9 11l3 3L22 4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2" stroke-linecap="round"/>'],
+                        ['href' => '/exams', 'label' => 'Provas', 'bg' => 'bg-rose-50 dark:bg-rose-900/20 hover:bg-rose-100 dark:hover:bg-rose-900/40', 'text' => 'text-rose-600 dark:text-rose-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-rose-500 dark:text-rose-400', 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/>'],
+                        ['href' => '/subject', 'label' => 'Matérias', 'bg' => 'bg-fuchsia-50 dark:bg-fuchsia-900/20 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/40', 'text' => 'text-fuchsia-600 dark:text-fuchsia-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-fuchsia-500 dark:text-fuchsia-400', 'icon' => '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2"/>'],
+                        ['href' => '/profile', 'label' => 'Perfil', 'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800', 'text' => 'text-gray-600 dark:text-gray-300', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-gray-500 dark:text-gray-400', 'icon' => '<circle cx="12" cy="8" r="4" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round"/>'],
+                        ['href' => '/horary', 'label' => 'Horários', 'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800', 'text' => 'text-gray-600 dark:text-gray-300', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-gray-500 dark:text-gray-400', 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01" stroke-width="2.5" stroke-linecap="round"/>'],
+                        ['href' => '/activities/create', 'label' => 'Nova Ativ.', 'bg' => 'bg-pink-600 hover:bg-pink-700', 'text' => 'text-white', 'ibg' => 'bg-white/20', 'ic' => 'text-white', 'icon' => '<path d="M12 5v14M5 12h14" stroke-width="2.5" stroke-linecap="round"/>'],
                     ];
                 @endphp
-
                 @foreach ($shortcuts as $s)
                     <a href="{{ $s['href'] }}"
                         class="flex flex-col items-center gap-2.5 rounded-2xl p-5 shadow-sm border border-transparent
-                                                                                                                                                                              hover:border-pink-100 hover:-translate-y-1 transition-all duration-200 group {{ $s['bg'] }}">
+                                          hover:border-pink-100 hover:-translate-y-1 transition-all duration-200 group {{ $s['bg'] }}">
                         <div
                             class="w-10 h-10 rounded-xl {{ $s['ibg'] }} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-200">
                             <svg class="w-5 h-5 {{ $s['ic'] }}" fill="none" stroke="currentColor"
@@ -155,8 +91,8 @@
             </div>
         </section>
 
-        <section class="space-y-5">
-
+        {{-- ══ STATS ══ --}}
+        <section class="space-y-4">
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                 <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
@@ -164,24 +100,22 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-
                 <div
-                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border-gray-300 dark:border-gray-500 ring-1 ring-white dark:ring-gray-500 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
+                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 ring-1 ring-gray-200 dark:ring-gray-700 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-gray-200 dark:bg-white/20 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-black dark:text-white" fill="none" stroke="currentColor"
+                        <div class="w-8 h-8 rounded-xl bg-gray-100 dark:bg-white/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2" />
                                 <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
                             </svg>
                         </div>
-                        <span class="w-2 h-2 rounded-full bg-gray-500/40"></span>
+                        <span class="w-2 h-2 rounded-full bg-gray-400/40"></span>
                     </div>
-                    <p class="text-3xl  font-black tabular-nums text-black dark:text-white leading-none" id="statPending"
+                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none" id="statPending"
                         data-counter style="font-family:'Syne',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 mt-1.5">Pendentes</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1.5">Pendentes</p>
                 </div>
-
                 <div
                     class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-green-100 dark:border-gray-800 ring-1 ring-green-200 dark:ring-green-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
@@ -198,7 +132,6 @@
                     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
                         Concluídas</p>
                 </div>
-
                 <div
                     class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-red-100 dark:border-gray-800 ring-1 ring-red-200 dark:ring-red-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
@@ -218,7 +151,6 @@
                     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
                         Atrasadas</p>
                 </div>
-
                 <div
                     class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-4 border border-pink-100 dark:border-pink-900/40 ring-1 ring-pink-200 dark:ring-pink-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
                     <div class="flex items-center justify-between mb-3">
@@ -234,24 +166,156 @@
                         style="font-family:'Syne',sans-serif;">—</p>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-pink-400 mt-1.5">Total</p>
                 </div>
+            </div>
+        </section>
+
+        {{-- ══ GRÁFICOS ══ --}}
+        <section class="space-y-4">
+            <div class="flex items-center gap-2">
+                <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
+                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
+                    style="font-family:'Syne',sans-serif;">Análise</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+                {{-- Gráfico 1: Atividades por status (Donut) --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Status</p>
+                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                style="font-family:'Syne',sans-serif;">Atividades</h3>
+                        </div>
+                        <div class="w-8 h-8 rounded-xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke-width="2" />
+                                <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="relative flex items-center justify-center" style="height:160px;">
+                        <canvas id="chartStatus"></canvas>
+                        <div class="absolute text-center pointer-events-none">
+                            <p id="chartStatusTotal" class="text-2xl font-black text-gray-900 dark:text-white leading-none"
+                                style="font-family:'Syne',sans-serif;">—</p>
+                            <p class="text-[10px] text-gray-400 font-semibold">total</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-1.5" id="chartStatusLegend"></div>
+                </div>
+
+                {{-- Gráfico 2: Atividades últimos 7 dias (Linha) --}}
+                <div
+                    class="lg:col-span-2 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Histórico</p>
+                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                style="font-family:'Syne',sans-serif;">Entregas nos últimos 7 dias</h3>
+                        </div>
+                        <div class="flex gap-3 text-[10px] font-bold text-gray-400">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-pink-500 inline-block"></span>Concluídas</span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>Atrasadas</span>
+                        </div>
+                    </div>
+                    <div style="height:180px; position:relative;">
+                        <canvas id="chartWeek"></canvas>
+                    </div>
+                </div>
 
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
+                {{-- Gráfico 3: Atividades por matéria (Barra horizontal) --}}
+                <div
+                    class="lg:col-span-3 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Por matéria</p>
+                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                style="font-family:'Syne',sans-serif;">Volume de atividades</h3>
+                        </div>
+                    </div>
+                    <div style="height:200px;position:relative;">
+                        <canvas id="chartSubjects"></canvas>
+                    </div>
+                </div>
+
+                {{-- Gráfico 4: Taxa de conclusão + Streak --}}
+                <div class="lg:col-span-2 flex flex-col gap-4">
+
+                    {{-- Taxa de conclusão --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex-1">
+                        <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400 mb-1">Eficiência</p>
+                        <h3 class="text-sm font-black text-gray-900 dark:text-white mb-4"
+                            style="font-family:'Syne',sans-serif;">Taxa de conclusão</h3>
+                        <div class="flex items-end gap-4">
+                            <div>
+                                <p id="completionRate" class="text-4xl font-black text-pink-600 leading-none"
+                                    style="font-family:'Syne',sans-serif;">—</p>
+                                <p class="text-xs text-gray-400 font-semibold mt-1">das atividades</p>
+                            </div>
+                            <div class="flex-1">
+                                {{-- Mini gauge via CSS --}}
+                                <div class="w-full h-2.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                                    <div id="completionBar"
+                                        class="h-full rounded-full bg-gradient-to-r from-pink-500 to-pink-300 transition-all duration-1000"
+                                        style="width:0%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-[9px] text-gray-400">0%</span>
+                                    <span class="text-[9px] text-gray-400">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Breakdown bars --}}
+                        <div class="mt-4 space-y-2" id="completionBreakdown"></div>
+                    </div>
+
+                    {{-- Próxima prova urgente --}}
+                    <div
+                        class="bg-gradient-to-br from-pink-600 to-rose-500 rounded-3xl shadow-lg shadow-pink-200/40 dark:shadow-pink-900/40 p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.2em] mb-1">Atenção</p>
+                            <h3 class="text-sm font-black text-white" style="font-family:'Syne',sans-serif;">Próxima prova
+                            </h3>
+                        </div>
+                        <div id="nextExamCard">
+                            <div class="h-3 w-24 bg-pink-500/40 rounded animate-pulse mb-1.5"></div>
+                            <div class="h-2 w-16 bg-pink-500/30 rounded animate-pulse"></div>
+                        </div>
+                        <a href="/exams"
+                            class="text-[10px] font-black text-pink-200 hover:text-white transition-colors uppercase tracking-widest mt-2">Ver
+                            provas →</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        {{-- ══ ATIVIDADES + MATÉRIAS ══ --}}
+        <section class="space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+
+                {{-- Atividades recentes --}}
                 <div
                     class="lg:col-span-3 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-colors duration-200">
-                    <div class="h-[3px] bg-linear-to-r from-pink-600 via-pink-400 to-pink-200"></div>
+                    <div class="h-[3px] bg-gradient-to-r from-pink-600 via-pink-400 to-pink-200"></div>
                     <div class="px-6 py-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
                         <div class="flex items-center gap-2">
                             <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                             <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                style="font-family:'Syne',sans-serif;">Atividades
-                                recentes</h3>
+                                style="font-family:'Syne',sans-serif;">Atividades recentes</h3>
                         </div>
                         <a href="/activities"
-                            class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors flex items-center gap-0.5">Ver
-                            todas →</a>
+                            class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
+                            →</a>
                     </div>
                     <div id="recentActivities" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800">
                         @for ($i = 0; $i < 4; $i++)
@@ -280,18 +344,17 @@
                     </div>
                 </div>
 
+                {{-- Provas + Matérias --}}
                 <div class="lg:col-span-2 flex flex-col gap-4">
-
                     <div
                         class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col flex-1 transition-colors duration-200">
-                        <div class="h-[3px] bg-linear-to-r from-pink-400 to-rose-300"></div>
+                        <div class="h-[3px] bg-gradient-to-r from-pink-400 to-rose-300"></div>
                         <div
                             class="px-5 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-4 rounded-full bg-gradient-to-b from-pink-400 to-pink-200"></span>
                                 <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                    style="font-family:'Syne',sans-serif;">
-                                    Próximas provas</h3>
+                                    style="font-family:'Syne',sans-serif;">Próximas provas</h3>
                             </div>
                             <a href="/exams"
                                 class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
@@ -346,10 +409,11 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
+
+        {{-- ══ QUOTE ══ --}}
         <div class="rounded-3xl overflow-hidden relative shadow-sm"
             style="background:linear-gradient(130deg,#9d174d 0%,#db2777 50%,#fda4af 100%);">
             <div class="absolute inset-0 pointer-events-none opacity-[.08]"
@@ -365,7 +429,10 @@
                 </div>
             </div>
         </div>
+
     </div>
 
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

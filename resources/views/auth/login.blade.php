@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | StudyLab</title>
-    <link rel="icon" href="{{ asset('favicons/icone.ico') }}">
+    <link rel="icon" href="{{ asset('favicons/logo/logo.png') }}">
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>

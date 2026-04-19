@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>StudyLab</title>
-    <link  rel="icon" href="{{ asset('favicons/icone.ico') }}">
+    <link rel="icon" href="{{ asset('favicons/logo/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         if (localStorage.getItem('theme') === 'dark') {
@@ -70,7 +70,7 @@
                     </div>
                 </a>
                 <script>
-                    (function() {
+                    (function () {
                         const cached = localStorage.getItem('user_cache');
                         if (cached) {
                             try {
@@ -78,12 +78,12 @@
                                 if (user.name) document.getElementById('headerUserName').textContent = user.name;
                                 if (user.avatarUrl) {
                                     const img = document.getElementById('headerAvatar');
-                                    const fb  = document.getElementById('headerAvatarFallback');
+                                    const fb = document.getElementById('headerAvatarFallback');
                                     img.src = user.avatarUrl;
                                     img.classList.remove('hidden');
                                     fb.style.display = 'none';
                                 }
-                            } catch(e) {}
+                            } catch (e) { }
                         }
                     })();
                 </script>
