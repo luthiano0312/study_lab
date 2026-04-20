@@ -32,7 +32,7 @@
                 </button>
 
                 {{-- Drive --}}
-                <button class="app-tile">
+                <button class="app-tile"  >
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="1.8"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -44,7 +44,7 @@
                 </button>
 
                 {{-- Niklor --}}
-                <button class="app-tile">
+                <button class="app-tile"  >
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="1.6"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -57,7 +57,7 @@
                 </button>
 
                 {{-- Docs --}}
-                <button class="app-tile">
+                <button class="app-tile" >
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" stroke-width="1.8"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -96,7 +96,7 @@
                     <span >Metas</span>
                 </button>
 
-                <button class="app-tile" >
+                <button class="app-tile"  data-extra >
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -108,7 +108,7 @@
                     <span >Flashcards</span>
                 </button>
 
-                <button class="app-tile">
+                <button class="app-tile"  data-extra>
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -120,7 +120,7 @@
                     <span >Focus</span>
                 </button>
 
-                <button class="app-tile">
+                <button class="app-tile"  data-extra>
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -132,7 +132,7 @@
                     <span >Lousa</span>
                 </button>
 
-                <button class="app-tile">
+                <button class="app-tile"  data-extra>
                     <div class="icon-wrap">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -150,7 +150,7 @@
             <div class="apps-sep"></div>
 
             {{-- Link "Ver todos" --}}
-            <button class="apps-store-row">
+            <button class="apps-store-row" id="toggleExtras">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)"
                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="7" height="7" rx="1" />

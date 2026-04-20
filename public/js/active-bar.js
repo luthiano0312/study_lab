@@ -17,3 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
     });
 });
+
+const toggleBtn = document.getElementById('toggleExtras');
+const toggleLabel = document.getElementById('toggleLabel');
+const extras = document.querySelectorAll('.app-tile[data-extra]');
+let expanded = false;
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    expanded = !expanded;
+    extras.forEach(el => el.classList.toggle('visible', expanded));
+    toggleLabel.textContent = expanded ? 'Ver menos apps' : 'Ver todos os apps';
+});

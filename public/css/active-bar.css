@@ -167,3 +167,10 @@
 .dark .apps-store-row span {
     color: rgba(255, 255, 255, 0.45);
 }   
+
+.app-tile[data-extra] {
+    display: none;
+}
+.app-tile[data-extra].visible {
+    display: flex;
+}
