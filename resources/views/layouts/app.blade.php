@@ -15,10 +15,12 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body
-    class="bg-gray-50 dark:bg-[#121212] dark:text-gray-100 overflow-x-hidden font-sans antialiased transition-colors duration-200">
+    class="bg-gray-50 dark:bg-[#121212] dark:text-gray-100 overflow-x-hidden font-dm-mono antialiased transition-colors duration-200">
 
     <div class="flex flex-col h-screen">
 
@@ -70,7 +72,7 @@
                     </div>
                 </a>
                 <script>
-                    (function () {
+                    (function() {
                         const cached = localStorage.getItem('user_cache');
                         if (cached) {
                             try {
@@ -83,7 +85,7 @@
                                     img.classList.remove('hidden');
                                     fb.style.display = 'none';
                                 }
-                            } catch (e) { }
+                            } catch (e) {}
                         }
                     })();
                 </script>
@@ -100,8 +102,8 @@
                 <nav class="flex-1 px-2 py-4 flex flex-col gap-1">
 
                     <p
-                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mb-1
-                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                        class="text-[9px] font-bold font-dm-mono text-gray-300 uppercase tracking-widest px-3 mb-1
+                               opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap ">
                         Início
                     </p>
 
@@ -109,7 +111,7 @@
                         icon="vital_signs_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" />
 
                     <p
-                        class="text-[9px] font-bold text-gray-300 uppercase tracking-widest px-3 mt-3 mb-1
+                        class="text-[9px] font-bold font-dm-mono text-gray-300 uppercase tracking-widest px-3 mt-3 mb-1
                                opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                         Estudos
                     </p>
@@ -137,7 +139,7 @@
                         icon="pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png" :submenu="[
         [
             'label' => 'Upload de foto',
-            'href' => '#',
+            'href' => '/horary',
             'icon' => 'pace_24dp_00000_FILL0_wght400_GRAD0_opsz24.png',
         ],
     ]" />
@@ -151,7 +153,7 @@
         ],
         [
             'label' => 'Ver Trabalhos',
-            'href' => '#',
+            'href' => '/works',
             'icon' => 'book_24dp_000000_FILL0_wght400_GRAD0_opsz24.png',
         ],
     ]" />

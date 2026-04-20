@@ -48,6 +48,13 @@
         return view('notes.exam.edit', compact('exam'));
     })->name('exam.edit');
 
+    Route::get('/works', fn() => view('notes.work.index'))->name('work.index');
+    Route::get('/works/create', fn() => view('notes.work.create'))->name('work.create');
+    Route::get('/works/edit/{id}', function ($id) {
+        $exam = Exam::findOrFail($id);
+        return view('notes.work.edit', compact('exam'));
+    })->name('work.edit');
+
     Route::get('/contents', fn() => view('subjects.content.index'))->name('content.index');
     Route::get('/contents/create', fn() => view('subjects.content.create'))->name('content.create');
     Route::get('/contents/edit/{id}', function ($id) {
@@ -61,6 +68,8 @@
         $horary = Horary::findOrFail($id);
         return view('horary.photo.edit', compact('horary'));
     })->name('horary.edit');
+
+
 
     // BD-QUESTIONS
     Route::get('/central', fn() => view('database_questions.index'))->name('central.index');

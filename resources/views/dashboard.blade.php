@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-full space-y-8" style="font-family:'DM Sans',sans-serif;">
+    <div class="min-h-full space-y-8" style="font-family: 'Unbounded', sans-serif;">
 
         {{-- ══ HERO ══ --}}
         <section class="grid grid-cols-1 lg:grid-cols-5 gap-4">
@@ -17,7 +17,7 @@
                     <div>
                         <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">StudyLab</p>
                         <h1 class="text-white font-black leading-[1.1] mb-1.5"
-                            style="font-family:'Syne',sans-serif;font-size:clamp(1.65rem,3.5vw,2.4rem);">
+                            style="font-family:'Unbounded',sans-serif;font-size:clamp(1.65rem,3.5vw,2.4rem);">
                             Olá, <span id="greetName">Estudante</span>
                         </h1>
                         <p class="text-pink-100/80 text-sm">Pronto pra mais um dia de foco?</p>
@@ -49,7 +49,7 @@
                     <div>
                         <p class="text-[10px] font-black uppercase tracking-[.22em] text-pink-400 mb-3">Agora</p>
                         <div id="clock" class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none"
-                            style="font-family:'Syne',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
+                            style="font-family:'Unbounded',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
                         <p class="text-sm font-semibold text-gray-400 mt-2">{{ now()->translatedFormat('l') }}</p>
                         <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
                     </div>
@@ -63,7 +63,7 @@
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                 <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Syne',sans-serif;">Atalhos</h2>
+                    style="font-family:'Unbounded',sans-serif;">Atalhos</h2>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                 @php
@@ -96,7 +96,7 @@
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                 <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Syne',sans-serif;">Seus dados</h2>
+                    style="font-family:'Unbounded',sans-serif;">Seus dados</h2>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -113,7 +113,7 @@
                         <span class="w-2 h-2 rounded-full bg-gray-400/40"></span>
                     </div>
                     <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none" id="statPending"
-                        data-counter style="font-family:'Syne',sans-serif;">—</p>
+                        data-counter style="font-family:'Unbounded',sans-serif;">—</p>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1.5">Pendentes</p>
                 </div>
                 <div
@@ -128,7 +128,7 @@
                         <span class="w-2 h-2 rounded-full bg-green-400"></span>
                     </div>
                     <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none" id="statDone"
-                        data-counter style="font-family:'Syne',sans-serif;">—</p>
+                        data-counter style="font-family:'Unbounded',sans-serif;">—</p>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
                         Concluídas</p>
                 </div>
@@ -147,7 +147,7 @@
                         <span class="w-2 h-2 rounded-full bg-red-400"></span>
                     </div>
                     <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none"
-                        id="statOverdue" data-counter style="font-family:'Syne',sans-serif;">—</p>
+                        id="statOverdue" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
                         Atrasadas</p>
                 </div>
@@ -163,7 +163,7 @@
                         <span class="w-2 h-2 rounded-full bg-pink-400"></span>
                     </div>
                     <p class="text-3xl font-black tabular-nums text-pink-700 leading-none" id="statTotal" data-counter
-                        style="font-family:'Syne',sans-serif;">—</p>
+                        style="font-family:'Unbounded',sans-serif;">—</p>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-pink-400 mt-1.5">Total</p>
                 </div>
             </div>
@@ -174,7 +174,7 @@
             <div class="flex items-center gap-2">
                 <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                 <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Syne',sans-serif;">Análise</h2>
+                    style="font-family:'Unbounded',sans-serif;">Análise</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -186,7 +186,7 @@
                         <div>
                             <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Status</p>
                             <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Syne',sans-serif;">Atividades</h3>
+                                style="font-family:'Unbounded',sans-serif;">Atividades</h3>
                         </div>
                         <div class="w-8 h-8 rounded-xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center">
                             <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +199,7 @@
                         <canvas id="chartStatus"></canvas>
                         <div class="absolute text-center pointer-events-none">
                             <p id="chartStatusTotal" class="text-2xl font-black text-gray-900 dark:text-white leading-none"
-                                style="font-family:'Syne',sans-serif;">—</p>
+                                style="font-family:'Unbounded',sans-serif;">—</p>
                             <p class="text-[10px] text-gray-400 font-semibold">total</p>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                         <div>
                             <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Histórico</p>
                             <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Syne',sans-serif;">Entregas nos últimos 7 dias</h3>
+                                style="font-family:'Unbounded',sans-serif;">Entregas nos últimos 7 dias</h3>
                         </div>
                         <div class="flex gap-3 text-[10px] font-bold text-gray-400">
                             <span class="flex items-center gap-1.5"><span
@@ -238,7 +238,7 @@
                         <div>
                             <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Por matéria</p>
                             <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Syne',sans-serif;">Volume de atividades</h3>
+                                style="font-family:'Unbounded',sans-serif;">Volume de atividades</h3>
                         </div>
                     </div>
                     <div style="height:200px;position:relative;">
@@ -254,11 +254,11 @@
                         class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex-1">
                         <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400 mb-1">Eficiência</p>
                         <h3 class="text-sm font-black text-gray-900 dark:text-white mb-4"
-                            style="font-family:'Syne',sans-serif;">Taxa de conclusão</h3>
+                            style="font-family:'Unbounded',sans-serif;">Taxa de conclusão</h3>
                         <div class="flex items-end gap-4">
                             <div>
                                 <p id="completionRate" class="text-4xl font-black text-pink-600 leading-none"
-                                    style="font-family:'Syne',sans-serif;">—</p>
+                                    style="font-family:'Unbounded',sans-serif;">—</p>
                                 <p class="text-xs text-gray-400 font-semibold mt-1">das atividades</p>
                             </div>
                             <div class="flex-1">
@@ -283,7 +283,7 @@
                         class="bg-gradient-to-br from-pink-600 to-rose-500 rounded-3xl shadow-lg shadow-pink-200/40 dark:shadow-pink-900/40 p-5 flex-1 flex flex-col justify-between">
                         <div>
                             <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.2em] mb-1">Atenção</p>
-                            <h3 class="text-sm font-black text-white" style="font-family:'Syne',sans-serif;">Próxima prova
+                            <h3 class="text-sm font-black text-white" style="font-family:'Unbounded',sans-serif;">Próxima prova
                             </h3>
                         </div>
                         <div id="nextExamCard">
@@ -311,7 +311,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
                             <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                style="font-family:'Syne',sans-serif;">Atividades recentes</h3>
+                                style="font-family:'Unbounded',sans-serif;">Atividades recentes</h3>
                         </div>
                         <a href="/activities"
                             class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
@@ -354,7 +354,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-4 rounded-full bg-gradient-to-b from-pink-400 to-pink-200"></span>
                                 <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                    style="font-family:'Syne',sans-serif;">Próximas provas</h3>
+                                    style="font-family:'Unbounded',sans-serif;">Próximas provas</h3>
                             </div>
                             <a href="/exams"
                                 class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
@@ -377,7 +377,7 @@
                         <div class="px-5 py-3.5 flex items-center justify-between border-b border-pink-500/60">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-4 rounded-full bg-pink-300"></span>
-                                <h3 class="text-sm font-black text-white" style="font-family:'Syne',sans-serif;">Matérias
+                                <h3 class="text-sm font-black text-white" style="font-family:'Unbounded',sans-serif;">Matérias
                                 </h3>
                                 <span id="statSubjects"
                                     class="bg-pink-500 text-pink-100 text-[10px] font-black px-2 py-0.5 rounded-full leading-none">—</span>
@@ -422,7 +422,7 @@
                 <div>
                     <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">Motivação</p>
                     <blockquote class="text-white font-black text-lg leading-snug max-w-lg"
-                        style="font-family:'Syne',sans-serif;">
+                        style="font-family:'Unbounded',sans-serif;">
                         "A educação é a arma mais poderosa que você pode usar para mudar o mundo."
                     </blockquote>
                     <p class="text-pink-300 text-xs font-semibold mt-1.5">— Nelson Mandela</p>
