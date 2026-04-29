@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurar conta · StudyLab</title>
     <link rel="icon" type="image/png" href="{{ asset('favicons/logo/onboarding-icon.png') }}">
+
+    <script src="{{ asset('js/auth-guard-onboarding.js') }}"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

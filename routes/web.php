@@ -1,79 +1,79 @@
-    <?php
+<?php
 
-    use Illuminate\Support\Facades\Route;
-    use App\Models\Subject;
-    use App\Models\Activity;
-    use App\Models\Exam;
-    use App\Models\Content;
-    use App\Http\Controllers\Api\SocialAuthController;
-
-    Route::get('/', fn() => view('index'));
-    Route::get('/login', fn() => view('auth/login'))->name('login');
-    Route::get('/logout', fn() => view('auth/login'))->name('logout');
-    Route::get('/register', fn() => view('auth/register'))->name('register');
-    Route::get('/forgot', fn() => view('auth/forgot-password'));
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
-    Route::get('/profile', fn() => view('profile.profile'))->name('profile');
+use Illuminate\Support\Facades\Route;
+use App\Models\Subject;
+use App\Models\Activity;
+use App\Models\Exam;
+use App\Models\Content;
+use App\Http\Controllers\Api\SocialAuthController;
 
 
-    Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('google.redirect');
-    Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('google.callback');
+Route::get('/', fn() => view('index'))->name('home');
+Route::get('/login', fn() => view('auth/login'))->name('login');
+Route::get('/logout', fn() => view('auth/login'))->name('logout');
+Route::get('/register', fn() => view('auth/register'))->name('register');
+Route::get('/forgot', fn() => view('auth/forgot-password'))->name('forgot');
 
-    Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
-    Route::get('/focus', fn() => view('focus.index'))->name('focus');
+Route::get('/auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'callback'])->name('google.callback');
+
+
+Route::get('/onboarding', fn() => view('onboarding'))->name('onboarding');
 
 
 
+Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+Route::get('/profile', fn() => view('profile.profile'))->name('profile');
+Route::get('/focus', fn() => view('focus.index'))->name('focus');
 
+// ── Matérias ──────────────────────────────────────────────────
+Route::get('/subjects', fn() => view('subjects.subject.index'))->name('subject.index');
+Route::get('/subjects/create', fn() => view('subjects.subject.create'))->name('subject.create');
+Route::get('/subjects/edit/{id}', function ($id) {
+    $subject = Subject::findOrFail($id);
+    return view('subjects.subject.edit', compact('subject'));
+})->name('subject.edit');
 
-    Route::get('/subjects', fn() => view('subjects.subject.index'))->name('subject.index');
-    Route::get('/subjects/create', fn() => view('subjects.subject.create'))->name('subject.create');
-    Route::get('/subjects/edit/{id}', function ($id) {
-        $subject = Subject::findOrFail($id);
-        return view('subjects.subject.edit', compact('subject'));
-    })->name('subject.edit');
+// ── Atividades ────────────────────────────────────────────────
+Route::get('/activities', fn() => view('subjects.activities.index'))->name('activity.index');
+Route::get('/activities/create', fn() => view('subjects.activities.create'))->name('activity.create');
+Route::get('/activities/edit/{id}', function ($id) {
+    $activity = Activity::findOrFail($id);
+    return view('subjects.activities.edit', compact('activity'));
+})->name('activity.edit');
 
-    Route::get('/activities', fn() => view('subjects.activities.index'))->name('activity.index');
-    Route::get('/activities/create', fn() => view('subjects.activities.create'))->name('activity.create');
-    Route::get('/activities/edit/{id}', function ($id) {
-        $activity = Activity::findOrFail($id);
-        return view('subjects.activities.edit', compact('activity'));
-    })->name('activity.edit');
+// ── Exames e Provas ───────────────────────────────────────────
+Route::get('/exams', fn() => view('notes.exam.index'))->name('exam.index');
+Route::get('/exams/create', fn() => view('notes.exam.create'))->name('exam.create');
+Route::get('/exams/edit/{id}', function ($id) {
+    $exam = Exam::findOrFail($id);
+    return view('notes.exam.edit', compact('exam'));
+})->name('exam.edit');
 
+// ── Trabalhos ─────────────────────────────────────────────────
+Route::get('/works', fn() => view('notes.work.index'))->name('work.index');
+Route::get('/works/create', fn() => view('notes.work.create'))->name('work.create');
+Route::get('/works/edit/{id}', function ($id) {
+    $exam = Exam::findOrFail($id);
+    return view('notes.work.edit', compact('exam'));
+})->name('work.edit');
 
-    Route::get('/exams', fn() => view('notes.exam.index'))->name('exam.index');
-    Route::get('/exams/create', fn() => view('notes.exam.create'))->name('exam.create');
-    Route::get('/exams/edit/{id}', function ($id) {
-        $exam = Exam::findOrFail($id);
-        return view('notes.exam.edit', compact('exam'));
-    })->name('exam.edit');
+// ── Conteúdos ─────────────────────────────────────────────────
+Route::get('/contents', fn() => view('subjects.content.index'))->name('content.index');
+Route::get('/contents/create', fn() => view('subjects.content.create'))->name('content.create');
+Route::get('/contents/edit/{id}', function ($id) {
+    $content = Content::findOrFail($id);
+    return view('subjects.content.edit', compact('content'));
+})->name('content.edit');
 
-    Route::get('/works', fn() => view('notes.work.index'))->name('work.index');
-    Route::get('/works/create', fn() => view('notes.work.create'))->name('work.create');
-    Route::get('/works/edit/{id}', function ($id) {
-        $exam = Exam::findOrFail($id);
-        return view('notes.work.edit', compact('exam'));
-    })->name('work.edit');
+// ── Horários ──────────────────────────────────────────────────
+Route::get('/horary', fn() => view('horary.photo.index'))->name('horary.index');
+Route::get('/horary/create', fn() => view('horary.photo.create'))->name('horary.create');
+Route::get('/horary/edit/{id}', function ($id) {
+    $horary = \App\Models\Horary::findOrFail($id);
+    return view('horary.photo.edit', compact('horary'));
+})->name('horary.edit');
 
-    Route::get('/contents', fn() => view('subjects.content.index'))->name('content.index');
-    Route::get('/contents/create', fn() => view('subjects.content.create'))->name('content.create');
-    Route::get('/contents/edit/{id}', function ($id) {
-        $content = Content::findOrFail($id);
-        return view('subjects.content.edit', compact('content'));
-    })->name('content.edit');
-
-    Route::get('/horary', fn() => view('horary.photo.index'))->name('horary.index');
-    Route::get('/horary/create', fn() => view('horary.photo.create'))->name('horary.create');
-    Route::get('/horary/edit/{id}', function ($id) {
-        $horary = Horary::findOrFail($id);
-        return view('horary.photo.edit', compact('horary'));
-    })->name('horary.edit');
-
-
-
-    // BD-QUESTIONS
-    Route::get('/central', fn() => view('database_questions.index'))->name('central.index');
-
-
-    // math
-    Route::get('/algebra', fn() => view('database_questions.math.index'))->name('algebra.index');
+// ── Base de Questões ──────────────────────────────────────────
+Route::get('/central', fn() => view('database_questions.index'))->name('central.index');
+Route::get('/algebra', fn() => view('database_questions.math.index'))->name('algebra.index');

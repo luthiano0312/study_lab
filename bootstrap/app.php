@@ -13,14 +13,25 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    $middleware->redirectGuestsTo(function (Request $request) {
-        if ($request->expectsJson() || $request->is('api/*')) {
-            abort(401, 'Unauthenticated.');
-        }
 
-        return '/login';
-    });
-})
+        /*
+        |----------------------------------------------------------------------
+        | Redirecionamento para visitantes não autenticados (rotas web)
+        |----------------------------------------------------------------------
+        | As views protegidas usam auth-guard.js no frontend para redirecionar.
+        | Este handler cobre o caso de rotas API que exigem autenticação via
+        | Sanctum — retorna 401 JSON em vez de redirecionar para HTML.
+        */
+        $middleware->redirectGuestsTo(function (Request $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                abort(401, 'Unauthenticated.');
+            }
+
+            return '/login';
+        });
+
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
