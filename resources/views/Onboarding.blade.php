@@ -7,6 +7,12 @@
     <title>Configurar conta · StudyLab</title>
     <link rel="icon" type="image/png" href="{{ asset('favicons/logo/onboarding-icon.png') }}">
 
+    @if(session('auth_token'))
+    <script>
+        localStorage.setItem('auth_token', '{{ session('auth_token') }}');
+    </script>
+    @endif
+
     <script src="{{ asset('js/auth-guard-onboarding.js') }}"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>

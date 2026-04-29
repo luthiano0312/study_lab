@@ -1,15 +1,5 @@
 'use strict';
 
-// Captura token OAuth redirecionado pelo Google callback (?token=...)
-(function () {
-    const params = new URLSearchParams(window.location.search);
-    const oauthToken = params.get('token');
-    if (oauthToken) {
-        localStorage.setItem('auth_token', oauthToken);
-        window.history.replaceState(null, '', window.location.pathname);
-    }
-})();
-
 document.addEventListener('DOMContentLoaded', async function () {
     const token = localStorage.getItem('auth_token');
     if (!token) return;

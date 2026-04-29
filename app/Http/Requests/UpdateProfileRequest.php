@@ -30,9 +30,9 @@ class UpdateProfileRequest extends FormRequest
         'current_password' => 'required_with:password',
         'card_color'       => 'sometimes|string|in:rosa,roxo,azul,verde,laranja,preto,vermelho,branco,ciano,amarelo,indigo,rosegold',
         'preset_avatar'    => 'sometimes|integer|min:0|max:20',
-        'avatar_url'       => 'sometimes|string',
+        'avatar_url'       => 'sometimes|string|max:2048',
         'onboarding_done'  => 'sometimes|boolean',
-        'avatar'           => 'sometimes|image|max:2097152',
+        'avatar'           => 'sometimes|image|max:2048',
         ];
     }
 

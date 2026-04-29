@@ -57,7 +57,7 @@ class User extends Authenticatable
     /**
      * Get all subjects owned by the user.
      */
-    public function subjects()
+    public function subjects(): HasMany
     {
         return $this->hasMany(\App\Models\Subject::class);
     }

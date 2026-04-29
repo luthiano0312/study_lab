@@ -247,14 +247,6 @@ function authHeaders(extra = {}) {
         ...extra,
     };
 }
-(() => {
-    const p = new URLSearchParams(window.location.search);
-    const t = p.get("token");
-    if (t) {
-        localStorage.setItem("auth_token", t);
-        window.history.replaceState(null, "", location.pathname);
-    }
-})();
 
 /* ── CURSOR — rAF-based, reliable ──────────────────────────── */
 function initCursor() {

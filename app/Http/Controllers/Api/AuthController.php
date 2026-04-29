@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,23 +34,25 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
         if (! auth()->attempt($request->only('email', 'password'))) {
             return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 
-        $token = auth()->user()->createToken('auth_token')->plainTextToken;
+        $user = auth()->user();
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'message' => 'Login realizado com sucesso',
             'token' => $token,
-            'user' => auth()->user(),
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_url,
+                'onboarding_done' => (bool) $user->onboarding_done,
+            ],
         ]);
     }
 

@@ -41,9 +41,9 @@ class SocialAuthController extends Controller
 
         return redirect()->to(
             $isNew
-                ? route('onboarding', ['token' => $token])
-                : route('dashboard', ['token' => $token])
-        );
+                ? route('onboarding')
+                : route('dashboard')
+        )->with('auth_token', $token);
     }
 
     private function getSocialiteUser(): SocialiteUser

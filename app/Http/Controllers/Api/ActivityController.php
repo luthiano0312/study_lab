@@ -25,6 +25,8 @@ class ActivityController extends Controller
 
     public function update(ActivityRequest $request, Activity $activity)
     {
+        abort_if($activity->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $activity->update($request->validated());
 
         return response()->json([
@@ -35,6 +37,8 @@ class ActivityController extends Controller
 
     public function destroy(Activity $activity)
     {
+        abort_if($activity->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $activity->delete();
 
         return response()->json([

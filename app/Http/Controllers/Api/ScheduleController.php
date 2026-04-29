@@ -27,6 +27,8 @@ class ScheduleController extends Controller
 
     public function update(ScheduleRequest $request, Schedule $schedule)
     {
+        abort_if($schedule->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $schedule->update($request->validated());
 
         return response()->json([
@@ -37,6 +39,8 @@ class ScheduleController extends Controller
 
     public function destroy(Schedule $schedule)
     {
+        abort_if($schedule->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $schedule->delete();
 
         return response()->json([

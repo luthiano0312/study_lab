@@ -8,6 +8,8 @@ use App\Models\Traits\BelongsToUser;
 
 class ScheduleImage extends Model
 {
+    use BelongsToUser;
+
     protected $fillable = [
         'user_id',
         'title',

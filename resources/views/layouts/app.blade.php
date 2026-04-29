@@ -8,6 +8,12 @@
     <title>StudyLab</title>
     <link rel="icon" href="{{ asset('favicons/logo/logo.png') }}">
 
+    @if(session('auth_token'))
+    <script>
+        localStorage.setItem('auth_token', '{{ session('auth_token') }}');
+    </script>
+    @endif
+
     {{--
         ╔══════════════════════════════════════════════════════════╗
         ║  AUTH GUARD — protege todas as views que usam este layout ║
