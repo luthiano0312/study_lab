@@ -25,6 +25,8 @@ class ContentController extends Controller
 
     public function update(ContentRequest $request, Content $content)
     {
+        abort_if($content->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $content->update($request->validated());
 
         return response()->json([
@@ -35,6 +37,8 @@ class ContentController extends Controller
 
     public function destroy(Content $content)
     {
+        abort_if($content->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $content->delete();
 
         return response()->json([

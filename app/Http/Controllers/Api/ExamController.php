@@ -25,6 +25,8 @@ class ExamController extends Controller
 
     public function update(ExamRequest $request, Exam $exam)
     {
+        abort_if($exam->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $exam->update($request->validated());
 
         return response()->json([
@@ -35,6 +37,8 @@ class ExamController extends Controller
 
     public function destroy(Exam $exam)
     {
+        abort_if($exam->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $exam->delete();
 
         return response()->json([

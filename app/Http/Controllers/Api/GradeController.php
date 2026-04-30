@@ -25,6 +25,8 @@ class GradeController extends Controller
 
     public function update(GradeRequest $request, Grade $grade)
     {
+        abort_if($grade->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $grade->update($request->validated());
 
         return response()->json([
@@ -35,6 +37,8 @@ class GradeController extends Controller
 
     public function destroy(Grade $grade)
     {
+        abort_if($grade->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $grade->delete();
 
         return response()->json([

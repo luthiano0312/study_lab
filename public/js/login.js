@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             if (res.ok) {
                 localStorage.setItem('auth_token', data.token);
+                if (data.user) {
+                    localStorage.setItem('user_cache', JSON.stringify({
+                        name: data.user.name,
+                        avatarUrl: data.user.avatar
+                    }));
+                }
                 window.location.href = '/dashboard';
             } else {
                 showErr(data.message ?? 'Credenciais inválidas');

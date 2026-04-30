@@ -7,6 +7,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>StudyLab</title>
     <link rel="icon" href="{{ asset('favicons/logo/logo.png') }}">
+
+    @if(session('auth_token'))
+    <script>
+        localStorage.setItem('auth_token', '{{ session('auth_token') }}');
+    </script>
+    @endif
+
+    {{--
+        ╔══════════════════════════════════════════════════════════╗
+        ║  AUTH GUARD — protege todas as views que usam este layout ║
+        ║  Roda SÍNCRONO, antes de qualquer render.                 ║
+        ║  Usuários não autenticados são redirecionados ao /login.  ║
+        ╚══════════════════════════════════════════════════════════╝
+    --}}
+    <script src="{{ asset('js/auth-guard.js') }}"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         if (localStorage.getItem('theme') === 'dark') {

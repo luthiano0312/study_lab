@@ -12,23 +12,29 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::prefix('auth')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login',    [AuthController::class, 'login']);
+
+    Route::post('/register', [AuthController::class, 'register'])
+        ->middleware('throttle:10,1');
+
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:5,1');
+
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user',            [AuthController::class, 'user']);
-    Route::post('/logout',         [AuthController::class, 'logout']);
-    Route::put('/profile',         [UserController::class, 'update']);
-    Route::post('/profile/photo',  [UserController::class, 'updatePhoto']);
-    Route::delete('/profile',      [UserController::class, 'delete']);
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::put('/profile', [UserController::class, 'update']);
+    Route::post('/profile/photo', [UserController::class, 'updatePhoto']);
+    Route::delete('/profile', [UserController::class, 'delete']);
 
-    Route::apiResource('subjects',       SubjectController::class);
-    Route::apiResource('activities',     ActivityController::class);
-    Route::apiResource('exams',          ExamController::class);
-    Route::apiResource('grades',         GradeController::class);
-    Route::apiResource('contents',       ContentController::class);
+    Route::apiResource('subjects', SubjectController::class);
+    Route::apiResource('activities', ActivityController::class);
+    Route::apiResource('exams', ExamController::class);
+    Route::apiResource('grades', GradeController::class);
+    Route::apiResource('contents', ContentController::class);
     Route::apiResource('scheduleImages', ScheduleImageController::class);
-    Route::apiResource('schedules',      ScheduleController::class)->except(['show']);
+    Route::apiResource('schedules', ScheduleController::class)->except(['show']);
 });

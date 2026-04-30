@@ -25,6 +25,8 @@ class SubjectController extends Controller
 
     public function update(SubjectRequest $request, Subject $subject)
     {
+        abort_if($subject->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $subject->update($request->validated());
 
         return response()->json([
@@ -35,6 +37,8 @@ class SubjectController extends Controller
 
     public function destroy(Subject $subject)
     {
+        abort_if($subject->user_id !== auth()->id(), 403, 'Não autorizado.');
+
         $subject->delete();
 
         return response()->json([
