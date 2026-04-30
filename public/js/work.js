@@ -69,23 +69,32 @@ function showToast(el) {
 /* ─── Quick-date select shared logic ────────────────────────── */
 
 function initQuickDate(selectEl, inputEl) {
+    if (!selectEl || !inputEl) return;
+
+    // BUG FIX: Sempre mostra o campo de data na página de edição
+    // (onde já existe um valor pré-preenchido)
+    if (inputEl.value) {
+        inputEl.classList.remove('hidden');
+    }
+
     selectEl.addEventListener('change', () => {
         const val = selectEl.value;
         if (!val) return;
         const t = today();
         const map = {
-            hoje:     t,
-            amanha:   addDays(t, 1),
-            '3dias':  addDays(t, 3),
-            '1semana':addDays(t, 7),
+            hoje:      t,
+            amanha:    addDays(t, 1),
+            '3dias':   addDays(t, 3),
+            '1semana': addDays(t, 7),
             '2semanas':addDays(t, 14),
-            '1mes':   addMonths(t, 1),
+            '1mes':    addMonths(t, 1),
         };
+        // Sempre remove 'hidden' para exibir o input
+        inputEl.classList.remove('hidden');
         if (val === 'custom') {
-            inputEl.classList.remove('hidden');
+            inputEl.value = '';
             inputEl.focus();
         } else {
-            inputEl.classList.remove('hidden');
             inputEl.value = map[val];
         }
     });
@@ -94,16 +103,17 @@ function initQuickDate(selectEl, inputEl) {
 /* ─── INDEX page ─────────────────────────────────────────────── */
 
 function initIndex() {
-    const tbody         = document.getElementById('examsTable');
-    const totalCount    = document.getElementById('totalCount');
-    const pendingCount  = document.getElementById('pendingCount');
-    const progressCount = document.getElementById('progressCount');
-    const completedCount= document.getElementById('completedCount');
-    const deleteModal   = document.getElementById('deleteModal');
-    const cancelDelete  = document.getElementById('cancelDelete');
-    const confirmDelete = document.getElementById('confirmDelete');
-    const toast         = document.getElementById('toast');
+    const tbody          = document.getElementById('examsTable');
+    const totalCount     = document.getElementById('totalCount');
+    const pendingCount   = document.getElementById('pendingCount');
+    const progressCount  = document.getElementById('progressCount');
+    const completedCount = document.getElementById('completedCount');
+    const deleteModal    = document.getElementById('deleteModal');
+    const cancelDelete   = document.getElementById('cancelDelete');
+    const confirmDelete  = document.getElementById('confirmDelete');
+    const toast          = document.getElementById('toast');
 
+    // BUG FIX: Saída limpa se não estiver na página de index
     if (!tbody) return;
 
     let pendingDeleteId = null;
@@ -111,13 +121,17 @@ function initIndex() {
     async function loadExams() {
         try {
             const res  = await fetch(API_BASE, { headers: { Accept: 'application/json' } });
+
+            // BUG FIX: Verifica se a resposta foi bem-sucedida antes de parsear
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
             const data = await res.json();
 
-            // Stats
-            totalCount.textContent     = data.length;
-            pendingCount.textContent   = data.filter(e => e.status === 'pending').length;
-            progressCount.textContent  = data.filter(e => e.status === 'in_progress').length;
-            completedCount.textContent = data.filter(e => e.status === 'completed').length;
+            // Stats — verifica existência de cada elemento antes de escrever
+            if (totalCount)     totalCount.textContent     = data.length;
+            if (pendingCount)   pendingCount.textContent   = data.filter(e => e.status === 'pending').length;
+            if (progressCount)  progressCount.textContent  = data.filter(e => e.status === 'in_progress').length;
+            if (completedCount) completedCount.textContent = data.filter(e => e.status === 'completed').length;
 
             if (data.length === 0) {
                 tbody.innerHTML = `
@@ -177,19 +191,19 @@ function initIndex() {
             });
 
         } catch (err) {
-            console.error(err);
+            console.error('Erro ao carregar exams:', err);
             tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-sm text-gray-400 font-semibold">Erro ao carregar trabalhos.</td></tr>`;
         }
     }
 
     // Delete modal
-    cancelDelete.addEventListener('click', () => {
+    cancelDelete?.addEventListener('click', () => {
         deleteModal.classList.add('hidden');
         deleteModal.classList.remove('flex');
         pendingDeleteId = null;
     });
 
-    confirmDelete.addEventListener('click', async () => {
+    confirmDelete?.addEventListener('click', async () => {
         if (!pendingDeleteId) return;
         confirmDelete.textContent = 'Excluindo...';
         confirmDelete.disabled = true;
@@ -220,17 +234,21 @@ function initIndex() {
 /* ─── CREATE page ────────────────────────────────────────────── */
 
 function initCreate() {
-    const form    = document.getElementById('examForm');
-    const toast   = document.getElementById('toast');
+    const form  = document.getElementById('examForm');
+    const toast = document.getElementById('toast');
 
-    if (!form || form.dataset.id) return; // skip if edit page
+    // BUG FIX: Sai se não há form OU se o form pertence à página de edição
+    // (tem data-id preenchido pelo Blade)
+    if (!form || form.dataset.id) return;
 
     // Char counter
     const desc    = document.getElementById('description');
     const counter = document.getElementById('charCounter');
-    desc?.addEventListener('input', () => {
-        counter.textContent = `${desc.value.length} / 500`;
-    });
+    if (desc && counter) {
+        desc.addEventListener('input', () => {
+            counter.textContent = `${desc.value.length} / 500`;
+        });
+    }
 
     // Quick date
     initQuickDate(
@@ -263,10 +281,15 @@ function initCreate() {
                 }),
             });
 
-            if (!res.ok) throw new Error(await res.text());
+            // BUG FIX: Lê o body do erro para facilitar debug
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error('Erro ao criar:', res.status, errText);
+                throw new Error(errText);
+            }
 
-            toast.classList.remove('hidden');
-            toast.classList.add('flex');
+            showToast(toast);
+            // BUG FIX: Redireciona para a rota correta de listagem
             setTimeout(() => { window.location.href = '/exams'; }, 1400);
 
         } catch (err) {
@@ -281,6 +304,8 @@ function initCreate() {
 
 function initEdit() {
     const form = document.getElementById('examForm');
+
+    // BUG FIX: Sai se não há form OU se não tem data-id (não é página de edição)
     if (!form || !form.dataset.id) return;
 
     const examId      = form.dataset.id;
@@ -290,14 +315,16 @@ function initEdit() {
     const confirmDel  = document.getElementById('confirmDelete');
     const deleteBtn   = document.getElementById('deleteBtn');
 
-    // Pre-fill fields from data-* attrs
     const typeEl   = document.getElementById('type');
     const statusEl = document.getElementById('status');
     const descEl   = document.getElementById('description');
     const counter  = document.getElementById('charCounter');
 
+    // BUG FIX: Pré-preenche os selects a partir dos data-* attrs do form
     if (typeEl)   typeEl.value   = form.dataset.type   ?? '';
     if (statusEl) statusEl.value = form.dataset.status ?? '';
+
+    // Contador de caracteres
     if (descEl && counter) {
         counter.textContent = `${descEl.value.length} / 500`;
         descEl.addEventListener('input', () => {
@@ -305,7 +332,7 @@ function initEdit() {
         });
     }
 
-    // Quick date
+    // Quick date — o input já tem value do Blade, initQuickDate vai mostrá-lo
     initQuickDate(
         document.getElementById('due_date_quick'),
         document.getElementById('due_date')
@@ -330,17 +357,20 @@ function initEdit() {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content ?? '',
                 },
                 body: JSON.stringify({
-                    type:        document.getElementById('type').value,
-                    description: descEl.value.trim(),
+                    type:        typeEl?.value ?? '',
+                    description: descEl?.value.trim() ?? '',
                     due_date:    document.getElementById('due_date').value,
-                    status:      document.getElementById('status').value,
+                    status:      statusEl?.value ?? '',
                 }),
             });
 
-            if (!res.ok) throw new Error(await res.text());
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error('Erro ao atualizar:', res.status, errText);
+                throw new Error(errText);
+            }
 
-            toast.classList.remove('hidden');
-            toast.classList.add('flex');
+            showToast(toast);
             setTimeout(() => { window.location.href = '/exams'; }, 1400);
 
         } catch (err) {
@@ -386,7 +416,7 @@ function initEdit() {
 function validateForm() {
     let ok = true;
 
-    // Type (only on exam forms)
+    // Type
     const typeEl  = document.getElementById('type');
     const errType = document.getElementById('err-type');
     if (typeEl && errType) {
@@ -397,28 +427,37 @@ function validateForm() {
         }
     }
 
+    // Description
     const descEl  = document.getElementById('description');
     const errDesc = document.getElementById('err-description');
-    if (!descEl.value.trim()) {
-        errDesc.classList.remove('hidden'); ok = false;
-    } else {
-        errDesc.classList.add('hidden');
+    if (descEl && errDesc) {
+        if (!descEl.value.trim()) {
+            errDesc.classList.remove('hidden'); ok = false;
+        } else {
+            errDesc.classList.add('hidden');
+        }
     }
 
+    // Due date — BUG FIX: verifica o input de data, não o select de atalho
     const dateEl  = document.getElementById('due_date');
     const errDate = document.getElementById('err-due_date');
-    if (!dateEl.value) {
-        errDate.classList.remove('hidden'); ok = false;
-    } else {
-        errDate.classList.add('hidden');
+    if (dateEl && errDate) {
+        if (!dateEl.value) {
+            errDate.classList.remove('hidden'); ok = false;
+        } else {
+            errDate.classList.add('hidden');
+        }
     }
 
+    // Status
     const statusEl  = document.getElementById('status');
     const errStatus = document.getElementById('err-status');
-    if (!statusEl.value) {
-        errStatus.classList.remove('hidden'); ok = false;
-    } else {
-        errStatus.classList.add('hidden');
+    if (statusEl && errStatus) {
+        if (!statusEl.value) {
+            errStatus.classList.remove('hidden'); ok = false;
+        } else {
+            errStatus.classList.add('hidden');
+        }
     }
 
     return ok;

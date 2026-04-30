@@ -1,168 +1,105 @@
-<link rel="stylesheet" href="{{ asset('css/active-bar.css') }}">
+{{-- resources/views/notes/index.blade.php --}}
 
-<div class="flex justify-end">
-    <div class="relative inline-block">
+@extends('layouts.app') {{-- troque pelo seu layout base --}}
 
-        {{-- Botão dos 9 pontos --}}
-        <button id="activeBar" class="group relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-150
-                       hover:bg-white/10 active:bg-white/15">
-            <div class="grid grid-cols-3 gap-[3.5px] opacity-60 group-hover:opacity-100 transition-opacity">
-                @for($i = 0; $i < 9; $i++)
-                    <div class="h-[6px] w-[6px] rounded-full bg-gray-400"></div>
-                @endfor
-            </div>
+@section('title', 'Notes')
+
+@section('head')
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/notebook.css') }}" />
+@endsection
+
+@section('content')
+
+<div class="notes-page">
+
+    {{-- Cabeçalho da página --}}
+    <div class="notes-page-header">
+        <h1>Minhas Notas</h1>
+        <button class="btn-open-notebook" id="btnOpen">
+            <span>✎</span> Nova Nota
         </button>
-
-        {{-- Painel --}}
-        <div id="appsGrid" class="bg-white">
-            <div class="apps-inner-grid  bg-white dark:bg-[#18181b]">
-
-                {{-- Grupos --}}
-                <button class="app-tile">
-                    <div class="icon-wrap ">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <span >Grupos</span>
-                </button>
-
-                {{-- Drive --}}
-                <button class="app-tile"  >
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-                        </svg>
-                    </div>
-                    <span >Armazem</span>
-                </button>
-
-                {{-- Niklor --}}
-                <button class="app-tile"  >
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="1.6"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M7 10 C6.5 13 7 15 8 16.5 C9.5 18 14.5 18 16 16.5 C17 15 17.5 13 17 10" />
-                            <circle cx="9.5" cy="11" r="1.1" fill="#EA4335" stroke="none" />
-                            <circle cx="14.5" cy="11" r="1.1" fill="#EA4335" stroke="none" />
-                        </svg>
-                    </div>
-                    <span >Niklor</span>
-                </button>
-
-                {{-- Docs --}}
-                <button class="app-tile" >
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A90D9" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14 2 14 8 20 8" />
-                            <line x1="16" y1="13" x2="8" y2="13" />
-                            <line x1="16" y1="17" x2="8" y2="17" />
-                            <polyline points="10 9 9 9 8 9" />
-                        </svg>
-                    </div>
-                    <span >Notes</span>
-                </button>
-
-                {{-- Timer --}}
-                <button class="app-tile">
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FBBC04" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                    </div>
-                    <span >Calculadora</span>
-                </button>
-
-                {{-- Ajustes --}}
-                <button class="app-tile">
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
-                    </div>
-                    <span >Metas</span>
-                </button>
-
-                <button class="app-tile"  data-extra >
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
-                    </div>
-                    <span >Flashcards</span>
-                </button>
-
-                <button class="app-tile"  data-extra>
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
-                    </div>
-                    <span >Focus</span>
-                </button>
-
-                <button class="app-tile"  data-extra>
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
-                    </div>
-                    <span >Lousa</span>
-                </button>
-
-                <button class="app-tile"  data-extra>
-                    <div class="icon-wrap">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
-                    </div>
-                    <span >Questões</span>
-                </button>
-                
-
-            </div>
-
-            <div class="apps-sep"></div>
-
-            {{-- Link "Ver todos" --}}
-            <button class="apps-store-row" id="toggleExtras">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)"
-                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="7" height="7" rx="1" />
-                    <rect x="14" y="3" width="7" height="7" rx="1" />
-                    <rect x="3" y="14" width="7" height="7" rx="1" />
-                    <rect x="14" y="14" width="7" height="7" rx="1" />
-                </svg>
-                <span >Ver todos os apps</span>
-            </button>
-        </div>
-
     </div>
+
+    {{-- Cards de notas salvas (renderizadas pelo servidor no carregamento) --}}
+    <div class="notes-grid" id="notesGrid">
+        @forelse ($notes as $note)
+            <div class="note-card" data-id="{{ $note->id }}" onclick="openNote({{ $note->id }})">
+                <div class="note-card-title">{{ $note->title ?: 'Sem título' }}</div>
+                <div class="note-card-preview">{{ Str::limit($note->content, 100) }}</div>
+                <div class="note-card-date">{{ $note->updated_at->format('d/m/Y H:i') }}</div>
+            </div>
+        @empty
+            <p class="notes-empty">Nenhuma nota ainda. Clique em "Nova Nota" para começar.</p>
+        @endforelse
+    </div>
+
 </div>
 
-<script src="{{ asset('js/active-bar.js') }}"></script>
+{{-- Overlay --}}
+<div class="overlay" id="overlay"></div>
+
+{{-- Painel do Caderno --}}
+<div class="notebook-panel" id="notebookPanel">
+
+    {{-- Prateleira lateral --}}
+    <aside class="shelf" id="shelf">
+        <div class="shelf-header">
+            <span class="shelf-title">Prateleira</span>
+            <span class="shelf-count" id="shelfCount">0</span>
+        </div>
+        <div class="shelf-empty" id="shelfEmpty">
+            <span>Nenhuma nota ainda</span>
+        </div>
+        <ul class="shelf-list" id="shelfList"></ul>
+    </aside>
+
+    {{-- Caderno --}}
+    <div class="notebook">
+        <div class="notebook-topbar">
+            <div class="notebook-meta">
+                <input class="note-title-input" id="noteTitleInput" type="text" placeholder="Título da nota..." maxlength="80" />
+                <span class="note-date" id="noteDate"></span>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn-action btn-save" id="btnSave">✦ Salvar</button>
+                <div class="download-group">
+                    <button class="btn-action btn-dl" id="btnDownloadTxt">↓ TXT</button>
+                    <button class="btn-action btn-dl" id="btnDownloadPdf">↓ PDF</button>
+                </div>
+                <button class="btn-close" id="btnClose">✕</button>
+            </div>
+        </div>
+
+        <div class="notebook-body">
+            <div class="notebook-margin"></div>
+            <div class="notebook-lines">
+                <textarea class="notebook-textarea" id="noteTextarea" placeholder="Escreva seus pensamentos aqui..."></textarea>
+            </div>
+        </div>
+
+        <div class="notebook-footer">
+            <span class="word-count" id="wordCount">0 palavras</span>
+            <span class="char-count" id="charCount">0 caracteres</span>
+            <span class="status-msg" id="statusMsg"></span>
+        </div>
+    </div>
+
+</div>
+
+@endsection
+
+@section('scripts')
+<script>
+    // Passa as notas do servidor para o JS (evita chamada extra à API no carregamento)
+    window.INITIAL_NOTES = @json($notes);
+
+    // URL base da API — gerada pelo Laravel
+    window.API_BASE = '{{ url("/api/notes") }}';
+
+    // CSRF token para as requisições POST/PUT/DELETE
+    window.CSRF_TOKEN = '{{ csrf_token() }}';
+</script>
+<script src="{{ asset('js/notebook.js') }}"></script>
+@endsection

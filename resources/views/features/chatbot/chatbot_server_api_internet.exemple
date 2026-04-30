@@ -1,0 +1,72 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from google import genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+app = Flask(__name__)
+CORS(app)
+
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyCKUoCwzpPxSGjk2ME2h8ocy0pcsjzP63g")
+
+SYSTEM_PROMPT = """Você é o Niklor AI, um assistente inteligente, simpático e direto ao ponto.
+Responda sempre em português brasileiro.
+Seja útil, claro e conciso."""
+
+# BUG FIX: client criado uma vez só, fora das funções
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+sessions: dict = {}
+
+def get_or_create_session(session_id: str):
+    if session_id not in sessions:
+        # Reutiliza o mesmo client global
+        chat = client.chats.create(
+            model="gemini-2.0-flash",
+            config={"system_instruction": SYSTEM_PROMPT}
+        )
+        sessions[session_id] = chat
+    return sessions[session_id]
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "ok", "service": "Niklor AI"})
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json(silent=True)
+
+    if not data or not data.get('message', '').strip():
+        return jsonify({"error": "Campo 'message' é obrigatório."}), 400
+
+    message    = data['message'].strip()
+    session_id = data.get('session_id', 'default')
+
+    try:
+        chat_session = get_or_create_session(session_id)
+        response     = chat_session.send_message(message)
+        return jsonify({
+            "reply":      response.text,
+            "session_id": session_id,
+        })
+
+    except Exception as e:
+        error_msg = str(e)
+        if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
+            return jsonify({"error": "Cota da API esgotada."}), 429
+        if "401" in error_msg:
+            return jsonify({"error": "Chave de API inválida."}), 401
+        return jsonify({"error": f"Erro interno: {error_msg}"}), 500
+
+@app.route('/session/<session_id>', methods=['DELETE'])
+def clear_session(session_id: str):
+    sessions.pop(session_id, None)
+    return jsonify({"message": "Sessão encerrada."})
+
+if __name__ == '__main__':
+    print("=" * 50)
+    print("  Niklor AI Server rodando em http://localhost:5000")
+    print("=" * 50)
+    app.run(host='0.0.0.0', port=5000, debug=True)

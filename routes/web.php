@@ -1,4 +1,4 @@
-    <?php
+<?php
 
     use Illuminate\Support\Facades\Route;
     use App\Models\Subject;
@@ -6,6 +6,8 @@
     use App\Models\Exam;
     use App\Models\Content;
     use App\Http\Controllers\Api\SocialAuthController;
+    use App\Http\Controllers\ChatbotController;
+  
 
     Route::get('/', fn() => view('index'));
     Route::get('/login', fn() => view('auth/login'))->name('login');
@@ -68,6 +70,11 @@
         $horary = Horary::findOrFail($id);
         return view('horary.photo.edit', compact('horary'));
     })->name('horary.edit');
+
+
+    Route::get('/chatbot',      fn() => view('features.chatbot.index'))->name('chatbot.index');
+    Route::post('/chatbot/send',  [ChatbotController::class, 'send'])->name('chatbot.send');
+    Route::post('/chatbot/clear', [ChatbotController::class, 'clear'])->name('chatbot.clear');
 
 
 

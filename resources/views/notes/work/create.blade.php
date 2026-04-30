@@ -146,6 +146,6 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/exam.js') }}"></script>
+  <script src="{{ asset('js/work.js') }}"></script>
 
 @endsection

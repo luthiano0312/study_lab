@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'niklor_ai' => [
+        'url' => env('NIKLOR_AI_URL', 'http://localhost:5000'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
