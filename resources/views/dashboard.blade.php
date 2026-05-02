@@ -66,7 +66,7 @@
                     {{-- Concluídas Card --}}
                     <div
                         class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between">
                             <p
                                 class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-green-500 transition-colors">
                                 Concluídas</p>
@@ -87,7 +87,7 @@
                     {{-- Pendentes Card --}}
                     <div
                         class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between">
                             <p
                                 class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-pink-400 transition-colors">
                                 Pendentes</p>
@@ -108,7 +108,7 @@
                     {{-- Atrasadas Card --}}
                     <div
                         class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between">
                             <p
                                 class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-red-500 transition-colors">
                                 Atrasadas</p>
