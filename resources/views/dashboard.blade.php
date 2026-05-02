@@ -47,9 +47,10 @@
                         <div
                             class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all">
                         </div>
-                        <div class="flex items-center justify-between mb-4 relative z-10">
+                        <div class="flex items-center justify-between relative z-10">
                             <p class="text-[10px] font-black uppercase tracking-widest text-pink-100">Foco Total</p>
-                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
+                            <div
+                                class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                         d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -58,7 +59,8 @@
                         </div>
                         <p class="text-5xl font-black tabular-nums text-white leading-none tracking-tighter relative z-10"
                             id="statTotal" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
-                        <p class="text-[10px] text-pink-100/80 mt-2 font-semibold uppercase relative z-10">Atividades no Radar</p>
+                        <p class="text-[10px] text-pink-100/80 mt-2 font-semibold uppercase relative z-10">Atividades no
+                            Radar</p>
                     </div>
 
                     {{-- Concluídas Card --}}
@@ -345,7 +347,8 @@
                         </div>
                     </div>
 
-                    <div class="relative z-10 items-center justify-between border-t border-white/20 pt-4 mt-2 hidden lg:flex">
+                    <div
+                        class="relative z-10 items-center justify-between border-t border-white/20 pt-4 mt-2 hidden lg:flex">
                         <div>
                             <p class="text-white/50 text-[8px] font-black uppercase tracking-widest mb-0.5">Acesso Rápido
                             </p>
