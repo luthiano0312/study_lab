@@ -1,594 +1,347 @@
 "use strict";
+// v1.5.1 - Dashboard Intelligence & Theme Sync
+// Layout: Slider | Gamification | Efficiency | Timeline | Subjects
 
 // ── helpers ─────────────────────────────────────────────────────────────────
-const MONTHS = [
-    "Jan",
-    "Fev",
-    "Mar",
-    "Abr",
-    "Mai",
-    "Jun",
-    "Jul",
-    "Ago",
-    "Set",
-    "Out",
-    "Nov",
-    "Dez",
-];
-const DAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+const DAYS = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+const RANKS = ["Explorador", "Aprendiz", "Iniciado", "Veterano", "Mestre", "Lendário", "Imortal"];
 
-const SUBJECT_COLORS = [
-    ["#fce7f3", "#9d174d"],
-    ["#ede9fe", "#5b21b6"],
-    ["#dbeafe", "#1e40af"],
-    ["#dcfce7", "#166534"],
-    ["#fef9c3", "#854d0e"],
-    ["#fee2e2", "#991b1b"],
+const SLIDES = [
+    { q: "A educação é a arma mais poderosa que você pode usar para mudar o mundo.", a: "Nelson Mandela" },
+    { q: "O sucesso não é o fim, o fracasso não é fatal: é a coragem de continuar que conta.", a: "Winston Churchill" },
+    { q: "Não é porque as coisas são difíceis que não ousamos; é porque não ousamos que elas são difíceis.", a: "Sêneca" },
+    { q: "A sorte favorece a mente preparada.", a: "Louis Pasteur" },
+    { q: "Foque no progresso, não na perfeição.", a: "Estudo Consciente" },
+    { q: "A mente que se abre a uma nova ideia jamais voltará ao seu tamanho original.", a: "Albert Einstein" }
 ];
 
-const STATUS_MAP = {
-    pending: ["#b45309", "#fef9c3", "Pendente"],
-    in_progress: ["#1d4ed8", "#dbeafe", "Progresso"],
-    completed: ["#166534", "#dcfce7", "Concluída"],
-};
+const PINK = "#db2777";
+const CYAN = "#22d3ee";
+const AMBER = "#fbbf24";
 
-const isDark = () => document.documentElement.classList.contains("dark");
 const $ = (id) => document.getElementById(id);
-const txt = (id, v) => {
-    const e = $(id);
-    if (e) e.textContent = v;
-};
 const hdrs = () => ({
     "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+    "Accept": "application/json",
+    "Authorization": "Bearer " + localStorage.getItem("auth_token"),
 });
-const isOverdue = (d) => d && new Date(d) < new Date(new Date().toDateString());
-const avatarSrc = (u) =>
-    u.avatar ??
-    (u.preset_avatar != null ? `/images/avatar${u.preset_avatar}.png` : null);
-const fmtDate = (s) => {
-    if (!s) return "—";
-    const [y, m, d] = s.split("-");
-    return `${d}/${m}/${y}`;
-};
-const badge = (color, bg, label) =>
-    `<span class="text-xs font-bold px-2.5 py-1 rounded-full ml-3 shrink-0 whitespace-nowrap" style="color:${color};background:${bg}">${label}</span>`;
 
-// Chart.js default: no animation-loop, respect dark mode
-Chart.defaults.animation.duration = 700;
-Chart.defaults.font.family = "'DM Sans', sans-serif";
+const isDark = () => document.documentElement.classList.contains("dark");
+const GRID = () => (isDark() ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)");
+const TICK = () => (isDark() ? "#9ca3af" : "#4b5563");
 
-// ── COLOR PALETTE ────────────────────────────────────────────────────────────
-const PINK = "#db2777";
-const PINK_L = "rgba(219,39,119,.12)";
-const RED = "#f87171";
-const RED_L = "rgba(248,113,113,.12)";
-const GRID = () => (isDark() ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.05)");
-const TICK = () => (isDark() ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.35)");
+// Global instances
+let chartWeek, chartSubjects, chartWeeklyLoad;
+let currentSlide = 0;
+let lastData = null;
 
-// ── CHARTS STATE ─────────────────────────────────────────────────────────────
-let chartStatus = null;
-let chartWeek = null;
-let chartSubjects = null;
+// ── initialization ──────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+    updateClock();
+    setInterval(updateClock, 1000);
+    initQuoteSlider();
 
-// ── CLOCK ───────────────────────────────────────────────────────────────────
-function startClock() {
-    const el = $("clock");
-    const tick = () => {
-        if (el)
-            el.textContent = new Date().toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
-                minute: "2-digit",
-            });
-    };
-    tick();
-    setInterval(tick, 1000);
-}
+    // Listen for theme changes from header.js
+    window.addEventListener('themeChanged', () => {
+        if (lastData) renderCharts(lastData);
+    });
 
-// ── USER ────────────────────────────────────────────────────────────────────
-async function loadUser() {
-    try {
-        const r = await fetch("/api/user", { headers: hdrs() });
-        if (!r.ok) return;
-        const u = await r.json();
+    // Initial attempt from local storage
+    const cache = JSON.parse(localStorage.getItem('user_cache') || '{}');
+    const data  = JSON.parse(localStorage.getItem('user_data') || '{}');
+    const user  = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    const fullName = cache.name || data.name || user.name || "Estudante";
+    const firstName = fullName.split(' ')[0];
+    if ($("greetName")) $("greetName").innerText = firstName;
 
-        txt("headerUserName", u.name || "Estudante");
-        txt("welcomeName", u.name || "Estudante");
-        txt("greetName", u.name?.split(" ")[0] || "Estudante");
+    await Promise.all([
+        fetchUserInfo(), 
+        loadActivities(),
+        loadExams(),
+        loadSubjects()
+    ]);
 
-        // Cache for fast header render
-        localStorage.setItem(
-            "user_cache",
-            JSON.stringify({
-                name: u.name,
-                avatarUrl: avatarSrc(u),
-            }),
-        );
+    initCounters();
+});
 
-        const src = avatarSrc(u);
-        if (src) {
-            ["userAvatar", "headerAvatar"].forEach((id) => {
-                const el = $(id);
-                if (!el) return;
-                el.src = src;
-                el.classList.remove("hidden");
-            });
-            [$("avatarFallback"), $("headerAvatarFallback")].forEach((el) => {
-                if (el) el.style.display = "none";
-            });
-        }
-    } catch {}
-}
+function initQuoteSlider() {
+    const qEl = $("slideQuote");
+    const aEl = $("slideAuthor");
+    if (!qEl || !aEl) return;
 
-// ── ACTIVITIES ───────────────────────────────────────────────────────────────
-async function loadActivities() {
-    try {
-        const r = await fetch("/api/activities", { headers: hdrs() });
-        if (!r.ok) return;
-        const list = await r.json();
+    setInterval(() => {
+        currentSlide = (currentSlide + 1) % SLIDES.length;
+        qEl.style.opacity = 0;
+        aEl.style.opacity = 0;
 
-        // Stats
-        let p = 0,
-            d = 0,
-            o = 0,
-            inprog = 0;
-        const last7 = Array(7)
-            .fill(0)
-            .map((_, i) => {
-                const dt = new Date();
-                dt.setDate(dt.getDate() - i);
-                return dt.toISOString().split("T")[0];
-            })
-            .reverse();
-        const completedByDay = Object.fromEntries(last7.map((d) => [d, 0]));
-        const overdueByDay = Object.fromEntries(last7.map((d) => [d, 0]));
-        const bySubject = {};
-
-        for (const a of list) {
-            if (a.status === "pending") p++;
-            if (a.status === "completed") d++;
-            if (a.status === "in_progress") inprog++;
-            if (a.status !== "completed" && isOverdue(a.due_date)) o++;
-
-            // Week chart data
-            const day = a.updated_at?.split("T")[0] ?? a.due_date;
-            if (a.status === "completed" && completedByDay[day] !== undefined)
-                completedByDay[day]++;
-            if (
-                a.status !== "completed" &&
-                isOverdue(a.due_date) &&
-                overdueByDay[day] !== undefined
-            )
-                overdueByDay[day]++;
-
-            // Subject chart data
-            const sub = a.subject_name || "Sem matéria";
-            bySubject[sub] = (bySubject[sub] || 0) + 1;
-        }
-
-        txt("statPending", p);
-        txt("statDone", d);
-        txt("statOverdue", o);
-        txt("statTotal", list.length);
-
-        // Completion rate
-        const total = list.length;
-        const rate = total ? Math.round((d / total) * 100) : 0;
-        txt("completionRate", rate + "%");
         setTimeout(() => {
-            const bar = $("completionBar");
-            if (bar) bar.style.width = rate + "%";
-        }, 300);
+            qEl.innerText = `"${SLIDES[currentSlide].q}"`;
+            aEl.innerText = SLIDES[currentSlide].a;
+            [0, 1, 2].forEach(i => {
+                const dot = $(`dot${i}`);
+                if (dot) {
+                    const active = i === (currentSlide % 3);
+                    dot.style.width = active ? "24px" : "8px";
+                    dot.style.opacity = active ? "1" : "0.3";
+                }
+            });
+            qEl.style.opacity = 1;
+            aEl.style.opacity = 1;
+        }, 500);
+    }, 6000);
+}
 
-        // Breakdown bars
-        const bd = $("completionBreakdown");
-        if (bd) {
-            const items = [
-                {
-                    label: "Concluídas",
-                    val: d,
-                    color: "#22c55e",
-                    bg: "bg-green-500",
-                },
-                {
-                    label: "Pendentes",
-                    val: p,
-                    color: "#eab308",
-                    bg: "bg-yellow-400",
-                },
-                {
-                    label: "Em progresso",
-                    val: inprog,
-                    color: "#3b82f6",
-                    bg: "bg-blue-500",
-                },
-                {
-                    label: "Atrasadas",
-                    val: o,
-                    color: "#ef4444",
-                    bg: "bg-red-500",
-                },
-            ];
-            bd.innerHTML = items
-                .map((it) => {
-                    const pct = total ? Math.round((it.val / total) * 100) : 0;
-                    return `<div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 w-[72px] shrink-0">${it.label}</span>
-                    <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                        <div class="h-full rounded-full transition-all duration-700" style="width:${pct}%;background:${it.color}"></div>
-                    </div>
-                    <span class="text-[10px] font-black tabular-nums w-6 text-right" style="color:${it.color}">${it.val}</span>
-                </div>`;
-                })
-                .join("");
-        }
+function updateClock() {
+    const now = new Date();
+    if ($("clock")) $("clock").innerText = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+    if ($("headerDate")) {
+        $("headerDate").innerText = `${DAYS[now.getDay()]}, ${String(now.getDate()).padStart(2, '0')} ${MONTHS[now.getMonth()]}`;
+    }
+}
 
-        // Recent activities list
-        const el = $("recentActivities");
-        if (el) {
-            const recent = [...list]
-                .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-                .slice(0, 5);
-            if (!recent.length) {
-                el.innerHTML =
-                    '<p class="text-center text-sm text-gray-400 py-6">Nenhuma atividade ainda.</p>';
-            } else {
-                el.innerHTML = recent
-                    .map((a) => {
-                        const late =
-                            a.status !== "completed" && isOverdue(a.due_date);
-                        const [color, bg, label] = late
-                            ? ["#dc2626", "#fee2e2", "Atrasada"]
-                            : STATUS_MAP[a.status] || STATUS_MAP.pending;
-                        const dot = late
-                            ? "#ef4444"
-                            : a.status === "completed"
-                              ? "#22c55e"
-                              : "#eab308";
-                        return `<div class="flex items-center justify-between px-6 py-3 hover:bg-pink-50/60 dark:hover:bg-pink-500/5 transition-colors">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-2 h-2 rounded-full shrink-0" style="background:${dot}"></div>
-                            <div class="min-w-0">
-                                <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${a.title || a.description || "—"}</p>
-                                <p class="text-xs text-gray-400">${a.subject_name || ""}${a.due_date ? " · " + fmtDate(a.due_date) : ""}</p>
-                            </div>
-                        </div>
-                        ${badge(color, bg, label)}
-                    </div>`;
-                    })
-                    .join("");
+async function fetchUserInfo() {
+    try {
+        const res = await fetch("/api/user", { headers: hdrs() });
+        if (res.ok) {
+            const user = await res.json();
+            if ($("greetName") && user.name) {
+                $("greetName").innerText = user.name.split(' ')[0];
+                localStorage.setItem('user_cache', JSON.stringify({ name: user.name, avatarUrl: user.avatar }));
             }
         }
-
-        // ── CHART: Status donut ──────────────────────────────────────────
-        buildChartStatus({
-            pending: p,
-            completed: d,
-            in_progress: inprog,
-            overdue: o,
-        });
-
-        // ── CHART: Week line ─────────────────────────────────────────────
-        buildChartWeek(
-            last7.map((d) => DAYS[new Date(d).getDay()]),
-            last7.map((d) => completedByDay[d]),
-            last7.map((d) => overdueByDay[d]),
-        );
-
-        // ── CHART: By subject ────────────────────────────────────────────
-        const subNames = Object.keys(bySubject).slice(0, 6);
-        const subVals = subNames.map((k) => bySubject[k]);
-        buildChartSubjects(subNames, subVals);
-    } catch (e) {
-        console.error(e);
-    }
+    } catch (e) {}
 }
 
-// ── CHART BUILDERS ───────────────────────────────────────────────────────────
-
-function buildChartStatus({ pending, completed, in_progress, overdue }) {
-    const ctx = $("chartStatus");
-    if (!ctx) return;
-
-    const total = pending + completed + in_progress + overdue;
-    txt("chartStatusTotal", total);
-
-    const data = [completed, pending, in_progress, overdue];
-    const labels = ["Concluídas", "Pendentes", "Em progresso", "Atrasadas"];
-    const colors = ["#22c55e", "#eab308", "#3b82f6", "#ef4444"];
-
-    // Legend
-    const leg = $("chartStatusLegend");
-    if (leg) {
-        leg.innerHTML = labels
-            .map(
-                (l, i) => `
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-sm shrink-0" style="background:${colors[i]}"></span>
-                    <span class="text-[11px] text-gray-500 dark:text-gray-400 font-medium">${l}</span>
-                </div>
-                <span class="text-[11px] font-black tabular-nums text-gray-700 dark:text-gray-300">${data[i]}</span>
-            </div>`,
-            )
-            .join("");
-    }
-
-    if (chartStatus) chartStatus.destroy();
-    chartStatus = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-            labels,
-            datasets: [
-                {
-                    data,
-                    backgroundColor: colors,
-                    borderWidth: 0,
-                    hoverOffset: 6,
-                },
-            ],
-        },
-        options: {
-            cutout: "72%",
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) =>
-                            ` ${ctx.label}: ${ctx.raw} (${total ? Math.round((ctx.raw / total) * 100) : 0}%)`,
-                    },
-                },
-            },
-            animation: { animateRotate: true, duration: 800 },
-        },
+function initCounters() {
+    document.querySelectorAll("[data-counter]").forEach((el) => {
+        const target = parseInt(el.innerText) || 0;
+        if (!target) return;
+        let count = 0;
+        const step = () => {
+            count += Math.ceil(target / 100);
+            if (count > target) count = target;
+            el.innerText = count;
+            if (count < target) requestAnimationFrame(step);
+        };
+        step();
     });
 }
 
-function buildChartWeek(labels, completed, overdue) {
-    const ctx = $("chartWeek");
-    if (!ctx) return;
+// ── data loading ────────────────────────────────────────────────────────────
+async function loadActivities() {
+    try {
+        const res = await fetch("/api/activities", { headers: hdrs() });
+        if (!res.ok) return;
+        const list = await res.json();
+        lastData = list;
 
+        const done = list.filter(a => a.status === 'completed').length;
+        const total = list.length;
+        const efficiency = total > 0 ? Math.round((done / total) * 100) : 0;
+        const level = Math.floor((done * 150) / 1000) + 1;
+
+        if ($("statTotal")) $("statTotal").innerText = total;
+        if ($("statDone")) $("statDone").innerText = done;
+        if ($("statPending")) $("statPending").innerText = list.filter(a => a.status === 'pending').length;
+        if ($("statOverdue")) $("statOverdue").innerText = list.filter(a => a.status === 'overdue').length;
+
+        if ($("userLevelBadge")) $("userLevelBadge").innerText = `Nível ${level}`;
+        if ($("userLevel")) $("userLevel").innerText = level;
+        if ($("rankName")) $("rankName").innerText = RANKS[Math.min(level - 1, RANKS.length - 1)];
+        if ($("totalXP")) $("totalXP").innerText = (done * 150) + " XP";
+        if ($("currentXP")) $("currentXP").innerText = (done * 150) % 1000;
+        if ($("xpBar")) $("xpBar").style.width = ((done * 150) % 1000 / 10) + "%";
+        if ($("completionRate")) $("completionRate").innerText = efficiency + "%";
+        if ($("completionBar")) $("completionBar").style.width = efficiency + "%";
+
+        if ($("userStreak")) $("userStreak").innerText = calculateStreak(list.filter(a => a.status === 'completed'));
+
+        renderCharts(list);
+        renderRecentActivities(list.slice(0, 5));
+        renderVisualTimeline(list);
+        renderEfficiencyBreakdown(done, list.filter(a => a.status === 'pending').length, list.filter(a => a.status === 'overdue').length);
+
+    } catch (e) {}
+}
+
+function renderCharts(list) {
+    const last7 = [...Array(7)].map((_, i) => {
+        const d = new Date();
+        d.setDate(d.getDate() - (6 - i));
+        return d.toISOString().split("T")[0];
+    });
+
+    const completed = last7.map(d => list.filter(a => a.due_date === d && a.status === 'completed').length);
+    const overdue = last7.map(d => list.filter(a => a.due_date === d && a.status === 'overdue').length);
+    const load = last7.map(d => list.filter(a => a.due_date === d).length);
+
+    buildChartWeek(last7.map(d => DAYS[new Date(d).getDay()].slice(0, 3)), completed, overdue);
+    buildChartWeeklyLoad(last7.map(d => DAYS[new Date(d).getDay()].slice(0, 3)), load);
+
+    const subjects = [...new Set(list.map(a => a.subject_name))].filter(Boolean);
+    const subData = subjects.map(s => list.filter(a => a.subject_name === s).length);
+    buildChartSubjects(subjects.length ? subjects : ["Geral"], subData.length ? subData : [list.length]);
+}
+
+function calculateStreak(completed) {
+    if (!completed.length) return 0;
+    const dates = [...new Set(completed.map(a => a.due_date))].sort().reverse();
+    const today = new Date().toISOString().split("T")[0];
+    if (dates[0] < today) {
+        const yest = new Date(); yest.setDate(yest.getDate() - 1);
+        if (dates[0] < yest.toISOString().split("T")[0]) return 0;
+    }
+    let s = 1;
+    for (let i = 0; i < dates.length - 1; i++) {
+        const d1 = new Date(dates[i]), d2 = new Date(dates[i+1]);
+        if ((d1 - d2) / 864e5 === 1) s++; else break;
+    }
+    return s;
+}
+
+async function loadExams() {
+    try {
+        const res = await fetch("/api/exams", { headers: hdrs() });
+        const list = res.ok ? await res.json() : [];
+        const next = list.sort((a,b) => new Date(a.due_date) - new Date(b.due_date))[0];
+        if (next && $("nextExamCard")) {
+            $("nextExamCard").innerHTML = `<p class="text-white font-black text-xl mb-1">${next.type}</p><p class="text-white/70 text-[10px] font-bold uppercase tracking-widest">📅 ${new Date(next.due_date).toLocaleDateString('pt-BR')}</p>`;
+        }
+    } catch (e) {}
+}
+
+async function loadSubjects() {
+    try {
+        const res = await fetch("/api/subjects", { headers: hdrs() });
+        const list = res.ok ? await res.json() : [];
+        if ($("statSubjects")) $("statSubjects").innerText = list.length;
+        if ($("subjectsList")) {
+            $("subjectsList").innerHTML = list.slice(0, 4).map(s => `
+                <div class="flex items-center gap-3 px-5 py-3">
+                    <div class="w-9 h-7 rounded-lg bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center text-[10px] font-black text-pink-600 dark:text-pink-400 border border-pink-100/50 dark:border-pink-800/30">${s.abbreviation || '??'}</div>
+                    <div class="flex-1 truncate"><p class="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">${s.name}</p></div>
+                </div>
+            `).join('');
+        }
+    } catch (e) {}
+}
+
+function buildChartWeek(labels, completed, overdue) {
+    const ctx = $("chartWeek"); if (!ctx) return;
     if (chartWeek) chartWeek.destroy();
     chartWeek = new Chart(ctx, {
         type: "line",
-        data: {
-            labels,
-            datasets: [
-                {
-                    label: "Concluídas",
-                    data: completed,
-                    borderColor: PINK,
-                    backgroundColor: PINK_L,
-                    borderWidth: 2.5,
-                    pointRadius: 4,
-                    pointBackgroundColor: PINK,
-                    pointBorderColor: "#fff",
-                    pointBorderWidth: 2,
-                    fill: true,
-                    tension: 0.42,
-                },
-                {
-                    label: "Atrasadas",
-                    data: overdue,
-                    borderColor: RED,
-                    backgroundColor: RED_L,
-                    borderWidth: 2,
-                    pointRadius: 3,
-                    pointBackgroundColor: RED,
-                    pointBorderColor: "#fff",
-                    pointBorderWidth: 2,
-                    fill: true,
-                    tension: 0.42,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: { mode: "index", intersect: false },
-            },
-            scales: {
-                x: {
-                    grid: { color: GRID(), drawBorder: false },
-                    ticks: { color: TICK(), font: { size: 10, weight: "600" } },
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: { color: GRID(), drawBorder: false },
-                    ticks: {
-                        color: TICK(),
-                        font: { size: 10 },
-                        stepSize: 1,
-                        precision: 0,
-                    },
-                },
-            },
-        },
+        data: { labels, datasets: [
+            { label: "Concluídas", data: completed, borderColor: PINK, backgroundColor: "rgba(219, 39, 119, 0.1)", fill: true, tension: 0.4, borderWidth: 3 },
+            { label: "Atrasadas", data: overdue, borderColor: "#f87171", borderDash: [5, 5], fill: false, tension: 0.4, borderWidth: 2 }
+        ]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { x: { grid: { display: false }, ticks: { color: TICK(), font: { size: 10, weight: "600" } } },
+                      y: { grid: { color: GRID() }, ticks: { color: TICK(), font: { size: 10 } }, beginAtZero: true } }
+        }
     });
 }
 
 function buildChartSubjects(labels, data) {
-    const ctx = $("chartSubjects");
-    if (!ctx) return;
-
-    const palette = [
-        "#db2777",
-        "#ec4899",
-        "#f472b6",
-        "#e11d48",
-        "#be185d",
-        "#9d174d",
-    ];
-
+    const ctx = $("chartSubjects"); if (!ctx) return;
     if (chartSubjects) chartSubjects.destroy();
     chartSubjects = new Chart(ctx, {
         type: "bar",
-        data: {
-            labels,
-            datasets: [
-                {
-                    label: "Atividades",
-                    data,
-                    backgroundColor: palette.slice(0, labels.length),
-                    borderRadius: 8,
-                    borderSkipped: false,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: "y", // horizontal bars
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) =>
-                            ` ${ctx.raw} atividade${ctx.raw !== 1 ? "s" : ""}`,
-                    },
-                },
-            },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: { color: GRID(), drawBorder: false },
-                    ticks: { color: TICK(), font: { size: 10 }, precision: 0 },
-                },
-                y: {
-                    grid: { display: false },
-                    ticks: { color: TICK(), font: { size: 11, weight: "600" } },
-                },
-            },
-        },
+        data: { labels, datasets: [{ data, backgroundColor: PINK, borderRadius: 8, barThickness: 12 }]},
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { x: { grid: { color: GRID() }, ticks: { color: TICK(), font: { size: 10 } }, beginAtZero: true },
+                      y: { grid: { display: false }, ticks: { color: TICK(), font: { size: 10, weight: "700" } } } }
+        }
     });
 }
 
-// ── EXAMS ────────────────────────────────────────────────────────────────────
-async function loadExams() {
-    try {
-        const r = await fetch("/api/exams", { headers: hdrs() });
-        if (!r.ok) return;
-        const all = await r.json();
-        const upcoming = all
-            .filter((e) => e.status !== "completed" && e.due_date)
-            .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-
-        // ── Upcoming exams list ──
-        const el = $("upcomingExams");
-        if (el) {
-            const slice = upcoming.slice(0, 4);
-            if (!slice.length) {
-                el.innerHTML =
-                    '<p class="text-center text-sm text-gray-400 py-5">Nenhuma prova próxima.</p>';
-            } else {
-                el.innerHTML = slice
-                    .map((e) => {
-                        const dt = new Date(e.due_date + "T00:00:00");
-                        const day = String(dt.getDate()).padStart(2, "0");
-                        const mon = MONTHS[dt.getMonth()];
-                        const days = Math.ceil((dt - new Date()) / 864e5);
-                        const urgent = days <= 3;
-                        const tag =
-                            days <= 0
-                                ? "Hoje"
-                                : days === 1
-                                  ? "Amanhã"
-                                  : `${days}d`;
-                        return `<div class="flex items-center justify-between px-5 py-3 hover:bg-pink-50/60 dark:hover:bg-pink-500/5 transition-colors">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="text-center shrink-0 w-10">
-                                <div class="font-black text-gray-900 dark:text-white leading-none" style="font-family:'Syne',sans-serif;font-size:1.3rem">${day}</div>
-                                <div class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">${mon}</div>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${e.type || "Prova"}</p>
-                                <p class="text-xs text-gray-400 truncate">${e.description || ""}</p>
-                            </div>
-                        </div>
-                        ${badge(urgent ? "#dc2626" : "#db2777", urgent ? "#fee2e2" : "#fce7f3", tag)}
-                    </div>`;
-                    })
-                    .join("");
-            }
+function buildChartWeeklyLoad(labels, data) {
+    const ctx = $("chartWeeklyLoad"); if (!ctx) return;
+    if (chartWeeklyLoad) chartWeeklyLoad.destroy();
+    chartWeeklyLoad = new Chart(ctx, {
+        type: "bar",
+        data: { labels, datasets: [{ data, backgroundColor: isDark() ? "rgba(219, 39, 119, 0.4)" : "rgba(219, 39, 119, 0.1)", borderColor: PINK, borderWidth: 1, borderRadius: 6, barThickness: 24 }]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { x: { grid: { display: false }, ticks: { color: TICK(), font: { size: 10, weight: "600" } } },
+                      y: { grid: { color: GRID() }, ticks: { color: TICK(), font: { size: 10 } }, beginAtZero: true } }
         }
+    });
+}
 
-        // ── Next exam urgency card ──
-        const card = $("nextExamCard");
-        if (card && upcoming.length) {
-            const e = upcoming[0];
-            const dt = new Date(e.due_date + "T00:00:00");
-            const days = Math.ceil((dt - new Date()) / 864e5);
-            const tag =
-                days <= 0 ? "Hoje!" : days === 1 ? "Amanhã" : `em ${days} dias`;
-            card.innerHTML = `
-                <p class="text-white font-black text-base leading-tight" style="font-family:'Syne',sans-serif;">${e.type || "Prova"}</p>
-                <p class="text-pink-200 text-xs font-semibold mt-0.5">${e.description || ""}</p>
-                <div class="mt-2 flex items-center gap-2">
-                    <span class="bg-white/20 text-white text-[10px] font-black px-2.5 py-1 rounded-full">${tag}</span>
-                    <span class="text-pink-200 text-[10px]">${String(dt.getDate()).padStart(2, "0")}/${MONTHS[dt.getMonth()]}</span>
-                </div>`;
-        } else if (card) {
-            card.innerHTML =
-                '<p class="text-pink-200 text-sm font-semibold">Nenhuma prova próxima 🎉</p>';
-        }
-    } catch (e) {
-        console.error(e);
+function renderEfficiencyBreakdown(done, pending, overdue) {
+    if ($("completionBreakdown")) {
+        $("completionBreakdown").innerHTML = `
+            <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-green-500"></div><span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Concluídas</span></div><span class="text-[10px] font-black text-gray-900 dark:text-white">${done}</span></div>
+            <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div><span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Pendentes</span></div><span class="text-[10px] font-black text-gray-900 dark:text-white">${pending}</span></div>
+            <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Atrasadas</span></div><span class="text-[10px] font-black text-gray-900 dark:text-white">${overdue}</span></div>
+        `;
     }
 }
 
-// ── SUBJECTS ─────────────────────────────────────────────────────────────────
-async function loadSubjects() {
-    try {
-        const r = await fetch("/api/subjects", { headers: hdrs() });
-        if (!r.ok) return;
-        const list = await r.json();
-        txt("statSubjects", list.length);
-
-        const el = $("subjectsList");
-        if (el) {
-            el.innerHTML = list
-                .slice(0, 5)
-                .map((s, i) => {
-                    const [bg, color] =
-                        SUBJECT_COLORS[i % SUBJECT_COLORS.length];
-                    const abbr = (s.abbreviation || s.name || "?")
-                        .slice(0, 3)
-                        .toUpperCase();
-                    return `<div class="flex items-center gap-3 px-5 py-2.5 hover:bg-pink-500/10 transition-colors">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-black shrink-0" style="background:${bg};color:${color}">${abbr}</div>
-                    <div class="min-w-0">
-                        <p class="text-sm font-semibold text-white truncate">${s.name}</p>
-                        <p class="text-xs text-pink-200/70 truncate">${s.teacher || "Sem professor"}</p>
+function renderRecentActivities(list) {
+    const container = $("recentActivities");
+    if (!container) return;
+    if (list.length === 0) {
+        container.innerHTML = `<div class="p-10 text-center text-gray-400 text-[11px] font-bold uppercase tracking-widest">Nenhuma atividade recente</div>`;
+        return;
+    }
+    container.innerHTML = list.map(a => `
+        <div class="group mx-4 my-2 px-6 py-5 flex items-center justify-between bg-white dark:bg-[#1c1c1f] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-pink-200 dark:hover:border-pink-900/50 transition-all duration-300">
+            <div class="flex items-center gap-5 flex-1 min-w-0">
+                <div class="w-12 h-12 rounded-2xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="truncate">
+                    <p class="text-sm font-black text-gray-900 dark:text-gray-100 truncate mb-1" style="font-family:'Unbounded',sans-serif;">${a.description}</p>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${new Date(a.due_date).toLocaleDateString('pt-BR')}</span>
+                        <span class="text-[10px] font-black text-pink-500 bg-pink-50 dark:bg-pink-900/30 px-2 py-0.5 rounded-md uppercase tracking-widest">${a.subject_name || 'Geral'}</span>
                     </div>
-                </div>`;
-                })
-                .join("");
-        }
-    } catch {}
+                </div>
+            </div>
+            <div class="ml-6 shrink-0">
+                <span class="text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest 
+                    ${a.status === 'completed' ? 'bg-green-500 text-white shadow-lg shadow-green-500/20' : 
+                      a.status === 'overdue' ? 'bg-red-500 text-white shadow-lg shadow-red-500/20' : 
+                      'bg-amber-500 text-white shadow-lg shadow-amber-500/20'}">
+                    ${a.status === 'completed' ? 'Concluído' : a.status === 'overdue' ? 'Atrasado' : 'Pendente'}
+                </span>
+            </div>
+        </div>
+    `).join('');
 }
 
-// ── COUNTER ANIMATION ────────────────────────────────────────────────────────
-function animateCounters() {
-    document.querySelectorAll("[data-counter]").forEach((el) => {
-        const target = parseInt(el.textContent) || 0;
-        if (!target) return;
-        let cur = 0;
-        const step = Math.ceil(target / 20);
-        const t = setInterval(() => {
-            cur = Math.min(cur + step, target);
-            el.textContent = cur;
-            if (cur >= target) clearInterval(t);
-        }, 40);
-    });
-}
+function renderVisualTimeline(list) {
+    const container = $("visualTimeline");
+    if (!container) return;
+    const sorted = list.filter(a => a.status !== 'completed')
+                      .sort((a,b) => new Date(a.due_date) - new Date(b.due_date))
+                      .slice(0, 4);
+    
+    if (sorted.length === 0) {
+        container.innerHTML = `<p class="text-center text-[10px] font-bold text-gray-400 py-4 uppercase tracking-widest">Tudo em dia!</p>`;
+        return;
+    }
 
-// ── BOOT ─────────────────────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
-    startClock();
-    await loadUser();
-    await Promise.all([loadActivities(), loadExams(), loadSubjects()]);
-    setTimeout(animateCounters, 100);
-});
+    container.innerHTML = sorted.map((a, i) => `
+        <div class="flex gap-6 relative group">
+            ${i < sorted.length - 1 ? `<div class="absolute left-[15.5px] top-8 w-[1px] h-[calc(100%-16px)] bg-gray-100 dark:bg-gray-800/60"></div>` : ''}
+            
+            <div class="relative">
+                <div class="w-8 h-8 rounded-full ${a.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' : 'bg-pink-500/10 border-pink-500/30'} border flex items-center justify-center shrink-0 z-10 group-hover:scale-110 transition-transform shadow-sm bg-white dark:bg-[#18181b]">
+                    <span class="text-[10px] font-black ${a.status === 'overdue' ? 'text-red-500' : 'text-pink-500'}">${new Date(a.due_date).getDate()}</span>
+                </div>
+            </div>
+
+            <div class="flex-1 pb-6 min-w-0">
+                <p class="text-[11px] font-black text-gray-900 dark:text-white leading-tight truncate mb-1" style="font-family:'Unbounded',sans-serif;">${a.description}</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-[8px] font-black ${a.status === 'overdue' ? 'text-red-400' : 'text-pink-500'} uppercase tracking-widest">${a.status === 'overdue' ? 'Atrasado' : 'Próximo'}</span>
+                    <span class="text-[8px] font-bold text-gray-400 uppercase tracking-widest truncate">${a.subject_name || 'Estudo'}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}

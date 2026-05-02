@@ -1,45 +1,36 @@
-'use strict';
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-document.addEventListener('DOMContentLoaded', async function () {
-    const token = localStorage.getItem('auth_token');
-    if (!token) return;
+    if (themeToggle && darkIcon && lightIcon) {
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
 
-    try {
-        const res = await fetch('/api/user', {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
+            // Swap icons
+            if (isDark) {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
             }
+            
+            // Dispatch event for other components (like charts)
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: isDark ? 'dark' : 'light' } }));
         });
+    }
 
-        if (!res.ok) return;
-        const user = await res.json();
-
-        // Preenche nome
-        const nameEl = document.getElementById('headerUserName');
-        if (nameEl && user.name) nameEl.textContent = user.name;
-
-        // Decide URL do avatar
-        let avatarUrl = null;
-        if (user.avatar) {
-            avatarUrl = user.avatar; // já vem como URL completa da API
-        } else if (user.preset_avatar !== null && user.preset_avatar !== undefined) {
-            avatarUrl = '/images/avatar' + user.preset_avatar + '.png';
-        }
-
-        if (avatarUrl) {
-            const img = document.getElementById('headerAvatar');
-            const fb  = document.getElementById('headerAvatarFallback');
-            if (img) { img.src = avatarUrl; img.classList.remove('hidden'); }
-            if (fb)  { fb.style.display = 'none'; }
-        }
-
-        // Salva cache para o próximo carregamento instantâneo
-        localStorage.setItem('user_cache', JSON.stringify({
-            name: user.name,
-            avatarUrl: avatarUrl
-        }));
-    } catch (e) {
-        // silently fail — fallback já está no HTML
+    // Apply theme on load (redundant but safe if inline script fails)
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (darkIcon) darkIcon.classList.remove('hidden');
+        if (lightIcon) lightIcon.classList.add('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        if (darkIcon) darkIcon.classList.add('hidden');
+        if (lightIcon) lightIcon.classList.remove('hidden');
     }
 });

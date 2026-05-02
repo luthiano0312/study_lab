@@ -1,438 +1,538 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-h-full space-y-8" style="font-family: 'Unbounded', sans-serif;">
+    <div class="min-h-full" style="font-family: 'Unbounded', sans-serif;">
 
-        {{-- ══ HERO ══ --}}
-        <section class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        {{-- MAIN GRID: 2 Columns layout based on reference image --}}
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
 
-            {{-- Saudação --}}
-            <div class="lg:col-span-3 relative rounded-3xl overflow-hidden min-h-[200px]"
-                style="background:linear-gradient(130deg,#9d174d 0%,#db2777 42%,#ec4899 74%,#fda4af 100%);">
-                <div class="absolute inset-0 pointer-events-none opacity-[.08]"
-                    style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:20px 20px;"></div>
-                <div class="absolute -top-10 -right-10 w-52 h-52 rounded-full pointer-events-none opacity-[.15]"
-                    style="background:radial-gradient(circle,#fff,transparent 70%);"></div>
-                <div class="relative z-10 p-7 flex flex-col justify-between h-full gap-5">
-                    <div>
-                        <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">StudyLab</p>
-                        <h1 class="text-white font-black leading-[1.1] mb-1.5"
-                            style="font-family:'Unbounded',sans-serif;font-size:clamp(1.65rem,3.5vw,2.4rem);">
-                            Olá, <span id="greetName">Estudante</span>
-                        </h1>
-                        <p class="text-pink-100/80 text-sm">Pronto pra mais um dia de foco?</p>
-                    </div>
+            {{-- ════════ LEFT COLUMN (Main Content) ════════ --}}
+            <div class="xl:col-span-3 flex flex-col gap-6">
+
+                {{-- Header --}}
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden group">
                     <div
-                        class="flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-4 py-2.5 w-fit backdrop-blur-sm">
+                        class="absolute right-0 top-0 w-32 h-32 bg-pink-500/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-pink-500/10 transition-colors">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h1 class="text-gray-900 dark:text-white font-black text-3xl leading-none"
+                                style="font-family:'Unbounded',sans-serif;">
+                                Olá, <span id="greetName">Estudante</span>
+                            </h1>
+                            <span id="userLevelBadge"
+                                class="bg-pink-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg shadow-pink-500/20">Nível
+                                --</span>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs font-semibold">Seu laboratório de estudos está
+                            pronto para hoje.</p>
+                    </div>
+
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="text-right">
+                            <div id="clock"
+                                class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none text-2xl"
+                                style="font-family:'Unbounded',sans-serif;">00:00</div>
+                            <p id="headerDate" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                                Carregando data...</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Stats Row --}}
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div
+                        class="bg-pink-600 rounded-3xl p-5 border border-pink-500 shadow-lg shadow-pink-500/20 hover:-translate-y-1 transition-all duration-300 group cursor-default relative overflow-hidden">
                         <div
-                            class="w-8 h-8 rounded-xl overflow-hidden bg-white/20 flex-shrink-0 flex items-center justify-center border border-white/20">
-                            <img id="userAvatar" src="" alt="" class="w-full h-full object-cover hidden">
-                            <div id="avatarFallback">
+                            class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all">
+                        </div>
+                        <div class="flex items-center justify-between mb-4 relative z-10">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-pink-100">Foco Total</p>
+                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="8" r="4" stroke-width="2" />
-                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
                         </div>
-                        <div class="leading-tight">
-                            <p class="text-pink-200 text-[10px] font-semibold">Bem-vindo de volta</p>
-                            <p id="welcomeName" class="text-white text-[13px] font-black">Estudante</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Relógio --}}
-            <div
-                class="lg:col-span-2 bg-white dark:bg-[#18181b] rounded-3xl border border-pink-100 dark:border-gray-800 shadow-sm p-7 flex flex-col justify-between gap-4 transition-colors duration-200">
-                <div class="flex gap-10">
-                    <div>
-                        <p class="text-[10px] font-black uppercase tracking-[.22em] text-pink-400 mb-3">Agora</p>
-                        <div id="clock" class="font-black text-gray-900 dark:text-gray-100 tabular-nums leading-none"
-                            style="font-family:'Unbounded',sans-serif;font-size:clamp(2.6rem,6vw,4rem);">00:00</div>
-                        <p class="text-sm font-semibold text-gray-400 mt-2">{{ now()->translatedFormat('l') }}</p>
-                        <p class="text-xs text-gray-300 mt-0.5">{{ now()->translatedFormat('d \d\e F \d\e Y') }}</p>
+                        <p class="text-5xl font-black tabular-nums text-white leading-none tracking-tighter relative z-10"
+                            id="statTotal" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
+                        <p class="text-[10px] text-pink-100/80 mt-2 font-semibold uppercase relative z-10">Atividades no Radar</p>
                     </div>
 
-                </div>
-            </div>
-        </section>
-
-        {{-- ══ ATALHOS ══ --}}
-        <section class="space-y-4">
-            <div class="flex items-center gap-2">
-                <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Unbounded',sans-serif;">Atalhos</h2>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                @php
-                    $shortcuts = [
-                        ['href' => '/activities', 'label' => 'Atividades', 'bg' => 'bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40', 'text' => 'text-pink-600 dark:text-pink-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-pink-500 dark:text-pink-400', 'icon' => '<path d="M9 11l3 3L22 4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2" stroke-linecap="round"/>'],
-                        ['href' => '/exams', 'label' => 'Provas', 'bg' => 'bg-rose-50 dark:bg-rose-900/20 hover:bg-rose-100 dark:hover:bg-rose-900/40', 'text' => 'text-rose-600 dark:text-rose-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-rose-500 dark:text-rose-400', 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/>'],
-                        ['href' => '/subject', 'label' => 'Matérias', 'bg' => 'bg-fuchsia-50 dark:bg-fuchsia-900/20 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/40', 'text' => 'text-fuchsia-600 dark:text-fuchsia-400', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-fuchsia-500 dark:text-fuchsia-400', 'icon' => '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2"/>'],
-                        ['href' => '/profile', 'label' => 'Perfil', 'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800', 'text' => 'text-gray-600 dark:text-gray-300', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-gray-500 dark:text-gray-400', 'icon' => '<circle cx="12" cy="8" r="4" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke-width="2" stroke-linecap="round"/>'],
-                        ['href' => '/horary', 'label' => 'Horários', 'bg' => 'bg-gray-50 dark:bg-[#18181b] hover:bg-gray-100 dark:hover:bg-gray-800', 'text' => 'text-gray-600 dark:text-gray-300', 'ibg' => 'bg-white dark:bg-gray-800', 'ic' => 'text-gray-500 dark:text-gray-400', 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke-width="2" stroke-linecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01" stroke-width="2.5" stroke-linecap="round"/>'],
-                        ['href' => '/activities/create', 'label' => 'Nova Ativ.', 'bg' => 'bg-pink-600 hover:bg-pink-700', 'text' => 'text-white', 'ibg' => 'bg-white/20', 'ic' => 'text-white', 'icon' => '<path d="M12 5v14M5 12h14" stroke-width="2.5" stroke-linecap="round"/>'],
-                    ];
-                @endphp
-                @foreach ($shortcuts as $s)
-                    <a href="{{ $s['href'] }}"
-                        class="flex flex-col items-center gap-2.5 rounded-2xl p-5 shadow-sm border border-transparent
-                                          hover:border-pink-100 hover:-translate-y-1 transition-all duration-200 group {{ $s['bg'] }}">
-                        <div
-                            class="w-10 h-10 rounded-xl {{ $s['ibg'] }} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-200">
-                            <svg class="w-5 h-5 {{ $s['ic'] }}" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
+                    {{-- Concluídas Card --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
+                        <div class="flex items-center justify-between mb-4">
+                            <p
+                                class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-green-500 transition-colors">
+                                Concluídas</p>
+                            <div
+                                class="w-8 h-8 rounded-xl bg-gray-50 dark:bg-gray-800/50 group-hover:bg-green-50 dark:group-hover:bg-green-900/30 flex items-center justify-center transition-colors">
+                                <svg class="w-4 h-4 text-gray-400 group-hover:text-green-500 transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
                         </div>
-                        <span class="text-[11px] font-black uppercase tracking-wide {{ $s['text'] }}">{{ $s['label'] }}</span>
-                    </a>
-                @endforeach
-            </div>
-        </section>
-
-        {{-- ══ STATS ══ --}}
-        <section class="space-y-4">
-            <div class="flex items-center gap-2">
-                <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Unbounded',sans-serif;">Seus dados</h2>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div
-                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 ring-1 ring-gray-200 dark:ring-gray-700 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-gray-100 dark:bg-white/10 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke-width="2" />
-                                <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <span class="w-2 h-2 rounded-full bg-gray-400/40"></span>
+                        <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none" id="statDone"
+                            data-counter style="font-family:'Unbounded',sans-serif;">—</p>
+                        <p class="text-[10px] text-gray-400 mt-2 font-semibold uppercase">nos últimos 30 dias</p>
                     </div>
-                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none" id="statPending"
-                        data-counter style="font-family:'Unbounded',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1.5">Pendentes</p>
-                </div>
-                <div
-                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-green-100 dark:border-gray-800 ring-1 ring-green-200 dark:ring-green-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-green-50 dark:bg-green-900/30 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M20 6L9 17l-5-5" stroke-width="2.5" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                    </div>
-                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none" id="statDone"
-                        data-counter style="font-family:'Unbounded',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
-                        Concluídas</p>
-                </div>
-                <div
-                    class="bg-white dark:bg-[#18181b] rounded-2xl p-4 border border-red-100 dark:border-gray-800 ring-1 ring-red-200 dark:ring-red-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-red-50 dark:bg-red-900/30 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                                    stroke-width="2" />
-                                <line x1="12" y1="9" x2="12" y2="13" stroke-width="2" stroke-linecap="round" />
-                                <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </div>
-                        <span class="w-2 h-2 rounded-full bg-red-400"></span>
-                    </div>
-                    <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-gray-100 leading-none"
-                        id="statOverdue" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mt-1.5">
-                        Atrasadas</p>
-                </div>
-                <div
-                    class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-4 border border-pink-100 dark:border-pink-900/40 ring-1 ring-pink-200 dark:ring-pink-900 shadow-sm hover:-translate-y-1 transition-transform duration-200 cursor-default">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-xl bg-pink-100 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2" />
-                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke-width="2" />
-                            </svg>
-                        </div>
-                        <span class="w-2 h-2 rounded-full bg-pink-400"></span>
-                    </div>
-                    <p class="text-3xl font-black tabular-nums text-pink-700 leading-none" id="statTotal" data-counter
-                        style="font-family:'Unbounded',sans-serif;">—</p>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-pink-400 mt-1.5">Total</p>
-                </div>
-            </div>
-        </section>
 
-        {{-- ══ GRÁFICOS ══ --}}
-        <section class="space-y-4">
-            <div class="flex items-center gap-2">
-                <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                <h2 class="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-widest"
-                    style="font-family:'Unbounded',sans-serif;">Análise</h2>
-            </div>
+                    {{-- Pendentes Card --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
+                        <div class="flex items-center justify-between mb-4">
+                            <p
+                                class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-pink-400 transition-colors">
+                                Pendentes</p>
+                            <div
+                                class="w-8 h-8 rounded-xl bg-gray-50 dark:bg-gray-800/50 group-hover:bg-pink-50 dark:group-hover:bg-pink-900/20 flex items-center justify-center transition-colors">
+                                <svg class="w-4 h-4 text-gray-400 group-hover:text-pink-400 transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2" />
+                                    <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none"
+                            id="statPending" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
+                        <p class="text-[10px] text-gray-400 mt-2 font-semibold uppercase">aguardando ação</p>
+                    </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {{-- Atrasadas Card --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl p-5 border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-200 cursor-default group">
+                        <div class="flex items-center justify-between mb-4">
+                            <p
+                                class="text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-red-500 transition-colors">
+                                Atrasadas</p>
+                            <div
+                                class="w-8 h-8 rounded-xl bg-gray-50 dark:bg-gray-800/50 group-hover:bg-red-50 dark:group-hover:bg-red-900/30 flex items-center justify-center transition-colors">
+                                <svg class="w-4 h-4 text-gray-400 group-hover:text-red-500 transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                                        stroke-width="2" />
+                                    <line x1="12" y1="9" x2="12" y2="13" stroke-width="2" stroke-linecap="round" />
+                                    <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-black tabular-nums text-gray-900 dark:text-white leading-none"
+                            id="statOverdue" data-counter style="font-family:'Unbounded',sans-serif;">—</p>
+                        <p class="text-[10px] text-gray-400 mt-2 font-semibold uppercase">requerem atenção</p>
+                    </div>
+                </div>
 
-                {{-- Gráfico 1: Atividades por status (Donut) --}}
-                <div
-                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Status</p>
+                {{-- Row: Shortcuts + Weekly Load --}}
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    {{-- Shortcuts --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col">
+                        <div class="flex items-center justify-between mb-5">
                             <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Unbounded',sans-serif;">Atividades</h3>
+                                style="font-family:'Unbounded',sans-serif;">Atalhos Rápidos</h3>
                         </div>
-                        <div class="w-8 h-8 rounded-xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke-width="2" />
-                                <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" />
-                            </svg>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            @php
+                                $shortcuts = [
+                                    [
+                                        'label' => 'Matérias',
+                                        'href' => '/subjects',
+                                        'icon' =>
+                                            '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2"/>',
+                                        'bg' => 'bg-pink-50 dark:bg-pink-900/20',
+                                        'text' => 'text-pink-600 dark:text-pink-400',
+                                        'ic' => 'text-pink-500',
+                                    ],
+                                    [
+                                        'label' => 'Horários',
+                                        'href' => '/horary',
+                                        'icon' =>
+                                            '<circle cx="12" cy="12" r="10" stroke-width="2"/><path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round"/>',
+                                        'bg' => 'bg-blue-50 dark:bg-blue-900/20',
+                                        'text' => 'text-blue-600 dark:text-blue-400',
+                                        'ic' => 'text-blue-500',
+                                    ],
+                                    [
+                                        'label' => 'Provas',
+                                        'href' => '/exams',
+                                        'icon' =>
+                                            '<path d="M9 11l3 3L22 4" stroke-width="2"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-width="2"/>',
+                                        'bg' => 'bg-amber-50 dark:bg-amber-900/20',
+                                        'text' => 'text-amber-600 dark:text-amber-400',
+                                        'ic' => 'text-amber-500',
+                                    ],
+                                    [
+                                        'label' => 'Trabalhos',
+                                        'href' => '/works',
+                                        'icon' =>
+                                            '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-width="2"/><path d="M14 2v6h6" stroke-width="2"/>',
+                                        'bg' => 'bg-green-50 dark:bg-green-900/20',
+                                        'text' => 'text-green-600 dark:text-green-400',
+                                        'ic' => 'text-green-500',
+                                    ],
+                                    [
+                                        'label' => 'Boletim',
+                                        'href' => '#',
+                                        'icon' =>
+                                            '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="2"/>',
+                                        'bg' => 'bg-purple-50 dark:bg-purple-900/20',
+                                        'text' => 'text-purple-600 dark:text-purple-400',
+                                        'ic' => 'text-purple-500',
+                                    ],
+                                    [
+                                        'label' => 'Calendário',
+                                        'href' => '#',
+                                        'icon' =>
+                                            '<rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>',
+                                        'bg' => 'bg-indigo-50 dark:bg-indigo-900/20',
+                                        'text' => 'text-indigo-600 dark:text-indigo-400',
+                                        'ic' => 'text-indigo-500',
+                                    ],
+                                ];
+                            @endphp
+                            @foreach ($shortcuts as $s)
+                                <a href="{{ $s['href'] }}"
+                                    class="flex flex-col items-center justify-center gap-2 rounded-2xl p-3 shadow-sm border border-gray-100 dark:border-gray-800 hover:border-pink-200 transition-all duration-200 group w-full {{ $s['bg'] }}">
+                                    <svg class="w-5 h-5 {{ $s['ic'] }} group-hover:scale-110 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
+                                    <span
+                                        class="text-[9px] font-black uppercase tracking-wide {{ $s['text'] }}">{{ $s['label'] }}</span>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="relative flex items-center justify-center" style="height:160px;">
-                        <canvas id="chartStatus"></canvas>
-                        <div class="absolute text-center pointer-events-none">
-                            <p id="chartStatusTotal" class="text-2xl font-black text-gray-900 dark:text-white leading-none"
-                                style="font-family:'Unbounded',sans-serif;">—</p>
-                            <p class="text-[10px] text-gray-400 font-semibold">total</p>
+
+                    {{-- Carga Horária Semanal --}}
+                    <div
+                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                    style="font-family:'Unbounded',sans-serif;">Carga Semanal</h3>
+                                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mt-0.5">
+                                    Atividades por Dia</p>
+                            </div>
+                        </div>
+                        <div style="height:200px;position:relative;" class="flex-1 w-full">
+                            <canvas id="chartWeeklyLoad"></canvas>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-1.5" id="chartStatusLegend"></div>
                 </div>
 
-                {{-- Gráfico 2: Atividades últimos 7 dias (Linha) --}}
+                {{-- Volume por Matéria --}}
                 <div
-                    class="lg:col-span-2 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
-                    <div class="flex items-center justify-between">
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
                         <div>
-                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Histórico</p>
                             <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Unbounded',sans-serif;">Entregas nos últimos 7 dias</h3>
-                        </div>
-                        <div class="flex gap-3 text-[10px] font-bold text-gray-400">
-                            <span class="flex items-center gap-1.5"><span
-                                    class="w-2 h-2 rounded-full bg-pink-500 inline-block"></span>Concluídas</span>
-                            <span class="flex items-center gap-1.5"><span
-                                    class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>Atrasadas</span>
+                                style="font-family:'Unbounded',sans-serif;">Volume por Matéria</h3>
+                            <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mt-0.5">Atividades
+                                por Disciplina</p>
                         </div>
                     </div>
-                    <div style="height:180px; position:relative;">
-                        <canvas id="chartWeek"></canvas>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
-
-                {{-- Gráfico 3: Atividades por matéria (Barra horizontal) --}}
-                <div
-                    class="lg:col-span-3 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex flex-col gap-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400">Por matéria</p>
-                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
-                                style="font-family:'Unbounded',sans-serif;">Volume de atividades</h3>
-                        </div>
-                    </div>
-                    <div style="height:200px;position:relative;">
+                    <div style="height:180px;position:relative;" class="w-full">
                         <canvas id="chartSubjects"></canvas>
                     </div>
                 </div>
 
-                {{-- Gráfico 4: Taxa de conclusão + Streak --}}
-                <div class="lg:col-span-2 flex flex-col gap-4">
-
-                    {{-- Taxa de conclusão --}}
-                    <div
-                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 flex-1">
-                        <p class="text-[10px] font-black uppercase tracking-[.2em] text-pink-400 mb-1">Eficiência</p>
-                        <h3 class="text-sm font-black text-gray-900 dark:text-white mb-4"
-                            style="font-family:'Unbounded',sans-serif;">Taxa de conclusão</h3>
-                        <div class="flex items-end gap-4">
-                            <div>
-                                <p id="completionRate" class="text-4xl font-black text-pink-600 leading-none"
-                                    style="font-family:'Unbounded',sans-serif;">—</p>
-                                <p class="text-xs text-gray-400 font-semibold mt-1">das atividades</p>
-                            </div>
-                            <div class="flex-1">
-                                {{-- Mini gauge via CSS --}}
-                                <div class="w-full h-2.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                                    <div id="completionBar"
-                                        class="h-full rounded-full bg-gradient-to-r from-pink-500 to-pink-300 transition-all duration-1000"
-                                        style="width:0%"></div>
-                                </div>
-                                <div class="flex justify-between mt-1">
-                                    <span class="text-[9px] text-gray-400">0%</span>
-                                    <span class="text-[9px] text-gray-400">100%</span>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Breakdown bars --}}
-                        <div class="mt-4 space-y-2" id="completionBreakdown"></div>
-                    </div>
-
-                    {{-- Próxima prova urgente --}}
-                    <div
-                        class="bg-gradient-to-br from-pink-600 to-rose-500 rounded-3xl shadow-lg shadow-pink-200/40 dark:shadow-pink-900/40 p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.2em] mb-1">Atenção</p>
-                            <h3 class="text-sm font-black text-white" style="font-family:'Unbounded',sans-serif;">Próxima prova
-                            </h3>
-                        </div>
-                        <div id="nextExamCard">
-                            <div class="h-3 w-24 bg-pink-500/40 rounded animate-pulse mb-1.5"></div>
-                            <div class="h-2 w-16 bg-pink-500/30 rounded animate-pulse"></div>
-                        </div>
-                        <a href="/exams"
-                            class="text-[10px] font-black text-pink-200 hover:text-white transition-colors uppercase tracking-widest mt-2">Ver
-                            provas →</a>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        {{-- ══ ATIVIDADES + MATÉRIAS ══ --}}
-        <section class="space-y-4">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
-
-                {{-- Atividades recentes --}}
+                {{-- Histórico 7 dias --}}
                 <div
-                    class="lg:col-span-3 bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-colors duration-200">
-                    <div class="h-[3px] bg-gradient-to-r from-pink-600 via-pink-400 to-pink-200"></div>
-                    <div class="px-6 py-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-pink-600 to-pink-300"></span>
-                            <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                style="font-family:'Unbounded',sans-serif;">Atividades recentes</h3>
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                    style="font-family:'Unbounded',sans-serif;">Fluxo de Entregas</h3>
+                                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mt-0.5">Últimos
+                                    7 dias</p>
+                            </div>
                         </div>
-                        <a href="/activities"
-                            class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
-                            →</a>
+
+                        <div
+                            class="flex items-center gap-3 text-[10px] font-bold text-gray-500 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-full border border-gray-100 dark:border-gray-700">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-pink-500 inline-block shadow-[0_0_8px_rgba(236,72,153,0.5)]"></span>Concluídas</span>
+                            <span class="flex items-center gap-1.5 ml-2"><span
+                                    class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>Atrasadas</span>
+                        </div>
                     </div>
-                    <div id="recentActivities" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800">
+
+                    <div style="height:220px; position:relative;" class="w-full">
+                        <canvas id="chartWeek"></canvas>
+                    </div>
+                </div>
+
+                {{-- Histórico de Atividades --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+                    <div
+                        class="px-6 py-5 flex items-center justify-between border-b border-gray-50 dark:border-gray-800/60">
+                        <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
+                            style="font-family:'Unbounded',sans-serif;">Histórico de Atividades</h3>
+                        <a href="/activities"
+                            class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] font-bold px-3 py-1.5 rounded-lg transition-colors border border-gray-100 dark:border-gray-700 flex items-center gap-1">
+                            Ver tudo <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div id="recentActivities" class="flex-1 overflow-y-auto">
                         @for ($i = 0; $i < 4; $i++)
-                            <div class="flex items-center justify-between px-6 py-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 rounded-full bg-pink-100 dark:bg-pink-900 animate-pulse shrink-0"></div>
-                                    <div>
-                                        <div class="h-3 w-44 bg-gray-100 dark:bg-gray-800 rounded animate-pulse mb-1.5"></div>
-                                        <div class="h-2 w-28 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
+                            <div
+                                class="mx-4 my-2 px-6 py-5 flex items-center justify-between bg-gray-50/30 dark:bg-gray-800/20 rounded-2xl animate-pulse">
+                                <div class="flex items-center gap-4 flex-1">
+                                    <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800"></div>
+                                    <div class="space-y-2 flex-1">
+                                        <div class="h-4 w-3/4 bg-gray-100 dark:bg-gray-800 rounded"></div>
+                                        <div class="h-2 w-1/4 bg-gray-100 dark:bg-gray-800 rounded"></div>
                                     </div>
                                 </div>
-                                <div class="h-5 w-16 bg-gray-100 dark:bg-gray-800 rounded-full animate-pulse"></div>
+                                <div class="w-16 h-6 bg-gray-100 dark:bg-gray-800 rounded-full"></div>
                             </div>
                         @endfor
                     </div>
-                    <div class="px-6 py-4 border-t border-gray-50 dark:border-gray-800 flex justify-center">
-                        <a href="/activities/create"
-                            class="inline-flex items-center gap-1.5 text-[11px] font-bold text-pink-500 border border-pink-200 hover:bg-pink-500 hover:text-white hover:border-pink-500 px-4 py-2 rounded-xl transition-all duration-200">
-                            <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="3"
-                                viewBox="0 0 24 24">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
+                </div>
+            </div>
+
+            {{-- ════════ RIGHT COLUMN (Sidebar Stats) ════════ --}}
+            <div class="xl:col-span-1 flex flex-col gap-6">
+
+                {{-- Próxima Prova Urgente --}}
+                <div class="relative rounded-3xl p-6 shadow-xl shadow-pink-500/20 dark:shadow-pink-900/20 overflow-hidden min-h-[220px] flex flex-col justify-between group cursor-default"
+                    style="background:linear-gradient(135deg, #db2777 0%, #be185d 100%);">
+
+                    <div
+                        class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
+                        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            Nova atividade
+                        </div>
+                        <span
+                            class="text-white/80 text-[10px] font-black uppercase tracking-widest bg-white/10 px-2 py-1 rounded-full">Foco
+                            Atual</span>
+                    </div>
+
+                    <div class="relative z-10 flex-1 mt-2">
+                        <h3 class="text-white/90 text-[11px] font-semibold uppercase tracking-[.2em] mb-1">Próxima Prova
+                        </h3>
+                        <div id="nextExamCard" class="min-h-[60px]">
+                            <div class="h-4 w-32 bg-white/20 rounded animate-pulse mb-2"></div>
+                            <div class="h-3 w-20 bg-white/10 rounded animate-pulse"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 items-center justify-between border-t border-white/20 pt-4 mt-2 hidden lg:flex">
+                        <div>
+                            <p class="text-white/50 text-[8px] font-black uppercase tracking-widest mb-0.5">Acesso Rápido
+                            </p>
+                            <p class="text-white font-bold text-xs" style="font-family:'Unbounded',sans-serif;">Ver Agenda
+                            </p>
+                        </div>
+                        <a href="/exams"
+                            class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors border border-white/20">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                         </a>
                     </div>
                 </div>
 
-                {{-- Provas + Matérias --}}
-                <div class="lg:col-span-2 flex flex-col gap-4">
-                    <div
-                        class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col flex-1 transition-colors duration-200">
-                        <div class="h-[3px] bg-gradient-to-r from-pink-400 to-rose-300"></div>
-                        <div
-                            class="px-5 py-3.5 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
-                            <div class="flex items-center gap-2">
-                                <span class="w-1.5 h-4 rounded-full bg-gradient-to-b from-pink-400 to-pink-200"></span>
-                                <h3 class="text-sm font-black text-gray-900 dark:text-gray-100"
-                                    style="font-family:'Unbounded',sans-serif;">Próximas provas</h3>
+                {{-- Gamificação --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden relative group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-full -mr-10 -mt-10 blur-2xl"></div>
+
+                    <div class="flex items-center justify-between mb-6 relative z-10">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-pink-500 flex items-center justify-center text-white shadow-lg shadow-pink-500/30">
+                                <span id="userLevel" class="text-sm font-black">1</span>
                             </div>
-                            <a href="/exams"
-                                class="text-[11px] font-bold text-pink-500 hover:text-pink-700 transition-colors">Ver todas
-                                →</a>
+                            <div>
+                                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-tight">
+                                    Nível Atual</p>
+                                <p id="rankName" class="text-xs font-bold text-gray-900 dark:text-white"
+                                    style="font-family:'Unbounded',sans-serif;">Explorador</p>
+                            </div>
                         </div>
-                        <div id="upcomingExams" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800">
-                            @for ($i = 0; $i < 3; $i++)
-                                <div class="flex items-center justify-between px-5 py-3">
-                                    <div>
-                                        <div class="h-3 w-28 bg-gray-100 dark:bg-gray-800 rounded animate-pulse mb-1.5"></div>
-                                        <div class="h-2 w-20 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
-                                    </div>
-                                    <div class="h-3 w-14 bg-gray-100 dark:bg-gray-800 rounded animate-pulse"></div>
-                                </div>
-                            @endfor
+                        {{-- Streak / Foguinho --}}
+                        <div
+                            class="flex items-center gap-2 bg-orange-50 dark:bg-orange-950/20 px-3 py-2 rounded-xl border border-orange-100 dark:border-orange-900/30">
+                            <span class="text-lg">🔥</span>
+                            <span id="userStreak" class="text-sm font-black text-orange-600 dark:text-orange-500">0</span>
                         </div>
                     </div>
 
-                    <div class="bg-pink-600 rounded-3xl overflow-hidden flex flex-col flex-1 shadow-lg shadow-pink-200/40">
-                        <div class="px-5 py-3.5 flex items-center justify-between border-b border-pink-500/60">
-                            <div class="flex items-center gap-2">
-                                <span class="w-1.5 h-4 rounded-full bg-pink-300"></span>
-                                <h3 class="text-sm font-black text-white" style="font-family:'Unbounded',sans-serif;">Matérias
-                                </h3>
-                                <span id="statSubjects"
-                                    class="bg-pink-500 text-pink-100 text-[10px] font-black px-2 py-0.5 rounded-full leading-none">—</span>
+                    <div class="space-y-4 relative z-10">
+                        <div>
+                            <div class="flex justify-between items-end mb-2">
+                                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Progresso do Nível
+                                </p>
+                                <p class="text-[10px] font-bold text-pink-500"><span id="currentXP">0</span> / 1000 XP</p>
                             </div>
-                            <a href="/subject"
-                                class="text-[11px] font-bold text-pink-200 hover:text-white transition-colors">Ver todas
-                                →</a>
+                            <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden p-0.5">
+                                <div id="xpBar"
+                                    class="h-full bg-gradient-to-r from-pink-500 to-rose-400 rounded-full transition-all duration-1000 shadow-sm"
+                                    style="width: 0%"></div>
+                            </div>
                         </div>
-                        <div id="subjectsList" class="flex-1 divide-y divide-pink-500/30">
-                            @for ($i = 0; $i < 4; $i++)
-                                <div class="flex items-center gap-3 px-5 py-2.5">
-                                    <div class="w-7 h-7 rounded-lg bg-pink-500/50 animate-pulse shrink-0"></div>
-                                    <div>
-                                        <div class="h-3 w-28 bg-pink-500/40 rounded animate-pulse mb-1"></div>
-                                        <div class="h-2 w-20 bg-pink-500/30 rounded animate-pulse"></div>
-                                    </div>
-                                </div>
-                            @endfor
-                        </div>
-                        <div class="px-5 py-3 border-t border-pink-500/40 flex justify-center">
-                            <a href="/subject/create"
-                                class="inline-flex items-center gap-1.5 text-[11px] font-bold text-pink-100 border border-pink-400/70 hover:bg-white hover:text-pink-600 hover:border-white px-4 py-2 rounded-xl transition-all duration-200">
-                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="3"
-                                    viewBox="0 0 24 24">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Nova matéria
-                            </a>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div
+                                class="bg-gray-50 dark:bg-gray-800/40 p-3 rounded-2xl border border-gray-100 dark:border-gray-700/50">
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-[0.15em] mb-1">XP Total</p>
+                                <p id="totalXP" class="text-sm font-black text-gray-900 dark:text-white"
+                                    style="font-family:'Unbounded',sans-serif;">0</p>
+                            </div>
+                            <div
+                                class="bg-gray-50 dark:bg-gray-800/40 p-3 rounded-2xl border border-gray-100 dark:border-gray-700/50">
+                                <p class="text-[8px] font-black text-gray-400 uppercase tracking-[0.15em] mb-1">Próximo
+                                    Marco</p>
+                                <p class="text-sm font-black text-pink-500" style="font-family:'Unbounded',sans-serif;">+150
+                                    XP</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        {{-- ══ QUOTE ══ --}}
-        <div class="rounded-3xl overflow-hidden relative shadow-sm"
-            style="background:linear-gradient(130deg,#9d174d 0%,#db2777 50%,#fda4af 100%);">
-            <div class="absolute inset-0 pointer-events-none opacity-[.08]"
-                style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:18px 18px;"></div>
-            <div class="relative z-10 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                    <p class="text-pink-200 text-[10px] font-black uppercase tracking-[.22em] mb-1">Motivação</p>
-                    <blockquote class="text-white font-black text-lg leading-snug max-w-lg"
-                        style="font-family:'Unbounded',sans-serif;">
-                        "A educação é a arma mais poderosa que você pode usar para mudar o mundo."
-                    </blockquote>
-                    <p class="text-pink-300 text-xs font-semibold mt-1.5">— Nelson Mandela</p>
+                {{-- Eficiência --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 text-pink-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                style="font-family:'Unbounded',sans-serif;">Eficiência</h3>
+                        </div>
+                    </div>
+
+                    <div class="mb-5 flex items-end gap-3">
+                        <p id="completionRate" class="text-4xl font-black text-pink-600 dark:text-pink-400 leading-none"
+                            style="font-family:'Unbounded',sans-serif;">—</p>
+                        <p class="text-xs text-gray-400 font-semibold mb-1 uppercase">concluído</p>
+                    </div>
+
+                    <div class="w-full h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden mb-5">
+                        <div id="completionBar"
+                            class="h-full rounded-full bg-gradient-to-r from-pink-500 to-pink-300 transition-all duration-1000"
+                            style="width:0%"></div>
+                    </div>
+
+                    <div class="space-y-3" id="completionBreakdown">
+                        {{-- Filled by JS --}}
+                    </div>
+                </div>
+
+                {{-- Matérias List --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+                    <div
+                        class="px-5 py-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800/60 bg-gray-50/50 dark:bg-gray-800/20">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke-width="2" />
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke-width="2" />
+                            </svg>
+                            <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                                style="font-family:'Unbounded',sans-serif;">Matérias</h3>
+                        </div>
+                        <span id="statSubjects"
+                            class="bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 text-[10px] font-black px-2 py-0.5 rounded-md">—</span>
+                    </div>
+                    <div id="subjectsList" class="flex-1 divide-y divide-gray-50 dark:divide-gray-800/60">
+                        @for ($i = 0; $i < 3; $i++)
+                            <div class="flex items-center gap-3 px-5 py-3">
+                                <div class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse shrink-0"></div>
+                                <div class="w-full">
+                                    <div
+                                        class="h-3 w-3/4 max-w-[120px] bg-gray-100 dark:bg-gray-800 rounded animate-pulse mb-1.5">
+                                    </div>
+                                    <div class="h-2 w-1/2 max-w-[80px] bg-gray-100 dark:bg-gray-800 rounded animate-pulse">
+                                    </div>
+                                </div>
+                            </div>
+                        @endfor
+                    </div>
+                </div>
+
+                {{-- Timeline Visual --}}
+                <div
+                    class="bg-white dark:bg-[#18181b] rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+                    <div
+                        class="px-5 py-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800/60 bg-gray-50/30 dark:bg-gray-800/20">
+                        <h3 class="text-sm font-black text-gray-900 dark:text-white"
+                            style="font-family:'Unbounded',sans-serif;">Timeline de Entregas</h3>
+                    </div>
+                    <div id="visualTimeline" class="px-5 py-3 space-y-3">
+                        {{-- Filled by JS --}}
+                    </div>
+
+                    {{-- Slider Motivacional --}}
+                    <div
+                        class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-pink-600 to-rose-400 p-6 shadow-lg shadow-pink-500/20 group">
+                        <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:scale-110 transition-transform">
+                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16H8.01703V12H12.017C14.2261 12 16.017 10.2091 16.017 8C16.017 5.79086 14.2261 4 12.017 4H5.01703V21H14.017ZM19.017 21V4H21.017V21H19.017Z"
+                                    opacity="0.3" />
+                                <path
+                                    d="M11.19 2H5V22H11.19K11.19 2C13.84 2 16 4.16 16 6.81C16 9.46 13.84 11.62 11.19 11.62H5"
+                                    fill="none" stroke="white" stroke-width="1.5" />
+                            </svg>
+                        </div>
+                        <div class="relative z-10 min-h-[80px] flex flex-col justify-center">
+                            <p id="slideQuote"
+                                class="text-white font-bold text-sm leading-relaxed mb-3 transition-opacity duration-500 italic"
+                                style="font-family:'Unbounded',sans-serif;">
+                                "A educação é a arma mais poderosa que você pode usar para mudar o mundo."
+                            </p>
+                            <p id="slideAuthor"
+                                class="text-pink-100 text-[9px] font-black uppercase tracking-[0.2em] transition-opacity duration-500">
+                                Nelson Mandela
+                            </p>
+                        </div>
+                        <div class="flex gap-1.5 mt-4">
+                            <div class="h-1 w-6 bg-white rounded-full opacity-100" id="dot0"></div>
+                            <div class="h-1 w-2 bg-white/30 rounded-full" id="dot1"></div>
+                            <div class="h-1 w-2 bg-white/30 rounded-full" id="dot2"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-    </div>
-
-    {{-- Chart.js --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
+        {{-- Chart.js --}}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
